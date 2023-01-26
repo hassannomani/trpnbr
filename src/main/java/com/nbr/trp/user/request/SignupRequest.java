@@ -11,6 +11,14 @@ public class SignupRequest {
 
     private String password;
 
+    private String firstname;
+
+    private String lastname;
+
+    private String addedby;
+
+    private String addedfromip;
+
     public String getUsername() {
         return username;
     }
@@ -41,5 +49,37 @@ public class SignupRequest {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public String getAddedby() {
+        return addedby;
+    }
+
+    public String getAddedfromip() {
+        return addedfromip;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public void setAddedby(String addedby) {
+        this.addedby = addedby;
+    }
+
+    public void setAddedfromip(String addedfromip) {
+        this.addedfromip = addedfromip;
     }
 }
