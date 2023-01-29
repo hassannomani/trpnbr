@@ -20,7 +20,7 @@ public class UserDetailsImpl implements UserDetails {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private int id;
+    private String uuid;
 
     private String username;
 
@@ -32,13 +32,13 @@ public class UserDetailsImpl implements UserDetails {
     private Collection<? extends GrantedAuthority> authorities;
 
     public UserDetailsImpl(
-            int id,
+            String uuid,
             String username,
             String email,
             String password,
             Collection<? extends GrantedAuthority> authorities
     ) {
-        this.id = id;
+        this.uuid = uuid;
         this.username = username;
         this.email = email;
         this.password = password;
@@ -53,7 +53,7 @@ public class UserDetailsImpl implements UserDetails {
                 .collect(Collectors.toList());
 
         return new UserDetailsImpl(
-                user.getId(),
+                user.getUuid(),
                 user.getUsername(),
                 user.getEmail(),
                 user.getPassword(),
@@ -67,8 +67,8 @@ public class UserDetailsImpl implements UserDetails {
         return authorities;
     }
 
-    public int getId() {
-        return id;
+    public String getUuid() {
+        return uuid;
     }
 
     public String getEmail() {
@@ -112,7 +112,7 @@ public class UserDetailsImpl implements UserDetails {
         if (o == null || getClass() != o.getClass())
             return false;
         UserDetailsImpl user = (UserDetailsImpl) o;
-        return Objects.equals(id, user.id);
+        return Objects.equals(uuid, user.uuid);
     }
 
 }
