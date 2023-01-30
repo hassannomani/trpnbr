@@ -58,6 +58,9 @@ public class User {
     @Column(name = "UpdatedFromIP")
     public String UpdatedFromIP;
 
+    @Column(name = "Status")
+    public String Status;
+
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",
@@ -66,8 +69,8 @@ public class User {
     )
     private Set<Role> roles = new HashSet<>();
 
-    public User(String username, String password, String Firstname, String Lastname, String email, String AddedBy, String AddedFromIp, Set<Role> roles) {
-        //this.id = id;
+    public User(String uuid,String username, String password, String Firstname, String Lastname, String email, String AddedBy, String AddedFromIp, String Status, Set<Role> roles) {
+        this.uuid = uuid;
         this.Username = username;
         this.Email = email;
         this.Password = password;
@@ -76,6 +79,7 @@ public class User {
         this.AddedBy = AddedBy;
         this.AddedFromIP = AddedFromIp;
         this.roles = roles;
+        this.Status = Status;
     }
 
 }

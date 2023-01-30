@@ -19,6 +19,8 @@ public class SignupRequest {
 
     private String addedfromip;
 
+    private String status;
+
     public String getUsername() {
         return username;
     }
@@ -65,6 +67,14 @@ public class SignupRequest {
 
     public String getAddedfromip() {
         return addedfromip;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public void setFirstname(String firstname) {

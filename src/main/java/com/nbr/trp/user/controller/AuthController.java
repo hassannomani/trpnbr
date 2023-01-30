@@ -90,6 +90,7 @@ public class AuthController {
                 signUpRequest.getEmail(),
                 signUpRequest.getAddedby(),
                 signUpRequest.getAddedfromip(),
+                signUpRequest.getStatus(),
                 null
         );
 
