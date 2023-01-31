@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -83,6 +84,7 @@ public class AuthController {
 
         // Create new employee account
         User employee = new User(
+                UUID.randomUUID().toString(),
                 signUpRequest.getUsername(),
                 encoder.encode(signUpRequest.getPassword()),
                 signUpRequest.getFirstname(),
