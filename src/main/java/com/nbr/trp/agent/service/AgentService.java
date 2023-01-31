@@ -1,4 +1,7 @@
 package com.nbr.trp.agent.service;
 
-public class AgentService {
+import org.springframework.stereotype.Service;
+
+@Service
+public interface AgentService {
 }

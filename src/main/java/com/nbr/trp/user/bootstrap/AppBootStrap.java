@@ -8,6 +8,7 @@ import com.nbr.trp.user.repository.UserRepository;
 import com.nbr.trp.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
 
 import java.sql.Date;
 import java.util.HashSet;
@@ -16,7 +17,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import static com.nbr.trp.user.entity.ERole.ROLE_ADMIN;
-
+@Component
 public class AppBootStrap implements CommandLineRunner {
 
     @Autowired
