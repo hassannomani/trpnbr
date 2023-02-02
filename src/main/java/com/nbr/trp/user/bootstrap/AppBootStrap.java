@@ -31,7 +31,10 @@ public class AppBootStrap implements CommandLineRunner {
 
 
     @Autowired
-    public AppBootStrap(UserRepository userRepository){
+    public AppBootStrap(UserRepository userRepository, RoleRepository roleRepository, UserService userService){
+
+        this.userService=userService;
+        this.roleRepository=roleRepository;
         this.userRepository=userRepository;
     }
 
@@ -55,7 +58,7 @@ public class AppBootStrap implements CommandLineRunner {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        Optional<User> user1 = userRepository.findByUsername("admin");
+        Optional<User> user1 = userRepository.findByUsername("000000000000");
         if (user1.isEmpty()){
             Set<Role> roleadmin = new HashSet<Role>();
             Role adminsingle = roleRepository.findByName(String.valueOf(ROLE_ADMIN)).orElse(null);
