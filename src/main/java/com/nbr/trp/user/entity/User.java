@@ -23,43 +23,43 @@ public class User {
     private String uuid;
 
 
-    @Column(name = "Username",nullable = false,unique = true)
-    public String Username;
+    @Column(name = "username",nullable = false,unique = true)
+    public String username;
 
-    @Column(name = "Password")
-    public String Password;
+    @Column(name = "password")
+    public String password;
 
-    @Column(name = "FirstName")
-    public String FirstName;
+    @Column(name = "first_name")
+    public String firstName;
 
-    @Column(name = "LastName")
-    public String LastName;
+    @Column(name = "last_name")
+    public String lastName;
 
-    @Column(name = "Email")
-    public String Email;
+    @Column(name = "email")
+    public String email;
 
-    @Column(name = "AddedBy")
-    public String AddedBy;
+    @Column(name = "added_by")
+    public String addedBy;
 
-    @Column(name = "AddedDate")
+    @Column(name = "added_date")
     @CreationTimestamp
-    public Date AddedDate;
+    public Date addedDate;
 
-    @Column(name = "AddedFromIP")
-    public String AddedFromIP;
+    @Column(name = "added_fromiP")
+    public String addedFromIP;
 
-    @Column(name = "UpdatedBy")
-    public String UpdatedBy;
+    @Column(name = "updated_by")
+    public String updatedBy;
 
-    @Column(name = "UpdatedDate")
+    @Column(name = "updated_date")
     @UpdateTimestamp
-    public Date  UpdatedDate;
+    public Date  updatedDate;
 
-    @Column(name = "UpdatedFromIP")
-    public String UpdatedFromIP;
+    @Column(name = "updated_fromip")
+    public String updatedFromIP;
 
-    @Column(name = "Status")
-    public String Status;
+    @Column(name = "status")
+    public String status;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
@@ -71,15 +71,15 @@ public class User {
 
     public User(String uuid,String username, String password, String Firstname, String Lastname, String email, String AddedBy, String AddedFromIp, String Status, Set<Role> roles) {
         this.uuid = uuid;
-        this.Username = username;
-        this.Email = email;
-        this.Password = password;
-        this.FirstName = Firstname;
-        this.LastName = Lastname;
-        this.AddedBy = AddedBy;
-        this.AddedFromIP = AddedFromIp;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.firstName = Firstname;
+        this.lastName = Lastname;
+        this.addedBy = AddedBy;
+        this.addedFromIP = AddedFromIp;
         this.roles = roles;
-        this.Status = Status;
+        this.status = Status;
     }
 
 }

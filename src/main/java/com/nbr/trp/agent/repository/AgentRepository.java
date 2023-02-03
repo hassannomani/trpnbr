@@ -1,4 +1,9 @@
 package com.nbr.trp.agent.repository;
 
-public class AgentRepository {
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.stereotype.Repository;
+
+@Repository
+@EnableJpaRepositories
+public interface AgentRepository {
 }
