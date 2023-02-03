@@ -45,7 +45,7 @@ public class User {
     @CreationTimestamp
     public Date addedDate;
 
-    @Column(name = "added_fromiP")
+    @Column(name = "added_from_ip")
     public String addedFromIP;
 
     @Column(name = "updated_by")
@@ -55,7 +55,7 @@ public class User {
     @UpdateTimestamp
     public Date  updatedDate;
 
-    @Column(name = "updated_fromip")
+    @Column(name = "updated_from_ip")
     public String updatedFromIP;
 
     @Column(name = "status")
