@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "*", maxAge = 4800)
 @RestController
-@RequestMapping("/api/test")
+@RequestMapping("/api/common")
 public class CommonController {
 }
