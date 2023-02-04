@@ -20,99 +20,99 @@ public class Agent {
 	@Column(columnDefinition = "uniqueidentifier default newid()")
 	public String uuid;
 
-	@Column(name = "Name",nullable = false)
-	public String Name;
+	@Column(name = "name",nullable = false)
+	public String name;
 
-	@Column(name = "Username",nullable = false)
-	public String Username;
+	@Column(name = "username",nullable = false)
+	public String username;
 
-	@Column(name = "Phone")
-	public String Phone;
+	@Column(name = "phone")
+	public String phone;
 
-	@Column(name = "RegistrationType",nullable = false)
-	public String RegistrationType;
+	@Column(name = "registration_type",nullable = false)
+	public String registrationType;
 
-	@Column(name = "RegNo",nullable = false)
-	public String RegNo;
+	@Column(name = "reg_no",nullable = false)
+	public String regNo;
 
-	@Column(name = "RegDate",nullable = false)
-	public Date RegDate;
+	@Column(name = "reg_date",nullable = false)
+	public Date regDate;
 
-	@Column(name = "ContactPerson",nullable = false)
-	public Date ContactPerson;
+	@Column(name = "contact_person",nullable = false)
+	public Date contactPerson;
 
-	@Column(name = "ContactNumber",nullable = false)
-	public Date ContactNumber;
+	@Column(name = "contact_number",nullable = false)
+	public Date contactNumber;
 
-	@Column(name = "ContactEmail",nullable = false)
-	public Date ContactEmail;
+	@Column(name = "contact_email",nullable = false)
+	public Date contactEmail;
 
-	@Column(name = "BusinessAddressId")
-	public int BusinessAddressId;
+	@Column(name = "business_address_id")
+	public int businessAddressId;
 
-	@Column(name = "CurrentAddressId")
-	public int CurrentAddressId;
+	@Column(name = "current_address_id")
+	public int currentAddressId;
 
-	@Column(name = "PermanentAddressId")
-	public int PermanentAddressId;
+	@Column(name = "permanent_address_id")
+	public int permanentAddressId;
 
-	@Column(name = "BankAccountName")
-	public String BankAccountName;
+	@Column(name = "bank_account_name")
+	public String bankAccountName;
 
-	@Column(name = "BankAccountNo")
-	public String BankAccountNo;
+	@Column(name = "bank_account_no")
+	public String bankAccountNo;
 
-	@Column(name = "BankName")
-	public String BankName;
+	@Column(name = "bank_name")
+	public String bankName;
 
-	@Column(name = "BankBranch")
-	public String BankBranch;
+	@Column(name = "bank_branch")
+	public String bankBranch;
 
-	@Column(name = "RoutingNo")
-	public String RoutingNo;
+	@Column(name = "routing_no")
+	public String routingNo;
 
-	@Column(name = "DOB")
-	public Date DOB;
+	@Column(name = "dob")
+	public Date dob;
 
-	@Column(name = "FatherName")
-	public String FatherName;
+	@Column(name = "father_name")
+	public String fatherName;
 
-	@Column(name = "MotherName")
-	public String MotherName;
+	@Column(name = "mother_name")
+	public String motherName;
 
-	@Column(name = "SpouseName")
-	public String SpouseName;
+	@Column(name = "spouse_name")
+	public String spouseName;
 
-	@Column(name = "MobileNo")
-	public String MobileNo;
+	@Column(name = "mobile_no")
+	public String mobileNo;
 
-	@Column(name = "RegAssNID")
-	public String RegAssNID;
+	@Column(name = "reg_ass_nid")
+	public String regAssNID;
 
-	public Agent(String uuid, String name, String username, String phone, String registrationType, String regNo, Date regDate, Date contactPerson, Date contactNumber, Date contactEmail, int businessAddressId, int currentAddressId, int permanentAddressId, String bankAccountName, String bankAccountNo, String bankName, String bankBranch, String routingNo, Date DOB, String fatherName, String motherName, String spouseName, String mobileNo, String regAssNID) {
+	public Agent(String uuid, String name, String username, String phone, String registrationType, String regNo, Date regDate, Date contactPerson, Date contactNumber, Date contactEmail, int businessAddressId, int currentAddressId, int permanentAddressId, String bankAccountName, String bankAccountNo, String bankName, String bankBranch, String routingNo, Date dob, String fatherName, String motherName, String spouseName, String mobileNo, String regAssNID) {
 		this.uuid = uuid;
-		Name = name;
-		Username = username;
-		Phone = phone;
-		RegistrationType = registrationType;
-		RegNo = regNo;
-		RegDate = regDate;
-		ContactPerson = contactPerson;
-		ContactNumber = contactNumber;
-		ContactEmail = contactEmail;
-		BusinessAddressId = businessAddressId;
-		CurrentAddressId = currentAddressId;
-		PermanentAddressId = permanentAddressId;
-		BankAccountName = bankAccountName;
-		BankAccountNo = bankAccountNo;
-		BankName = bankName;
-		BankBranch = bankBranch;
-		RoutingNo = routingNo;
-		this.DOB = DOB;
-		FatherName = fatherName;
-		MotherName = motherName;
-		SpouseName = spouseName;
-		MobileNo = mobileNo;
-		RegAssNID = regAssNID;
+		this.name = name;
+		this.username = username;
+		this.phone = phone;
+		this.registrationType = registrationType;
+		this.regNo = regNo;
+		this.regDate = regDate;
+		this.contactPerson = contactPerson;
+		this.contactNumber = contactNumber;
+		this.contactEmail = contactEmail;
+		this.businessAddressId = businessAddressId;
+		this.currentAddressId = currentAddressId;
+		this.permanentAddressId = permanentAddressId;
+		this.bankAccountName = bankAccountName;
+		this.bankAccountNo = bankAccountNo;
+		this.bankName = bankName;
+		this.bankBranch = bankBranch;
+		this.routingNo = routingNo;
+		this.dob = dob;
+		this.fatherName = fatherName;
+		this.motherName = motherName;
+		this.spouseName = spouseName;
+		this.mobileNo = mobileNo;
+		this.regAssNID = regAssNID;
 	}
 }
