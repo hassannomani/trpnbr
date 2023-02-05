@@ -12,5 +12,4 @@ public interface AddressService {
 
     public List<User> getAllUsers();
 
-    public Optional<User> getUserByUsername(String username);
 }

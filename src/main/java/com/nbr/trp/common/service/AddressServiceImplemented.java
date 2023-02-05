@@ -18,8 +18,4 @@ public class AddressServiceImplemented implements AddressService{
         return null;
     }
 
-    @Override
-    public Optional<User> getUserByUsername(String username) {
-        return Optional.empty();
-    }
 }

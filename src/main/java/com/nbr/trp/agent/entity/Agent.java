@@ -56,20 +56,9 @@ public class Agent {
 	@Column(name = "permanent_address_id")
 	public int permanentAddressId;
 
-	@Column(name = "bank_account_name")
-	public String bankAccountName;
+	@Column(name = "bank_information_id")
+	public String bankInformationId;
 
-	@Column(name = "bank_account_no")
-	public String bankAccountNo;
-
-	@Column(name = "bank_name")
-	public String bankName;
-
-	@Column(name = "bank_branch")
-	public String bankBranch;
-
-	@Column(name = "routing_no")
-	public String routingNo;
 
 	@Column(name = "dob")
 	public Date dob;
@@ -89,7 +78,7 @@ public class Agent {
 	@Column(name = "reg_ass_nid")
 	public String regAssNID;
 
-	public Agent(String uuid, String name, String username, String phone, String registrationType, String regNo, Date regDate, String contactPerson, String contactNumber, String contactEmail, int businessAddressId, int currentAddressId, int permanentAddressId, String bankAccountName, String bankAccountNo, String bankName, String bankBranch, String routingNo, Date dob, String fatherName, String motherName, String spouseName, String mobileNo, String regAssNID) {
+	public Agent(String uuid, String name, String username, String phone, String registrationType, String regNo, Date regDate, String contactPerson, String contactNumber, String contactEmail, int businessAddressId, int currentAddressId, int permanentAddressId, String bankInformationId, String bankAccountNo, String bankName, String bankBranch, String routingNo, Date dob, String fatherName, String motherName, String spouseName, String mobileNo, String regAssNID) {
 		this.uuid = uuid;
 		this.name = name;
 		this.username = username;
@@ -103,11 +92,7 @@ public class Agent {
 		this.businessAddressId = businessAddressId;
 		this.currentAddressId = currentAddressId;
 		this.permanentAddressId = permanentAddressId;
-		this.bankAccountName = bankAccountName;
-		this.bankAccountNo = bankAccountNo;
-		this.bankName = bankName;
-		this.bankBranch = bankBranch;
-		this.routingNo = routingNo;
+		this.bankInformationId = bankInformationId;
 		this.dob = dob;
 		this.fatherName = fatherName;
 		this.motherName = motherName;

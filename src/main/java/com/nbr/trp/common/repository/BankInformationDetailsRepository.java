@@ -1,17 +1,19 @@
 package com.nbr.trp.common.repository;
 
 import com.nbr.trp.common.entity.Address;
+import com.nbr.trp.common.entity.BankInformationDetails;
 import com.nbr.trp.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import java.util.List;
+
 @Repository
 @EnableJpaRepositories
-public interface AddressRepository extends JpaRepository<Address, String> {
+public interface BankInformationDetailsRepository  extends JpaRepository<BankInformationDetails, String> {
 
-    Address save(Address address);
+    public BankInformationDetails save(BankInformationDetails bankInformationDetails);
 
-    Address findByUuid(String uuid);
+    public BankInformationDetails findByUuid(String uuid);
 }
