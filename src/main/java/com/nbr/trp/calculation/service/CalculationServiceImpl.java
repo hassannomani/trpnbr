@@ -26,15 +26,15 @@ public class CalculationServiceImpl implements CalculationService{
         Calculation calculation = calculationRepository.findByUuid(id);
         return exceptionHandler(calculation);
     }
-    public Calculation getCalculationByUsername(String tin) throws CalculationNotFoundException {
-        Calculation calculation = calculationRepository.findByTin(tin);
+    public Calculation getCalculationByUsername(String username) throws CalculationNotFoundException {
+        Calculation calculation = calculationRepository.findByUsername(username);
         return exceptionHandler(calculation);
     }
     public List<Calculation> getAllCalculation(){
         return calculationRepository.findAll();
     }
-    public Calculation updateCalculationByUsername(String tin, Calculation calculation) throws CalculationNotFoundException {
-        Calculation calculation1 = calculationRepository.findByTin(tin);
+    public Calculation updateCalculationByUsername(String username, Calculation calculation) throws CalculationNotFoundException {
+        Calculation calculation1 = calculationRepository.findByUsername(username);
 
         if(calculation1!=null){
             calculation1.setGender(calculation.getGender());
@@ -47,8 +47,11 @@ public class CalculationServiceImpl implements CalculationService{
             calculation1.setAssessmentYear(calculation.getAssessmentYear());
             calculation1.setAmount(calculation.getAmount());
             calculation1.setSubmitted(calculation.getSubmitted());
-
+            calculation1.setUsername(calculation.getUsername());
+            calculation1.setAgentId(calculation.getAgentId());
+            calculation1.setRepresentativeId(calculation.getRepresentativeId());
             Calculation c =calculationRepository.save(calculation1);
+
             return c;
         }else{
             return exceptionHandler(calculation1);
@@ -57,12 +60,12 @@ public class CalculationServiceImpl implements CalculationService{
     }
 
     public Calculation getCalculationByUsernameNAssessmentYear(String tin, String year) {
-        Calculation calculation = calculationRepository.findByTinAndAssessmentYear(tin,year);
+        Calculation calculation = calculationRepository.findByUsernameAndAssessmentYear(tin,year);
         return calculation;
     }
 
     public Calculation getCalculationByUsernameNAssessmentYearNSubmitted(String tin, String year) {
-        Calculation calculation = calculationRepository.findByTinAndAssessmentYearAndSubmitted(tin,year,"true");
+        Calculation calculation = calculationRepository.findByUsernameAndAssessmentYearAndSubmitted(tin,year,"true");
         return calculation;
     }
 

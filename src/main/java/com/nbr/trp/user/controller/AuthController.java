@@ -93,7 +93,8 @@ public class AuthController {
                 signUpRequest.getAddedby(),
                 signUpRequest.getAddedfromip(),
                 signUpRequest.getStatus(),
-                null
+                null,
+                ""
         );
 
         Set<String> strRoles = signUpRequest.getRoles();

@@ -19,13 +19,13 @@ public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(columnDefinition = "uniqueidentifier default newid()")
-    public String id;
+    public String uuid;
 
     @Column(name = "type", nullable = false)
     public String type;
 
-    @Column(name = "user", nullable = false)
-    public String user;
+    @Column(name = "username", nullable = false)
+    public String username;
 
     @Column(name = "address")
     public String address;
@@ -57,9 +57,9 @@ public class Address {
     public String updatedFromIP;
 
     public Address(String id, String type, String username, String address, String thana, String district, String addedBy, LocalDateTime addedDate, String addedFromIP, String updatedBy, LocalDateTime updatedDate, String updatedFromIP) {
-        this.id = id;
+        this.uuid = id;
         this.type = type;
-        this.user = username;
+        this.username = username;
         this.address = address;
         this.thana = thana;
         this.district = district;

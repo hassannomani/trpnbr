@@ -50,9 +50,15 @@ public class Payment {
     @CreationTimestamp
     private Date created_at;
 
+    @Column(nullable = false, name = "agent_id")
+    private String agentId;
+
+    @Column(nullable = false, name = "representative_id")
+    private String representativeId;
 
 
-    public Payment(String uuid, String tin, String assessmentYear, String getway, String mobile, double amount, String transactionId) {
+
+    public Payment(String uuid, String tin, String assessmentYear, String getway, String mobile, double amount, String transactionId, String agentId, String representativeId) {
         this.uuid = uuid;
         this.username = tin;
         this.assessmentYear = assessmentYear;
@@ -60,6 +66,8 @@ public class Payment {
         this.mobile = mobile;
         this.amount = amount;
         this.transactionId = transactionId;
+        this.agentId = agentId;
+        this.representativeId = representativeId;
     }
 }
 

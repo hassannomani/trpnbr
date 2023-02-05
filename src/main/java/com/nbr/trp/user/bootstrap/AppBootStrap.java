@@ -63,7 +63,7 @@ public class AppBootStrap implements CommandLineRunner {
             Set<Role> roleadmin = new HashSet<Role>();
             Role adminsingle = roleRepository.findByName(String.valueOf(ROLE_ADMIN)).orElse(null);
             roleadmin.add(adminsingle);
-            User userX = new User(UUID.randomUUID().toString(), "000000000000", "admin", "Admin" ,"User","admin@trp.gov.bd","SYSTEM", "127.0.0.1","1",roleadmin);
+            User userX = new User(UUID.randomUUID().toString(), "000000000000", "admin", "Admin" ,"User","admin@trp.gov.bd","SYSTEM", "127.0.0.1","1",roleadmin,"");
             User saved = userService.saveUser(userX);
             System.out.println(saved);
 

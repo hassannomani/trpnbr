@@ -1,6 +1,7 @@
 package com.nbr.trp.payment.service;
 
 import com.nbr.trp.payment.entity.Payment;
+import com.nbr.trp.payment.repository.PaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,7 +9,7 @@ import java.util.List;
 
 @Service
 
-public class PaymentServiceImp implements PaymentService{
+public class PaymentServiceImpl implements PaymentService{
 
     @Autowired
 
@@ -25,24 +26,17 @@ public class PaymentServiceImp implements PaymentService{
     }
 
     @Override
-    public Payment getPaymentByUUID(String id) throws PaymentNotFoundException {
+    public Payment getPaymentByUuid(String id) {
 
         Payment payment = paymentRepository.findByUuid(id);
 
-        if(payment == null){
-            throw new PaymentNotFoundException("Invalid payment id");
-        }
         return payment;
     }
 
     @Override
-    public Payment getPaymentByTinNoAndYear(String id, String year) throws PaymentNotFoundException {
+    public Payment getPaymentByUsernameAndYear(String username, String year){
 
-        Payment payment = paymentRepository.findByTinNoAndAssessmentYear(id,year);
-
-        if(payment == null){
-            throw new PaymentNotFoundException("Invalid payment id");
-        }
+        Payment payment = paymentRepository.findByUsernameAndAssessmentYear(username,year);
         return payment;
     }
 

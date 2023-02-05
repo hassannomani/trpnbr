@@ -61,6 +61,9 @@ public class User {
     @Column(name = "status")
     public String status;
 
+    @Column(name = "photo")
+    public String photo;
+
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",
@@ -69,7 +72,7 @@ public class User {
     )
     private Set<Role> roles = new HashSet<>();
 
-    public User(String uuid,String username, String password, String Firstname, String Lastname, String email, String AddedBy, String AddedFromIp, String Status, Set<Role> roles) {
+    public User(String uuid,String username, String password, String Firstname, String Lastname, String email, String AddedBy, String AddedFromIp, String Status, Set<Role> roles, String photo) {
         this.uuid = uuid;
         this.username = username;
         this.email = email;
@@ -80,6 +83,7 @@ public class User {
         this.addedFromIP = AddedFromIp;
         this.roles = roles;
         this.status = Status;
+        this.photo = photo;
     }
 
 }

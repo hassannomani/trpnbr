@@ -14,14 +14,14 @@ import java.util.List;
 public interface CalculationRepository extends JpaRepository<Calculation, String> {
     public Calculation findByUuid(String id);
 
-    public Calculation findByTin(String userid);
+    public Calculation findByUsername(String userid);
 
     public List<Calculation> findAll();
 
     public Calculation save(Calculation calculation);
 
-    public Calculation findByTinAndAssessmentYear(String tin, String assmntYear);
-    @Query(value = "select * from calculations c where c.tin = ?1 and c.assessment_year = ?2 and c.submitted = ?3",
+    public Calculation findByUsernameAndAssessmentYear(String username, String assmntYear);
+    @Query(value = "select * from calculations c where c.username = ?1 and c.assessment_year = ?2 and c.submitted = ?3",
             nativeQuery = true)
-    public Calculation findByTinAndAssessmentYearAndSubmitted(String tin, String assmntYear, String submitted);
+    public Calculation findByUsernameAndAssessmentYearAndSubmitted(String username, String assmntYear, String submitted);
 }

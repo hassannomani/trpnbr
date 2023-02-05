@@ -12,7 +12,7 @@ public interface PaymentService {
 
     public Payment getPaymentByUuid(String id) ;
 
-    public Payment getPaymentByTinNoAndYear(String id, String year);
+    public Payment getPaymentByUsernameAndYear(String Username, String year);
 
     public List<Payment> getAll();
 }

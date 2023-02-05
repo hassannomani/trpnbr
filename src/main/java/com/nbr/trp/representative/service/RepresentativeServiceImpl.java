@@ -26,7 +26,7 @@ public class RepresentativeServiceImpl implements RepresentativeService{
 
     @Override
     public Optional<Representative> getUserByUsername(String username) {
-        return Optional.ofNullable(representativeRepository.findByUser(username).orElse(null));
+        return Optional.ofNullable(representativeRepository.findByUsername(username).orElse(null));
     }
 
     @Override

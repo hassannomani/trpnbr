@@ -28,11 +28,11 @@ public class AgentServiceImpl implements AgentService{
 
     @Override
     public Optional<Agent> getAgentByUsername(String username) {
-        return Optional.ofNullable(agentRepository.findByUser(username).orElse(null));
+        return Optional.ofNullable(agentRepository.findByUsername(username).orElse(null));
     }
 
     @Override
     public Optional<Agent> getAgentByUuid(String uuid) {
-        return Optional.ofNullable(agentRepository.findByUser(uuid).orElse(null));
+        return Optional.ofNullable(agentRepository.findByUuid(uuid).orElse(null));
     }
 }

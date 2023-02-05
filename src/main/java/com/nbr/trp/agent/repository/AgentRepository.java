@@ -12,9 +12,9 @@ import java.util.Optional;
 @EnableJpaRepositories
 public interface AgentRepository extends JpaRepository<Agent, String> {
 
-    Optional<Agent> findByUser(String user);
+    Optional<Agent> findByUsername(String username);
 
     Agent save(Agent agent);
 
-    Agent findByUuid(String uuid);
+    Optional<Agent> findByUuid(String uuid);
 }

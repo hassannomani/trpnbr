@@ -11,7 +11,7 @@ import java.util.Optional;
 @EnableJpaRepositories
 public interface AddressRepository extends JpaRepository<Address, String> {
 
-    Optional<User> findByUser(String user);
+    Optional<User> findByUsername(String user);
 
     Address save(Address address);
 

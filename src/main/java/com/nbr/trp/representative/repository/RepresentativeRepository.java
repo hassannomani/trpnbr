@@ -12,7 +12,7 @@ import java.util.Optional;
 @Repository
 @EnableJpaRepositories
 public interface RepresentativeRepository extends JpaRepository<Representative, String> {
-    Optional<Representative> findByUser(String user);
+    Optional<Representative> findByUsername(String user);
 
     Representative save(Representative representative);
     Optional<Representative> findByUuid(String uuid);

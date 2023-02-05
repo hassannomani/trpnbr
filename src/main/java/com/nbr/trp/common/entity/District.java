@@ -19,14 +19,14 @@ public class District {
     private String id;
 
     @Column(name="div_id")
-    private String div_id;
+    private String divId;
 
     @Column(name = "name")
     private String name;
 
     public District(String id, String div_id, String name){
         this.id = id;
-        this.div_id = div_id;
+        this.divId = div_id;
         this.name = name;
     }
 }

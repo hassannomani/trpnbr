@@ -18,7 +18,7 @@ public interface CalculationService {
 
     public Calculation saveCalculation(Calculation calculation) throws CalculationNotFoundException;
 
-    public Calculation getCalculationByUsernameNAssessmentYear(String tin, String assmntYear);
+    public Calculation getCalculationByUsernameNAssessmentYear(String username, String assmntYear);
 
-    public Calculation getCalculationByUsernameNAssessmentYearNSubmitted(String tin, String assmntYear);
+    public Calculation getCalculationByUsernameNAssessmentYearNSubmitted(String username, String assmntYear);
 }

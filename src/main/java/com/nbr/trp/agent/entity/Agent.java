@@ -39,13 +39,13 @@ public class Agent {
 	public Date regDate;
 
 	@Column(name = "contact_person",nullable = false)
-	public Date contactPerson;
+	public String contactPerson;
 
 	@Column(name = "contact_number",nullable = false)
-	public Date contactNumber;
+	public String contactNumber;
 
 	@Column(name = "contact_email",nullable = false)
-	public Date contactEmail;
+	public String contactEmail;
 
 	@Column(name = "business_address_id")
 	public int businessAddressId;
@@ -89,7 +89,7 @@ public class Agent {
 	@Column(name = "reg_ass_nid")
 	public String regAssNID;
 
-	public Agent(String uuid, String name, String username, String phone, String registrationType, String regNo, Date regDate, Date contactPerson, Date contactNumber, Date contactEmail, int businessAddressId, int currentAddressId, int permanentAddressId, String bankAccountName, String bankAccountNo, String bankName, String bankBranch, String routingNo, Date dob, String fatherName, String motherName, String spouseName, String mobileNo, String regAssNID) {
+	public Agent(String uuid, String name, String username, String phone, String registrationType, String regNo, Date regDate, String contactPerson, String contactNumber, String contactEmail, int businessAddressId, int currentAddressId, int permanentAddressId, String bankAccountName, String bankAccountNo, String bankName, String bankBranch, String routingNo, Date dob, String fatherName, String motherName, String spouseName, String mobileNo, String regAssNID) {
 		this.uuid = uuid;
 		this.name = name;
 		this.username = username;
