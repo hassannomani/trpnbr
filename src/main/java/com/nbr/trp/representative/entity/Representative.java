@@ -45,23 +45,11 @@ public class Representative {
     @Column(name = "permanent_address_id")
     public int permanentAddressId;
 
-    @Column(name = "bank_account_name")
-    public String bankAccountName;
-
-    @Column(name = "bank_account_no")
-    public String bankAccountNo;
-
-    @Column(name = "bank_name")
-    public String bankName;
-
-    @Column(name = "bank_branch")
-    public String bankBranch;
-
-    @Column(name = "routing_no")
-    public String routingNo;
+    @Column(name = "bank_information_id")
+    public String bankInformationId;
 
 
-    public Representative(String uuid, String name, String agentId, String username, Date dob, String mobileNo, String nid, int businessAddressId, int currentAddressId, int permanentAddressId, String bankAccountName, String bankAccountNo, String bankName, String bankBranch, String routingNo) {
+    public Representative(String uuid, String name, String agentId, String username, Date dob, String mobileNo, String nid, int businessAddressId, int currentAddressId, int permanentAddressId, String bankInformationId) {
         this.uuid = uuid;
         this.name = name;
         this.agentId = agentId;
@@ -72,11 +60,8 @@ public class Representative {
         this.businessAddressId = businessAddressId;
         this.currentAddressId = currentAddressId;
         this.permanentAddressId = permanentAddressId;
-        this.bankAccountName = bankAccountName;
-        this.bankAccountNo = bankAccountNo;
-        this.bankName = bankName;
-        this.bankBranch = bankBranch;
-        this.routingNo = routingNo;
+        this.bankInformationId = bankInformationId;
+
     }
 }
 

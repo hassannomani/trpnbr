@@ -78,14 +78,13 @@ public class Agent {
 	@Column(name = "reg_ass_nid")
 	public String regAssNID;
 
-	public Agent(String uuid, String name, String username, String phone, String registrationType, String regNo, Date regDate, String contactPerson, String contactNumber, String contactEmail, int businessAddressId, int currentAddressId, int permanentAddressId, String bankInformationId, Date dob, String fatherName, String motherName, String spouseName, String mobileNo, String regAssNID) {
+	public Agent(String uuid, String name, String username, String phone, String registrationType, String regNo,  String contactPerson, String contactNumber, String contactEmail, int businessAddressId, int currentAddressId, int permanentAddressId, String bankInformationId, String fatherName, String motherName, String spouseName, String mobileNo, String regAssNID,Date regDate, Date dob) {
 		this.uuid = uuid;
 		this.name = name;
 		this.username = username;
 		this.phone = phone;
 		this.registrationType = registrationType;
 		this.regNo = regNo;
-		this.regDate = regDate;
 		this.contactPerson = contactPerson;
 		this.contactNumber = contactNumber;
 		this.contactEmail = contactEmail;
@@ -93,11 +92,12 @@ public class Agent {
 		this.currentAddressId = currentAddressId;
 		this.permanentAddressId = permanentAddressId;
 		this.bankInformationId = bankInformationId;
-		this.dob = dob;
 		this.fatherName = fatherName;
 		this.motherName = motherName;
 		this.spouseName = spouseName;
 		this.mobileNo = mobileNo;
 		this.regAssNID = regAssNID;
+		this.regDate = regDate;
+		this.dob = dob;
 	}
 }
