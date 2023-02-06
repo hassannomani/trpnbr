@@ -78,7 +78,7 @@ public class Agent {
 	@Column(name = "reg_ass_nid")
 	public String regAssNID;
 
-	public Agent(String uuid, String name, String username, String phone, String registrationType, String regNo, Date regDate, String contactPerson, String contactNumber, String contactEmail, int businessAddressId, int currentAddressId, int permanentAddressId, String bankInformationId, String bankAccountNo, String bankName, String bankBranch, String routingNo, Date dob, String fatherName, String motherName, String spouseName, String mobileNo, String regAssNID) {
+	public Agent(String uuid, String name, String username, String phone, String registrationType, String regNo, Date regDate, String contactPerson, String contactNumber, String contactEmail, int businessAddressId, int currentAddressId, int permanentAddressId, String bankInformationId, Date dob, String fatherName, String motherName, String spouseName, String mobileNo, String regAssNID) {
 		this.uuid = uuid;
 		this.name = name;
 		this.username = username;

@@ -16,5 +16,7 @@ public interface AgentRepository extends JpaRepository<Agent, String> {
 
     Agent save(Agent agent);
 
+    Boolean existsByUsername(String username);
+
     Optional<Agent> findByUuid(String uuid);
 }
