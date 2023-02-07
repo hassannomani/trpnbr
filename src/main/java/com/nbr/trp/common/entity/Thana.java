@@ -1,9 +1,6 @@
 package com.nbr.trp.common.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,22 +12,27 @@ import lombok.Setter;
 @Table(name = "thana")
 public class Thana {
     @Id
-    @Column(name="id",nullable = false,unique = true)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id")
+    private long id;
 
-    @Column(name="div_id")
-    private String divId;
+
+    @Column(name="division_id")
+    private String divisionId;
 
     @Column(name="district_id")
     private String districtId;
 
+    @Column(name="thana_id",nullable = false,unique = true)
+    private String thanaId;
+
     @Column(name = "name")
     private String name;
 
-    public Thana(String id, String div_id, String district_id, String name) {
-        this.id = id;
-        this.divId = div_id;
+    public Thana( String div_id, String district_id, String thanaId, String name) {
+        this.divisionId = div_id;
         this.districtId = district_id;
+        this.thanaId = thanaId;
         this.name = name;
     }
 }

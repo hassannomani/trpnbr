@@ -11,15 +11,20 @@ import lombok.Setter;
 @NoArgsConstructor
 @Table(name = "division")
 public class Division {
+
     @Id
-    @Column(name="id",nullable = false,unique = true)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id")
+    private long id;
+
+    @Column(name="div_id",nullable = false,unique = true)
+    private String divId;
 
     @Column(name = "name")
     private String name;
 
     public Division(String id, String name){
-        this.id = id;
+        this.divId = id;
         this.name = name;
     }
 
