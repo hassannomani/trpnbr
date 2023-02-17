@@ -11,10 +11,7 @@ import java.util.List;
 @Service
 public interface BankInformationDetailsService {
 
-    public User saveBank(User user);
-
-    public List<BankInformationDetails> getAllBanks();
-
+    public BankInformationDetails saveBank(BankInformationDetails bankInformationDetails);
     public BankInformationDetails findByUuid(String uuid);
 
 

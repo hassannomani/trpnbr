@@ -1,23 +1,28 @@
 package com.nbr.trp.common.service;
 
 import com.nbr.trp.common.entity.BankInformationDetails;
+import com.nbr.trp.common.repository.BankInformationDetailsRepository;
 import com.nbr.trp.user.entity.User;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 public class BankInformationDetailsServiceImpl implements BankInformationDetailsService{
-    @Override
-    public User saveBank(User user) {
-        return null;
-    }
+
+    @Autowired
+    BankInformationDetailsRepository bankInformationDetailsRepository;
 
     @Override
-    public List<BankInformationDetails> getAllBanks() {
-        return null;
+    public BankInformationDetails saveBank(BankInformationDetails bankInformationDetails) {
+
+       BankInformationDetails bankInformationDetails1 = bankInformationDetailsRepository.save(bankInformationDetails);
+       return bankInformationDetails1;
     }
 
     @Override
     public BankInformationDetails findByUuid(String uuid) {
-        return null;
+
+       BankInformationDetails informationDetails = bankInformationDetailsRepository.findByUuid(uuid);
+       return  informationDetails;
     }
 }

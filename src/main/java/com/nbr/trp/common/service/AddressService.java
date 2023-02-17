@@ -1,5 +1,6 @@
 package com.nbr.trp.common.service;
 
+import com.nbr.trp.common.entity.Address;
 import com.nbr.trp.user.entity.User;
 import org.springframework.stereotype.Service;
 
@@ -8,8 +9,8 @@ import java.util.Optional;
 
 @Service
 public interface AddressService {
-    public User saveUser(User user);
 
-    public List<User> getAllUsers();
+    Address saveAddress(Address address);
 
+    Address getByUuid(String uuid);
 }

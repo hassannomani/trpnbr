@@ -1,21 +1,26 @@
 package com.nbr.trp.common.service;
 
-import com.nbr.trp.user.entity.User;
+import com.nbr.trp.common.entity.Address;
+import com.nbr.trp.common.repository.AddressRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AddressServiceImplemented implements AddressService{
+
+    @Autowired
+    AddressRepository addressRepository;
+
     @Override
-    public User saveUser(User user) {
-        return null;
+    public Address saveAddress(Address address) {
+        Address ad = addressRepository.save(address);
+        return ad;
     }
 
     @Override
-    public List<User> getAllUsers() {
-        return null;
+    public Address getByUuid(String uuid) {
+        Address ad = addressRepository.findByUuid(uuid);
+        return ad;
     }
 
 }
