@@ -1,5 +1,6 @@
 package com.nbr.trp.user.service;
 
+import com.nbr.trp.user.entity.Role;
 import com.nbr.trp.user.entity.User;
 import org.springframework.stereotype.Service;
 
@@ -13,4 +14,6 @@ public interface UserService {
     public List<User> getAllUsers();
 
     public Optional<User> getUserByUsername(String username);
+
+    public List<Role> getRoles();
 }

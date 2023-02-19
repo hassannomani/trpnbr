@@ -1,6 +1,8 @@
 package com.nbr.trp.user.service;
 
+import com.nbr.trp.user.entity.Role;
 import com.nbr.trp.user.entity.User;
+import com.nbr.trp.user.repository.RoleRepository;
 import com.nbr.trp.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,6 +18,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     PasswordEncoder passwordEncoder;
 
@@ -38,5 +43,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> getUserByUsername(String username){
         return userRepository.findByUsername(username);
+    }
+
+    @Autowired
+    public List<Role> getRoles(){
+        return roleRepository.findAll();
     }
 }
