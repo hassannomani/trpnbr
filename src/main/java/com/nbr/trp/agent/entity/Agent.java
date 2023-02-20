@@ -1,5 +1,6 @@
 package com.nbr.trp.agent.entity;
 
+import com.nbr.trp.user.entity.Role;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,6 +8,8 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Setter
@@ -77,6 +80,13 @@ public class Agent {
 
 	@Column(name = "reg_ass_nid")
 	public String regAssNID;
+
+//	@ManyToMany
+//	@JoinTable(
+//			name = "course_like",
+//			joinColumns = @JoinColumn(name = "student_id"),
+//			inverseJoinColumns = @JoinColumn(name = "course_id"))
+//	private Set<Role> roles = new HashSet<>();
 
 	public Agent(String uuid, String name, String username, String phone, String registrationType, String regNo,  String contactPerson, String contactNumber, String contactEmail, int businessAddressId, int currentAddressId, int permanentAddressId, String bankInformationId, String fatherName, String motherName, String spouseName, String mobileNo, String regAssNID,Date regDate, Date dob) {
 		this.uuid = uuid;

@@ -49,7 +49,7 @@ public class AgentController {
             return ResponseEntity.internalServerError().body(new MessageResponse("Employee registered successfully!"));
     }
 
-    @PostMapping("/all")
+    @GetMapping("/all")
     public ResponseEntity<?> getAll() {
         List<Agent> ls = agentService.getAllAgents();
         return ResponseEntity.ok(ls);
