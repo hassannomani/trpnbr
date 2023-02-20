@@ -24,8 +24,6 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/agent")
 public class AgentController {
-
-
     @Autowired
     AgentRepository agentRepository;
 

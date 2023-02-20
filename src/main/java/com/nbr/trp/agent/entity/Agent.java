@@ -1,6 +1,7 @@
 package com.nbr.trp.agent.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,6 +13,7 @@ import java.util.Date;
 @Setter
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "agent")
 public class Agent {
 
@@ -32,11 +34,11 @@ public class Agent {
 	@Column(name = "registration_type",nullable = false)
 	public String registrationType;
 
-	@Column(name = "reg_no",nullable = false)
-	public String regNo;
+	@Column(name = "registration_no",nullable = false)
+	public String registrationNo;
 
-	@Column(name = "reg_date",nullable = false)
-	public Date regDate;
+	@Column(name = "registration_date",nullable = false)
+	public Date registrationDate;
 
 	@Column(name = "contact_person",nullable = false)
 	public String contactPerson;
@@ -59,7 +61,6 @@ public class Agent {
 	@Column(name = "bank_information_id")
 	public String bankInformationId;
 
-
 	@Column(name = "dob")
 	public Date dob;
 
@@ -78,26 +79,5 @@ public class Agent {
 	@Column(name = "reg_ass_nid")
 	public String regAssNID;
 
-	public Agent(String uuid, String name, String username, String phone, String registrationType, String regNo,  String contactPerson, String contactNumber, String contactEmail, int businessAddressId, int currentAddressId, int permanentAddressId, String bankInformationId, String fatherName, String motherName, String spouseName, String mobileNo, String regAssNID,Date regDate, Date dob) {
-		this.uuid = uuid;
-		this.name = name;
-		this.username = username;
-		this.phone = phone;
-		this.registrationType = registrationType;
-		this.regNo = regNo;
-		this.contactPerson = contactPerson;
-		this.contactNumber = contactNumber;
-		this.contactEmail = contactEmail;
-		this.businessAddressId = businessAddressId;
-		this.currentAddressId = currentAddressId;
-		this.permanentAddressId = permanentAddressId;
-		this.bankInformationId = bankInformationId;
-		this.fatherName = fatherName;
-		this.motherName = motherName;
-		this.spouseName = spouseName;
-		this.mobileNo = mobileNo;
-		this.regAssNID = regAssNID;
-		this.regDate = regDate;
-		this.dob = dob;
-	}
+
 }

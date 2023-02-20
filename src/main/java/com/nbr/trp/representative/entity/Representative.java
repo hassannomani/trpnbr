@@ -1,6 +1,8 @@
 package com.nbr.trp.representative.entity;
 
+import com.nbr.trp.agent.entity.Agent;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,6 +13,7 @@ import java.util.Date;
 @Setter
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "representative")
 public class Representative {
     @Id
@@ -22,7 +25,9 @@ public class Representative {
     public String name;
 
     @Column(name = "agent_id",nullable = false)
-    public String agentId;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "agent_id")
+    public Agent agentId;
 
     @Column(name = "username",nullable = false)
     public String username;
@@ -47,21 +52,5 @@ public class Representative {
 
     @Column(name = "bank_information_id")
     public String bankInformationId;
-
-
-    public Representative(String uuid, String name, String agentId, String username, Date dob, String mobileNo, String nid, int businessAddressId, int currentAddressId, int permanentAddressId, String bankInformationId) {
-        this.uuid = uuid;
-        this.name = name;
-        this.agentId = agentId;
-        this.username = username;
-        this.dob = dob;
-        this.mobileNo = mobileNo;
-        this.nid = nid;
-        this.businessAddressId = businessAddressId;
-        this.currentAddressId = currentAddressId;
-        this.permanentAddressId = permanentAddressId;
-        this.bankInformationId = bankInformationId;
-
-    }
 }
 
