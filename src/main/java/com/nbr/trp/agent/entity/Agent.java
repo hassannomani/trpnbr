@@ -1,5 +1,7 @@
 package com.nbr.trp.agent.entity;
 
+import com.nbr.trp.common.entity.Address;
+import com.nbr.trp.common.entity.BankInformationDetails;
 import com.nbr.trp.user.entity.Role;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -35,11 +37,11 @@ public class Agent {
 	@Column(name = "registration_type",nullable = false)
 	public String registrationType;
 
-	@Column(name = "reg_no",nullable = false)
-	public String regNo;
+	@Column(name = "registration_no",nullable = false)
+	public String registrationNo;
 
-	@Column(name = "reg_date",nullable = false)
-	public Date regDate;
+	@Column(name = "registration_date",nullable = false)
+	public Date registrationDate;
 
 	@Column(name = "contact_person",nullable = false)
 	public String contactPerson;
@@ -50,17 +52,24 @@ public class Agent {
 	@Column(name = "contact_email",nullable = false)
 	public String contactEmail;
 
-	@Column(name = "business_address_id")
-	public int businessAddressId;
+//	@Column(name = "business_address_id")
+//	public int businessAddressId;
 
-	@Column(name = "current_address_id")
-	public int currentAddressId;
+//	@Column(name = "current_address_id")
+//	public int currentAddressId;
 
-	@Column(name = "permanent_address_id")
-	public int permanentAddressId;
+//	@Column(name = "permanent_address_id")
+//	public int permanentAddressId;
 
-	@Column(name = "bank_information_id")
-	public String bankInformationId;
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(
+			name = "agent_bankinformation",
+			joinColumns = @JoinColumn(name = "agent_id"),
+			inverseJoinColumns = @JoinColumn(name = "bank_id")
+	)
+	private Set<BankInformationDetails> bankinformation = new HashSet<>();
+//	@Column(name = "bank_information_id")
+//	public String bankInformationId;
 
 
 	@Column(name = "dob")
@@ -81,33 +90,38 @@ public class Agent {
 	@Column(name = "reg_ass_nid")
 	public String regAssNID;
 
-//	@ManyToMany
-//	@JoinTable(
-//			name = "course_like",
-//			joinColumns = @JoinColumn(name = "student_id"),
-//			inverseJoinColumns = @JoinColumn(name = "course_id"))
-//	private Set<Role> roles = new HashSet<>();
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(
+			name = "agent_address",
+			joinColumns = @JoinColumn(name = "agent_id"),
+			inverseJoinColumns = @JoinColumn(name = "address_id")
+	)
+	private Set<Address> address = new HashSet<>();
 
-	public Agent(String uuid, String name, String username, String phone, String registrationType, String regNo,  String contactPerson, String contactNumber, String contactEmail, int businessAddressId, int currentAddressId, int permanentAddressId, String bankInformationId, String fatherName, String motherName, String spouseName, String mobileNo, String regAssNID,Date regDate, Date dob) {
+//	@ManyToMany
+
+
+	public Agent(String uuid, String name, String username, String phone, String registrationType, String regNo, String contactPerson, String contactNumber, String contactEmail/*, int businessAddressId, int currentAddressId, int permanentAddressId*/, Set<BankInformationDetails> bank, String fatherName, String motherName, String spouseName, String mobileNo, String regAssNID, Date regDate, Date dob, Set<Address> address) {
 		this.uuid = uuid;
 		this.name = name;
 		this.username = username;
 		this.phone = phone;
 		this.registrationType = registrationType;
-		this.regNo = regNo;
+		this.registrationNo = regNo;
 		this.contactPerson = contactPerson;
 		this.contactNumber = contactNumber;
 		this.contactEmail = contactEmail;
-		this.businessAddressId = businessAddressId;
-		this.currentAddressId = currentAddressId;
-		this.permanentAddressId = permanentAddressId;
-		this.bankInformationId = bankInformationId;
+//		this.businessAddressId = businessAddressId;
+//		this.currentAddressId = currentAddressId;
+//		this.permanentAddressId = permanentAddressId;
+		this.bankinformation = bank;
 		this.fatherName = fatherName;
 		this.motherName = motherName;
 		this.spouseName = spouseName;
 		this.mobileNo = mobileNo;
 		this.regAssNID = regAssNID;
-		this.regDate = regDate;
+		this.registrationDate = regDate;
 		this.dob = dob;
+		this.address = address;
 	}
 }

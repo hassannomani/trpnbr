@@ -12,26 +12,35 @@ import lombok.Setter;
 @Table(name = "thana")
 public class Thana {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private long id;
 
 
     @Column(name="division_id")
-    private String divisionId;
+    private long divisionId;
+
+    @Column(name="division_name")
+    private String divisionName;
 
     @Column(name="district_id")
     private String districtId;
 
-    @Column(name="thana_id",nullable = false,unique = true)
+    @Column(name="district_name")
+    private String districtName;
+
+    @Column(name="thana_id",nullable = false)
     private String thanaId;
 
     @Column(name = "name")
     private String name;
 
-    public Thana( String div_id, String district_id, String thanaId, String name) {
-        this.divisionId = div_id;
-        this.districtId = district_id;
+    public Thana(long id, long divisionId, String divisionName, String districtId, String districtName, String thanaId, String name) {
+        this.id = id;
+        this.divisionId = divisionId;
+        this.divisionName = divisionName;
+        this.districtId = districtId;
+        this.districtName = districtName;
         this.thanaId = thanaId;
         this.name = name;
     }

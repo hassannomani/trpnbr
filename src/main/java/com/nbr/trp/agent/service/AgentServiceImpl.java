@@ -2,6 +2,8 @@ package com.nbr.trp.agent.service;
 
 import com.nbr.trp.agent.entity.Agent;
 import com.nbr.trp.agent.repository.AgentRepository;
+import com.nbr.trp.common.entity.Address;
+import com.nbr.trp.common.entity.BankInformationDetails;
 import com.nbr.trp.user.entity.ERole;
 import com.nbr.trp.user.entity.Role;
 import com.nbr.trp.user.entity.User;
@@ -18,8 +20,8 @@ public class AgentServiceImpl implements AgentService{
 
     @Override
     public Agent saveAgent(Agent agent) {
-        System.out.println(agent.getRegDate());
-        System.out.println(agent.getName());
+
+        //add.add(agent)
 //        Agent agent1 = new Agent(
 //                UUID.randomUUID().toString(),
 //                agent.getName(),

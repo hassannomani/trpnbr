@@ -22,12 +22,13 @@ public class AddressController {
     @Autowired
     AddressService addressService;
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/add")
     public ResponseEntity<?> addAddress(@RequestBody Address address) {
         try{
             Address address1 = addressService.saveAddress(address);
             // return ResponseEntity.ok(new MessageResponse("Representative registered successfully!"));
-            return new ResponseEntity<>("Address added", HttpStatus.CREATED);
+            return new ResponseEntity<>(address1, HttpStatus.CREATED);
 
         }catch(Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);

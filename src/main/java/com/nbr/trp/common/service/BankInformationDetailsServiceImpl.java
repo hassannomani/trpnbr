@@ -4,9 +4,11 @@ import com.nbr.trp.common.entity.BankInformationDetails;
 import com.nbr.trp.common.repository.BankInformationDetailsRepository;
 import com.nbr.trp.user.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class BankInformationDetailsServiceImpl implements BankInformationDetailsService{
 
     @Autowired

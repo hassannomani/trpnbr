@@ -65,5 +65,6 @@ public class Address {
         this.updatedBy = updatedBy;
         this.updatedDate = updatedDate;
         this.updatedFromIP = updatedFromIP;
+
     }
 }
