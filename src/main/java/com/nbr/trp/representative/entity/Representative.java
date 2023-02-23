@@ -1,11 +1,15 @@
 package com.nbr.trp.representative.entity;
 
+import com.nbr.trp.common.entity.Address;
+import com.nbr.trp.common.entity.BankInformationDetails;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Setter
@@ -16,51 +20,53 @@ public class Representative {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(columnDefinition = "uniqueidentifier default newid()")
-    public String uuid;
+    public String userid;
 
-    @Column(name = "name",nullable = false)
-    public String name;
+    @Column(name = "re_name",nullable = false)
+    public String reName;
 
     @Column(name = "agent_id",nullable = false)
     public String agentId;
 
-    @Column(name = "username",nullable = false)
-    public String username;
+    @Column(name = "tin_no",nullable = false)
+    public String tinNo;
 
-    @Column(name = "dob")
-    public Date dob;
+    @Column(name = "re_dob")
+    public Date reDob;
 
-    @Column(name = "mobile_no")
-    public String mobileNo;
+    @Column(name = "re_mobile_no")
+    public String reMobileNo;
 
     @Column(name = "nid")
     public String nid;
 
-    @Column(name = "business_address_id")
-    public int businessAddressId;
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "representative_address",
+            joinColumns = @JoinColumn(name = "representative_id"),
+            inverseJoinColumns = @JoinColumn(name = "address_id")
+    )
+    private Set<Address> re_address = new HashSet<>();
 
-    @Column(name = "current_address_id")
-    public int currentAddressId;
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "representative_bankinformation",
+            joinColumns = @JoinColumn(name = "representative_id"),
+            inverseJoinColumns = @JoinColumn(name = "bank_id")
+    )
+    private Set<BankInformationDetails> re_bankinformation = new HashSet<>();
 
-    @Column(name = "permanent_address_id")
-    public int permanentAddressId;
 
-    @Column(name = "bank_information_id")
-    public String bankInformationId;
-
-
-    public Representative(String uuid, String name, String agentId, String username, Date dob, String mobileNo, String nid, int businessAddressId, int currentAddressId, int permanentAddressId, String bankInformationId) {
-        this.uuid = uuid;
-        this.name = name;
+    public Representative(String uuid, String name, String agentId, String tin, Date dob, String mobileNo, String nid, Set<Address> address, Set<BankInformationDetails> bank) {
+        this.userid = uuid;
+        this.reName = name;
         this.agentId = agentId;
-        this.username = username;
-        this.dob = dob;
-        this.mobileNo = mobileNo;
+        this.tinNo = tin;
+        this.reDob = dob;
+        this.reMobileNo = mobileNo;
         this.nid = nid;
-        this.businessAddressId = businessAddressId;
-        this.currentAddressId = currentAddressId;
-        this.permanentAddressId = permanentAddressId;
-        this.bankInformationId = bankInformationId;
+        this.re_address = address;
+        this.re_bankinformation = bank;
 
     }
 }

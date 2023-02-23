@@ -50,16 +50,17 @@ public class AgentServiceImpl implements AgentService{
 
     @Override
     public List<Agent> getAllAgents() {
+
         return agentRepository.findAll();
     }
 
     @Override
-    public Optional<Agent> getAgentByUsername(String username) {
-        return Optional.ofNullable(agentRepository.findByUsername(username).orElse(null));
+    public Optional<Agent> getAgentByTin(String username) {
+        return Optional.ofNullable(agentRepository.findByTin(username).orElse(null));
     }
 
     @Override
-    public Optional<Agent> getAgentByUuid(String uuid) {
-        return Optional.ofNullable(agentRepository.findByUuid(uuid).orElse(null));
+    public Optional<Agent> getAgentById(String uuid) {
+        return Optional.ofNullable(agentRepository.findById(uuid).orElse(null));
     }
 }

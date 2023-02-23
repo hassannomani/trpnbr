@@ -23,13 +23,13 @@ public class Agent {
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
 	@Column(columnDefinition = "uniqueidentifier default newid()")
-	public String uuid;
+	public String id;
 
 	@Column(name = "name",nullable = false)
 	public String name;
 
-	@Column(name = "username",nullable = false)
-	public String username;
+	@Column(name = "tin",nullable = false)
+	public String tin;
 
 	@Column(name = "phone")
 	public String phone;
@@ -101,10 +101,10 @@ public class Agent {
 //	@ManyToMany
 
 
-	public Agent(String uuid, String name, String username, String phone, String registrationType, String regNo, String contactPerson, String contactNumber, String contactEmail/*, int businessAddressId, int currentAddressId, int permanentAddressId*/, Set<BankInformationDetails> bank, String fatherName, String motherName, String spouseName, String mobileNo, String regAssNID, Date regDate, Date dob, Set<Address> address) {
-		this.uuid = uuid;
+	public Agent(String uuid, String name, String tin, String phone, String registrationType, String regNo, String contactPerson, String contactNumber, String contactEmail/*, int businessAddressId, int currentAddressId, int permanentAddressId*/, Set<BankInformationDetails> bank, String fatherName, String motherName, String spouseName, String mobileNo, String regAssNID, Date regDate, Date dob, Set<Address> address) {
+		this.id = uuid;
 		this.name = name;
-		this.username = username;
+		this.tin = tin;
 		this.phone = phone;
 		this.registrationType = registrationType;
 		this.registrationNo = regNo;

@@ -12,6 +12,7 @@ import com.nbr.trp.user.response.MessageResponse;
 import com.nbr.trp.user.service.UserDetailsImpl;
 import com.nbr.trp.user.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -135,6 +136,11 @@ public class AuthController {
         userRepository.save(employee);
 
         return ResponseEntity.ok(new MessageResponse("Employee registered successfully!"));
+    }
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/logout")
+    public ResponseEntity<?> logoutUser() {
+        return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
 }

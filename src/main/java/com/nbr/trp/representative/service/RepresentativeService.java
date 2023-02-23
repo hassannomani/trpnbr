@@ -13,8 +13,8 @@ public interface RepresentativeService {
 
     public List<Representative> getAllRepresentatives();
 
-    public Optional<Representative> getUserByUsername(String username);
+    public Optional<Representative> getUserByTin(String tin);
 
-    public Optional<Representative> getUserByUuid(String uuid);
+    public Optional<Representative> getUserById(String uuid);
 
 }

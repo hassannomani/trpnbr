@@ -13,8 +13,8 @@ public interface AgentService {
 
     public List<Agent> getAllAgents();
 
-    public Optional<Agent> getAgentByUsername(String username);
+    public Optional<Agent> getAgentByTin(String username);
 
-    public Optional<Agent> getAgentByUuid(String uuid);
+    public Optional<Agent> getAgentById(String uuid);
 
 }

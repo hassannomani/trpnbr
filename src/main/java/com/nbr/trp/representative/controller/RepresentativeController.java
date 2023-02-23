@@ -31,14 +31,14 @@ public class RepresentativeController {
 
     @PostMapping("/add")
     public ResponseEntity<?> addRepresentative(@RequestBody Representative representative) {
-        if (representativeRepository.existsByUsername(representative.getUsername())) {
+        if (representativeRepository.existsByTinNo(representative.getTinNo())) {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: username is already taken!"));
         }
 
         try{
             Representative representative1 = representativeService.saveRepresentative(representative);
                // return ResponseEntity.ok(new MessageResponse("Representative registered successfully!"));
-            return new ResponseEntity<>("Representative registered successfully!", HttpStatus.CREATED);
+            return new ResponseEntity<>(representative1, HttpStatus.CREATED);
 
         }catch(Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);

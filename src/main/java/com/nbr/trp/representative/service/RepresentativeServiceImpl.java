@@ -25,12 +25,12 @@ public class RepresentativeServiceImpl implements RepresentativeService{
     }
 
     @Override
-    public Optional<Representative> getUserByUsername(String username) {
-        return Optional.ofNullable(representativeRepository.findByUsername(username).orElse(null));
+    public Optional<Representative> getUserByTin(String tin) {
+        return Optional.ofNullable(representativeRepository.findByTinNo(tin).orElse(null));
     }
 
     @Override
-    public Optional<Representative> getUserByUuid(String uuid) {
-        return Optional.ofNullable(representativeRepository.findByUuid(uuid).orElse(null));
+    public Optional<Representative> getUserById(String id) {
+        return Optional.ofNullable(representativeRepository.findByUserid(id).orElse(null));
     }
 }

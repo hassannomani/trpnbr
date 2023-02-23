@@ -6,6 +6,7 @@ import com.nbr.trp.user.repository.RoleRepository;
 import com.nbr.trp.user.response.MessageResponse;
 import com.nbr.trp.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -100,4 +101,6 @@ public class UserController {
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
         }
     }
+
+
 }
