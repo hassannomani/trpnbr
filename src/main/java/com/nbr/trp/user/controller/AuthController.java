@@ -58,18 +58,23 @@ public class AuthController {
 
         UserDetailsImpl userDetails = (UserDetailsImpl)
                 authentication.getPrincipal();
-        List<String> roles = userDetails.getAuthorities()
-                .stream().map(item -> item.getAuthority())
-                .collect(Collectors.toList());
+        System.out.println("status is "+userDetails.getStatus());
+        if(userDetails.getStatus().equals("1")){
+            List<String> roles = userDetails.getAuthorities()
+                    .stream().map(item -> item.getAuthority())
+                    .collect(Collectors.toList());
+            return ResponseEntity.ok(new JwtResponse(
+                            jwt,
+                            userDetails.getUuid(),
+                            userDetails.getUsername(),
+                            userDetails.getEmail(),
+                            roles
+                    )
+            );
+        }else{
+            return ResponseEntity.status(403).body("Approval Required");
+        }
 
-        return ResponseEntity.ok(new JwtResponse(
-                        jwt,
-                        userDetails.getUuid(),
-                        userDetails.getUsername(),
-                        userDetails.getEmail(),
-                        roles
-                )
-        );
     }
 
     @PostMapping("/signup")

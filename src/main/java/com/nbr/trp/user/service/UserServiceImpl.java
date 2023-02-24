@@ -22,6 +22,11 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private RoleRepository roleRepository;
 
+    @Autowired
+    public void UserServiceImpl( UserRepository userRepository){
+        this.userRepository = userRepository;
+    }
+
     PasswordEncoder passwordEncoder;
 
     @Override
@@ -48,5 +53,18 @@ public class UserServiceImpl implements UserService {
     @Autowired
     public List<Role> getRoles(){
         return roleRepository.findAll();
+    }
+
+    @Override
+    public List<User> getAllPendingUsers() {
+        return userRepository.findAllPending();
+    }
+
+    @Override
+    public User approveRepuser(String id){
+        User u = userRepository.findByUuid(id);
+        u.setStatus("1");
+        User user = userRepository.save(u);
+        return user;
     }
 }

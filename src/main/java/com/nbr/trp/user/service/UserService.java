@@ -16,4 +16,8 @@ public interface UserService {
     public Optional<User> getUserByUsername(String username);
 
     public List<Role> getRoles();
+
+    public List<User> getAllPendingUsers();
+
+    public User approveRepuser(String uuid);
 }

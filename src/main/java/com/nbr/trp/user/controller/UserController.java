@@ -12,6 +12,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 //@CrossOrigin(origins = "*", maxAge = 4800)
@@ -96,6 +97,31 @@ public class UserController {
         System.out.println(username);
         try{
             Optional<User> user = userService.getUserByUsername(username);
+            return ResponseEntity.ok(user);
+        }catch(Exception e){
+            return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
+        }
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/pending-all")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> getAllPendingUsers() {
+        try{
+            List<User> users = userService.getAllPendingUsers();
+            return ResponseEntity.ok(users);
+        }catch(Exception e){
+            return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
+        }
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/approve/{uuid}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> approveUser(@PathVariable String uuid) {
+
+        try{
+            User user = userService.approveRepuser(uuid);
             return ResponseEntity.ok(user);
         }catch(Exception e){
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
