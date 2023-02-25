@@ -1,8 +1,5 @@
 package com.nbr.trp.representative.controller;
 
-import com.nbr.trp.agent.entity.Agent;
-import com.nbr.trp.agent.repository.AgentRepository;
-import com.nbr.trp.agent.service.AgentService;
 import com.nbr.trp.representative.entity.Representative;
 import com.nbr.trp.representative.repository.RepresentativeRepository;
 import com.nbr.trp.representative.service.RepresentativeService;
@@ -14,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -49,6 +47,14 @@ public class RepresentativeController {
     public ResponseEntity<?> getAll() {
         List<Representative> ls = representativeService.getAllRepresentatives();
         return ResponseEntity.ok(ls);
+
+    }
+
+    @GetMapping("/{tin}")
+    public ResponseEntity<?> getARepresentative(@PathVariable String tin){
+        System.out.println(tin);
+        Optional<Representative> representative = representativeService.getUserByTin(tin);
+        return ResponseEntity.ok(representative);
 
     }
 
