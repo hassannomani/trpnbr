@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAllUsers(){
-        return userRepository.findAll();
+        return userRepository.findAllByOrderByAddedDateDesc();
     }
 
     @Override
@@ -67,4 +67,13 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.save(u);
         return user;
     }
+
+    @Override
+    public User approveRepUserByTin(String tin){
+        User u = userRepository.getByTin(tin);
+        u.setStatus("1");
+        User user = userRepository.save(u);
+        return user;
+    }
+
 }

@@ -128,5 +128,18 @@ public class UserController {
         }
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/tinapprove/{username}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> approveUserByTin(@PathVariable String username) {
+
+        try{
+            User user = userService.approveRepUserByTin(username);
+            return ResponseEntity.ok(user);
+        }catch(Exception e){
+            return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
+        }
+    }
+
 
 }

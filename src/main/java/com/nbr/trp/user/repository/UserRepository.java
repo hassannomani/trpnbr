@@ -21,9 +21,17 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     User findByUuid(String uuid);
 
+
     @Query(value = "select * from users where status=0",
             nativeQuery = true)
     List<User> findAllPending();
+
+    @Query(value = "select * from users where username=?1",
+            nativeQuery = true)
+    User getByTin(String username);
+
+    List<User> findAllByOrderByAddedDateDesc();
+
 
 
 //    @Query(value = "update users set status = '1' where uuid = ?1",

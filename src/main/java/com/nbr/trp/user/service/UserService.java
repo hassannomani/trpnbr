@@ -20,4 +20,7 @@ public interface UserService {
     public List<User> getAllPendingUsers();
 
     public User approveRepuser(String uuid);
+
+    public User approveRepUserByTin(String tin);
+
 }
