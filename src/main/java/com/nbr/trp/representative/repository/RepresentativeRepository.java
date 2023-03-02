@@ -26,4 +26,6 @@ public interface RepresentativeRepository extends JpaRepository<Representative, 
     List<Representative> findAll();
 
 
+
+
 }

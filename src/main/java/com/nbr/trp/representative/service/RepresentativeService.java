@@ -17,4 +17,6 @@ public interface RepresentativeService {
 
     public Optional<Representative> getUserById(String uuid);
 
+    public List<Representative> getAllRepresentativesOfAnAgent(String id);
+
 }

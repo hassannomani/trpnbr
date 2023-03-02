@@ -33,4 +33,9 @@ public class RepresentativeServiceImpl implements RepresentativeService{
     public Optional<Representative> getUserById(String id) {
         return Optional.ofNullable(representativeRepository.findByUserid(id).orElse(null));
     }
+
+    @Override
+    public List<Representative> getAllRepresentativesOfAnAgent(String id){
+        return representativeRepository.findByAgentId(id);
+    }
 }

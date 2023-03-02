@@ -54,6 +54,10 @@ public class AppBootStrap implements CommandLineRunner {
                 Role role4 = new Role();
                 role4.setName(ERole.ROLE_REPRESENTATIVE.name());
                 roleRepository.save(role4);
+
+                Role role5 = new Role();
+                role5.setName(ERole.ROLE_API.name());
+                roleRepository.save(role5);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());

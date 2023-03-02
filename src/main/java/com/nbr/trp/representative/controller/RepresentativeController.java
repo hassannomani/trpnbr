@@ -58,4 +58,10 @@ public class RepresentativeController {
 
     }
 
+    @GetMapping("/agent/{id}")
+    public ResponseEntity<?> getAllRepresentativeOfAnAgent(@PathVariable String id){
+        List<Representative> representativeList = representativeService.getAllRepresentativesOfAnAgent(id);
+        return ResponseEntity.ok(representativeList);
+    }
+
 }
