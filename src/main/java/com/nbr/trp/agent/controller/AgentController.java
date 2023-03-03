@@ -46,5 +46,16 @@ public class AgentController {
         return ResponseEntity.ok(ls);
     }
 
+    @GetMapping("/{tin}")
+    public ResponseEntity<?> getAnAgent(@PathVariable String tin) {
+        try{
+            Optional<Agent> ag = agentService.getAgentByTin(tin);
+            return ResponseEntity.ok(ag);
+        }catch(Exception e){
+            return ResponseEntity.internalServerError().body(new MessageResponse("Failed!"));
+        }
+
+    }
+
 
 }
