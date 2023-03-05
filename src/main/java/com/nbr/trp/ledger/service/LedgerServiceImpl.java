@@ -38,4 +38,12 @@ public class LedgerServiceImpl implements  LedgerService
     public List<Ledger> getLadgersOfAnAgent(String id){
         return ledgerRepository.findByAgentId(id);
     }
+
+    public List<Ledger> getLedgersOfARepresentative(String id){
+        return ledgerRepository.findByRepresentativeId(id);
+    }
+
+    public List<Ledger> getLedgersOfAdmin(){
+        return ledgerRepository.findAll();
+    }
 }

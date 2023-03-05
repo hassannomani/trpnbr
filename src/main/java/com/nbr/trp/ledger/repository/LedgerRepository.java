@@ -24,6 +24,8 @@ public interface LedgerRepository extends JpaRepository<Ledger, String>{
 
     List<Ledger> findByAgentId(String id);
 
+    List<Ledger> findByRepresentativeId(String id);
+
 //    @Query(value = "select * from users, agent where agent.tin=users.username",
 //            nativeQuery = true)
 //    List<Ledger> findAgentAll(String agent);

@@ -5,6 +5,7 @@ import com.nbr.trp.ledger.service.LedgerService;
 import com.nbr.trp.user.response.MessageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,6 +42,28 @@ public class LedgerController {
     public ResponseEntity<?> getLadgersOfAnAgent(@PathVariable String id){
         try{
             List<Ledger> ldgs = ledgerService.getLadgersOfAnAgent(id);
+            return ResponseEntity.ok(ldgs);
+        } catch(Exception e){
+            return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
+        }
+    }
+
+    @GetMapping("/representative/{id}")
+    public ResponseEntity<?> getLedgersOfARepresentative(@PathVariable String id){
+        try{
+            List<Ledger> ldgs = ledgerService.getLedgersOfARepresentative(id);
+            return ResponseEntity.ok(ldgs);
+        } catch(Exception e){
+            return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
+        }
+    }
+
+    @GetMapping("/admin")
+    @PreAuthorize("hasRole('ADMIN')")
+
+    public ResponseEntity<?> getLedgersOfAdmin(){
+        try{
+            List<Ledger> ldgs = ledgerService.getLedgersOfAdmin();
             return ResponseEntity.ok(ldgs);
         } catch(Exception e){
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));

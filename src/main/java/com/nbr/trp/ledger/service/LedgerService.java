@@ -17,4 +17,7 @@ public interface LedgerService {
     public List<Ledger> getAll();
 
     public List<Ledger> getLadgersOfAnAgent(String id);
+    public List<Ledger> getLedgersOfARepresentative(String id);
+
+    public List<Ledger> getLedgersOfAdmin();
 }
