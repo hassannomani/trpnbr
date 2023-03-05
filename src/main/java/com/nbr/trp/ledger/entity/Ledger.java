@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.sql.Timestamp;
 
 @Entity
 @Setter
@@ -42,6 +45,10 @@ public class Ledger {
 
     @Column(name = "representative_id")
     public String representativeId;
+
+    @Column(name = "created_at")
+    @CreationTimestamp
+    public Timestamp created_at;
 
     public Ledger(String lid, String taxpayerId, String paidAmount, String paymentRule, String paymentMethod, String transactionId, String assessmentYear, String agentId, String agentTin, String representativeId) {
         this.lid = lid;
