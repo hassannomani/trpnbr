@@ -1,8 +1,6 @@
 package com.nbr.trp.common.service;
 
-import com.nbr.trp.common.entity.District;
-import com.nbr.trp.common.entity.Division;
-import com.nbr.trp.common.entity.Thana;
+import com.nbr.trp.common.entity.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +12,8 @@ public interface CommonService {
     List<District> getAllDistrict();
 
     List<Thana> getAllThana();
+
+    List<BankName> getAllBank();
 
 
 }

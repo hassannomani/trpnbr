@@ -1,14 +1,11 @@
 package com.nbr.trp.common.service;
 
-import com.nbr.trp.common.entity.District;
-import com.nbr.trp.common.entity.Division;
-import com.nbr.trp.common.entity.Thana;
-import com.nbr.trp.common.repository.DistrictRepository;
-import com.nbr.trp.common.repository.DivisionRepository;
-import com.nbr.trp.common.repository.ThanaRepository;
+import com.nbr.trp.common.entity.*;
+import com.nbr.trp.common.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,6 +19,12 @@ public class CommonServiceImpl implements CommonService{
 
     @Autowired
     ThanaRepository thanaRepository;
+
+    @Autowired
+    BankRepository bankRepository;
+
+    @Autowired
+    BankNameRepository bankNameRepository;
 
     @Override
     public List<Division> getAllDivision() {
@@ -39,4 +42,11 @@ public class CommonServiceImpl implements CommonService{
         List<Thana> th = thanaRepository.findAll();
         return th;
     }
+
+    public List<BankName> getAllBank() {
+
+        List<BankName> th = bankNameRepository.findAll();
+        return th;
+    }
+
 }

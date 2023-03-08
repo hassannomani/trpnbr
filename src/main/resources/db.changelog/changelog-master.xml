@@ -11,5 +11,7 @@
     <include file="db.changelog/changelog-v1.0.sql"/>
     <include file="db.changelog/changelog-v1.1.sql"/>
     <include file="db.changelog/changelog-v1.2.sql"/>
+    <include file="db.changelog/changelog-v1.3.sql"/>
+    <include file="db.changelog/changelog-v1.4.sql"/>
 
 </databaseChangeLog>

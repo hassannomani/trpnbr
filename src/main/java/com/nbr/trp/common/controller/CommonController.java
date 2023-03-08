@@ -1,9 +1,6 @@
 package com.nbr.trp.common.controller;
 
-import com.nbr.trp.common.entity.Address;
-import com.nbr.trp.common.entity.District;
-import com.nbr.trp.common.entity.Division;
-import com.nbr.trp.common.entity.Thana;
+import com.nbr.trp.common.entity.*;
 import com.nbr.trp.common.service.CommonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -51,6 +48,18 @@ public class CommonController {
     public ResponseEntity<?> getThana() {
         try{
             List<Thana> ds = commonService.getAllThana();
+            // return ResponseEntity.ok(new MessageResponse("Representative registered successfully!"));
+            return new ResponseEntity<>(ds, HttpStatus.CREATED);
+
+        }catch(Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        }
+    }
+
+    @GetMapping("/bank")
+    public ResponseEntity<?> getBank() {
+        try{
+            List<BankName> ds = commonService.getAllBank();
             // return ResponseEntity.ok(new MessageResponse("Representative registered successfully!"));
             return new ResponseEntity<>(ds, HttpStatus.CREATED);
 
