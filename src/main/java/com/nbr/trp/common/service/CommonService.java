@@ -14,6 +14,8 @@ public interface CommonService {
     List<Thana> getAllThana();
 
     List<BankName> getAllBank();
+    List<BankDistrict> getAllBankDist();
+    List<Bank> getAllBankBranches(String bank, String district);
 
 
 }

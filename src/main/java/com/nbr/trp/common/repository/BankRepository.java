@@ -16,4 +16,6 @@ public interface BankRepository extends JpaRepository<Bank, String> {
 //            nativeQuery = true)
     List<Bank> findAll();
 
+    List<Bank> findByBankNameAndDistName(String bank_name, String dist_name);
+
 }

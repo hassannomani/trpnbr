@@ -26,6 +26,9 @@ public class CommonServiceImpl implements CommonService{
     @Autowired
     BankNameRepository bankNameRepository;
 
+    @Autowired
+    BankDistRepository bankDistRepository;
+
     @Override
     public List<Division> getAllDivision() {
         List<Division> dv = divisionRepository.findAll();
@@ -47,6 +50,18 @@ public class CommonServiceImpl implements CommonService{
 
         List<BankName> th = bankNameRepository.findAll();
         return th;
+    }
+
+    public List<BankDistrict> getAllBankDist() {
+
+        List<BankDistrict> bankDistricts = bankDistRepository.findAll();
+        return bankDistricts;
+    }
+
+    public List<Bank> getAllBankBranches(String name, String district) {
+
+        List<Bank> bankDistricts = bankRepository.findByBankNameAndDistName(name, district);
+        return bankDistricts;
     }
 
 }
