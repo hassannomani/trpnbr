@@ -1,5 +1,6 @@
 package com.nbr.trp.ledger.controller;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.nbr.trp.ledger.entity.Ledger;
 import com.nbr.trp.ledger.service.LedgerService;
 import com.nbr.trp.user.response.MessageResponse;
@@ -69,5 +70,17 @@ public class LedgerController {
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
         }
     }
+
+    @PostMapping("/range")
+
+    public ResponseEntity<?> getLedgersRange(@RequestBody String obj){
+        try{
+            return ResponseEntity.ok("hi");
+        } catch(Exception e){
+            return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
+        }
+    }
+
+
 
 }
