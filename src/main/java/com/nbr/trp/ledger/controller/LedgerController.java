@@ -1,5 +1,6 @@
 package com.nbr.trp.ledger.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.nbr.trp.ledger.entity.Ledger;
 import com.nbr.trp.ledger.service.LedgerService;
@@ -9,7 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "*", maxAge = 4800)
 @RestController
@@ -71,11 +74,13 @@ public class LedgerController {
         }
     }
 
-    @PostMapping("/range")
+    @GetMapping("/range/{start}/{end}")
 
-    public ResponseEntity<?> getLedgersRange(@RequestBody String obj){
+    public ResponseEntity<?> getLedgersRange(@PathVariable String start, @PathVariable String end){
         try{
-            return ResponseEntity.ok("hi");
+
+            List<Ledger> ldglist = ledgerService.getLedgerWithinRange(start,end);
+            return ResponseEntity.ok(ldglist);
         } catch(Exception e){
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
         }

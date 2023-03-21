@@ -4,8 +4,10 @@ import com.nbr.trp.ledger.entity.Ledger;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +27,9 @@ public interface LedgerRepository extends JpaRepository<Ledger, String>{
     List<Ledger> findByAgentId(String id);
 
     List<Ledger> findByRepresentativeId(String id);
+
+    @Query(value = "select * from ledger where created_at >= :startDate AND created_at <=:endDate",nativeQuery = true)
+    List<Ledger>findAllWithinDateRange(@Param("startDate") Timestamp startDate, @Param("endDate")Timestamp endDate);
 
 //    @Query(value = "select * from users, agent where agent.tin=users.username",
 //            nativeQuery = true)
