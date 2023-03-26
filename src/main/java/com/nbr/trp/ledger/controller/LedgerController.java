@@ -85,6 +85,30 @@ public class LedgerController {
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
         }
     }
+    @GetMapping("/range-representative/{representativeId}/{start}/{end}")
+
+    public ResponseEntity<?> getLedgersRepresentativeRange(@PathVariable String representativeId, @PathVariable String start, @PathVariable String end){
+
+        try{
+
+            List<Ledger> ldglist = ledgerService.getLedgersOfARepresentativeRange(representativeId,start,end);
+            return ResponseEntity.ok(ldglist);
+        } catch(Exception e){
+            return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
+        }
+    }
+
+    @GetMapping("/range-agent/{agentId}/{start}/{end}")
+
+    public ResponseEntity<?> getLedgersAgentRange(@PathVariable String agentId, @PathVariable String start, @PathVariable String end){
+
+        try{
+            List<Ledger> ldglist = ledgerService.getLedgersOfAnAgentRange(agentId,start,end);
+            return ResponseEntity.ok(ldglist);
+        } catch(Exception e){
+            return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
+        }
+    }
 
 
 

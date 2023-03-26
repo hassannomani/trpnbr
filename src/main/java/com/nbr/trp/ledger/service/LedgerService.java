@@ -21,4 +21,8 @@ public interface LedgerService {
     public List<Ledger> getLedgersOfARepresentative(String id);
 
     public List<Ledger> getLedgersOfAdmin();
+
+    public List<Ledger> getLedgersOfARepresentativeRange(String id, String Start, String end);
+    public List<Ledger> getLedgersOfAnAgentRange(String id, String Start, String end);
+
 }

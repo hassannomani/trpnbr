@@ -43,7 +43,7 @@ public class RepresentativeController {
         }
     }
 
-    @PostMapping("/all")
+    @GetMapping("/all")
     public ResponseEntity<?> getAll() {
         List<Representative> ls = representativeService.getAllRepresentatives();
         return ResponseEntity.ok(ls);

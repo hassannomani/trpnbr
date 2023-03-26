@@ -50,6 +50,20 @@ public class LedgerServiceImpl implements  LedgerService
     }
 
     @Override
+    public List<Ledger> getLedgersOfARepresentativeRange(String id, String start, String end) {
+        java.sql.Timestamp t1 = convertStringToTimestamp(start,0);
+        java.sql.Timestamp t2 = convertStringToTimestamp(end,1);
+        return ledgerRepository.findAllReprstvLedgerWithinRange(id, t1, t2);
+    }
+
+    @Override
+    public List<Ledger> getLedgersOfAnAgentRange(String id, String start, String end) {
+        java.sql.Timestamp t1 = convertStringToTimestamp(start,0);
+        java.sql.Timestamp t2 = convertStringToTimestamp(end,1);
+        return ledgerRepository.findAllAgentLedgerWithinRange(id, t1, t2);
+    }
+
+    @Override
     public List<Ledger> getLedgerWithinRange(String start, String end){
         java.sql.Timestamp t1 = convertStringToTimestamp(start,0);
         java.sql.Timestamp t2 = convertStringToTimestamp(end,1);

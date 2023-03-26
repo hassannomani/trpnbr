@@ -21,8 +21,6 @@ public interface RepresentativeRepository extends JpaRepository<Representative, 
     Boolean existsByTinNo(String tin);
     List<Representative> findByAgentId(String agentId);
 
-    @Query(value = "select * from users, agent where agent.tin=users.username",
-            nativeQuery = true)
     List<Representative> findAll();
 
 
