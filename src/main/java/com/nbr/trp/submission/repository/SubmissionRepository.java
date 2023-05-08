@@ -17,7 +17,7 @@ public interface SubmissionRepository extends JpaRepository<Submission, String> 
 
     public Submission save(Submission submission);
 
-    public Submission findByRTin(String rtin);
+    public Submission findByReturneeTin(String rtin);
 
 
 //    @Query(value = "select * from calculations c where c.username = ?1 and c.assessment_year = ?2 and c.submitted = ?3",

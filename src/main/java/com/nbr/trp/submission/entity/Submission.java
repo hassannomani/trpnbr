@@ -13,7 +13,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name = "calculations")
+@Table(name = "submissions")
 @NoArgsConstructor
 public class Submission {
     @Id   //BINARY(16)
@@ -22,11 +22,11 @@ public class Submission {
     private String ruid;
 
     @NonNull
-    @Column(nullable = false, name="r_tin")
+    @Column(nullable = false, name="returnee_tin")
     private String returneeTin;
 
     @NonNull
-    @Column(nullable = false, name="r_nid")
+    @Column(nullable = false, name="returnee_nid")
     private String returneeNid;
 
     @NonNull
@@ -34,15 +34,15 @@ public class Submission {
     private String returneeMobile;
 
     @NonNull
-    @Column(nullable = false, name="r_name")
+    @Column(nullable = false, name="returnee_name")
     private String returneeName;
 
     @NonNull
-    @Column(nullable = false, name="r_father")
+    @Column(nullable = false, name="returnee_father")
     private String returneeFather;
 
     @NonNull
-    @Column(nullable = false, name="r_spouse")
+    @Column(nullable = false, name="returnee_spouse")
     private String returneeSpouse;
 
     @NonNull
@@ -50,15 +50,15 @@ public class Submission {
     private String assessmentYear;
 
     @NonNull
-    @Column(nullable = false, name="rcircle")
+    @Column(nullable = false, name="returnee_circle")
     private String returneeCircle;
 
     @NonNull
-    @Column(nullable = false, name="rzone")
+    @Column(nullable = false, name="returnee_zone")
     private String returneeZone;
 
     @NonNull
-    @Column(nullable = false, name="rresidency")
+    @Column(nullable = false, name="returnee_residency")
     private String returneeResidency;
 
     @NonNull
@@ -74,8 +74,8 @@ public class Submission {
     private String sourceIncome;
 
     @NonNull
-    @Column(nullable = false, name = "gender")
-    private String gender;
+    @Column(nullable = false, name = "returnee_gender")
+    private String returneeGender;
 
     @NonNull
     @Column(nullable = false, name = "submitted")
@@ -107,7 +107,7 @@ public class Submission {
             joinColumns = @JoinColumn(name = "submission_id"),
             inverseJoinColumns = @JoinColumn(name = "address_id")
     )
-    private Set<Address> re_address = new HashSet<>();
+    private Set<Address> returnee_address = new HashSet<>();
 
     public Submission(String ruid, String returneeTin, String returneeNid, String returneeMobile, String returneeName, String returneeFather, String returneeSpouse, String assessmentYear, String returneeCircle, String returneeZone, String returneeResidency, String taxableIncome, String grossWealth, String sourceIncome,  String gender, String submitted, String paymentMethod, String paymentNo, String paymentDate,  String agentId,  String representativeId, Set<Address> re_address) {
         this.ruid = ruid;
@@ -124,13 +124,13 @@ public class Submission {
         this.taxableIncome = taxableIncome;
         this.grossWealth = grossWealth;
         this.sourceIncome = sourceIncome;
-        this.gender = gender;
+        this.returneeGender = gender;
         this.submitted = submitted;
         this.paymentMethod = paymentMethod;
         this.paymentNo = paymentNo;
         this.paymentDate = paymentDate;
         this.agentId = agentId;
         this.representativeId = representativeId;
-        this.re_address = re_address;
+        this.returnee_address = re_address;
     }
 }

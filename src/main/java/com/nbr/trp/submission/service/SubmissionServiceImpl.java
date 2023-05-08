@@ -21,7 +21,7 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     @Override
     public Submission getSubmissionByTin(String tin) {
-        Submission submission = submissionRepository.findByRTin(tin);
+        Submission submission = submissionRepository.findByReturneeTin(tin);
         return submission;
     }
 
