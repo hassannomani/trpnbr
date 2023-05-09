@@ -9,6 +9,6 @@ import lombok.*;
 @AllArgsConstructor
 
 public class ETinAuthRequestModel {
-    private String username;
-    private String password;
+    private String UserName;
+    private String Password;
 }

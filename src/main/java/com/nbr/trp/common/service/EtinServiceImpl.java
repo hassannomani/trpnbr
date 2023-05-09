@@ -4,23 +4,26 @@ import com.google.gson.Gson;
 import com.nbr.trp.common.entity.ETinAuthModel;
 import com.nbr.trp.common.entity.ETinAuthRequestModel;
 import com.nbr.trp.common.entity.ETinResponseModel;
+import com.nbr.trp.common.entity.ETinZoneModel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class EtinServiceImpl implements  ETinService{
 
-    @Value("${etin.username:admin@bond.com}")
+    @Value("${etin.username}")
     private String userName;
 
-    @Value("${etin.password:1234}")
+    @Value("${etin.password}")
     private String password;
 
     @Value("${etin.token-url}")
@@ -40,12 +43,24 @@ public class EtinServiceImpl implements  ETinService{
 
     @Override
     public ETinAuthModel getETinAuthModel() {
+        //restTemplate = new RestTemplate();
         ETinAuthRequestModel request = new ETinAuthRequestModel(userName, password);
         String url = baseURL + authTokenURL;
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
         System.out.println("url : {}"+ url);
-        ETinAuthModel model = restTemplate.postForObject(baseURL + authTokenURL, request, ETinAuthModel.class);
+        System.out.println(request);
+        HttpEntity<?> httpEntity = new HttpEntity<>(request, headers);
+
+        //AcsAuthResponse response = restTemplate.exchange(url, HttpMethod.POST, authRequest, AcsAuthResponse.class).getBody();
+
+
+        ResponseEntity<ETinResponseModel> model = restTemplate.exchange(url,HttpMethod.POST, httpEntity, ETinResponseModel.class);
         if (model != null) {
             System.out.println(model.toString());
+        }else{
+            System.out.println("null");
+            System.out.println(model);
         }
         return model;
 
