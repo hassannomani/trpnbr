@@ -40,6 +40,15 @@ public class Representative {
     @Column(name = "nid")
     public String nid;
 
+    @Column(name="trp_id", nullable = false)
+    public String trpId;
+
+    @Column(name="ref_no", nullable = false)
+    public String refNo;
+
+    @Column(name="file_path", nullable = false)
+    public String filePath;
+
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "representative_address",
@@ -57,7 +66,7 @@ public class Representative {
     private Set<BankInformationDetails> re_bankinformation = new HashSet<>();
 
 
-    public Representative(String uuid, String name, String agentId, String tin, Date dob, String mobileNo, String nid, Set<Address> address, Set<BankInformationDetails> bank) {
+    public Representative(String uuid, String name, String agentId, String tin, Date dob, String mobileNo, String nid, Set<Address> address, Set<BankInformationDetails> bank, String trpid, String refNo,String filepath ) {
         this.userid = uuid;
         this.reName = name;
         this.agentId = agentId;
@@ -67,7 +76,9 @@ public class Representative {
         this.nid = nid;
         this.re_address = address;
         this.re_bankinformation = bank;
-
+        this.trpId = trpid;
+        this.refNo = refNo;
+        this.filePath = filepath;
     }
 }
 

@@ -23,9 +23,10 @@ public class ETinController {
         this.eTinService = eTinService;
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/tin/{value}")
     public ETinResponseModel getTinResponse(@PathVariable String value) {
-        ETinResponseModel response = eTinService.getTinResponse("374370152508");
+        ETinResponseModel response = eTinService.getTinResponse(value);
         return response;
     }
 }

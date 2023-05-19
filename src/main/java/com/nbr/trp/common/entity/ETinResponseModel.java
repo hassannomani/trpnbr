@@ -9,6 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 public class ETinResponseModel {
     private String tin;
+    private String name;
     private String assesName;
     private String nid;
     private String passportNumber;

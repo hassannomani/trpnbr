@@ -72,17 +72,17 @@ public class Agent {
 //	public String bankInformationId;
 
 
-	@Column(name = "dob")
-	public Date dob;
+//	@Column(name = "dob")
+//	public Date dob;
 
-	@Column(name = "father_name")
-	public String fatherName;
-
-	@Column(name = "mother_name")
-	public String motherName;
-
-	@Column(name = "spouse_name")
-	public String spouseName;
+//	@Column(name = "father_name")
+//	public String fatherName;
+//
+//	@Column(name = "mother_name")
+//	public String motherName;
+//
+//	@Column(name = "spouse_name")
+//	public String spouseName;
 
 	@Column(name = "mobile_no")
 	public String mobileNo;
@@ -101,7 +101,7 @@ public class Agent {
 //	@ManyToMany
 
 
-	public Agent(String uuid, String name, String tin, String phone, String registrationType, String regNo, String contactPerson, String contactNumber, String contactEmail/*, int businessAddressId, int currentAddressId, int permanentAddressId*/, Set<BankInformationDetails> bank, String fatherName, String motherName, String spouseName, String mobileNo, String regAssNID, Date regDate, Date dob, Set<Address> address) {
+	public Agent(String uuid, String name, String tin, String phone, String registrationType, String regNo, String contactPerson, String contactNumber, String contactEmail/*, int businessAddressId, int currentAddressId, int permanentAddressId*/, Set<BankInformationDetails> bank, String mobileNo, String regAssNID, Date regDate, Set<Address> address) {
 		this.id = uuid;
 		this.name = name;
 		this.tin = tin;
@@ -115,13 +115,13 @@ public class Agent {
 //		this.currentAddressId = currentAddressId;
 //		this.permanentAddressId = permanentAddressId;
 		this.bankinformation = bank;
-		this.fatherName = fatherName;
-		this.motherName = motherName;
-		this.spouseName = spouseName;
+//		this.fatherName = fatherName;
+//		this.motherName = motherName;
+//		this.spouseName = spouseName;
 		this.mobileNo = mobileNo;
 		this.regAssNID = regAssNID;
 		this.registrationDate = regDate;
-		this.dob = dob;
+		//this.dob = dob;
 		this.address = address;
 	}
 }
