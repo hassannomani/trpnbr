@@ -3,11 +3,24 @@ package com.nbr.trp.common.controller;
 import com.nbr.trp.common.entity.*;
 import com.nbr.trp.common.service.CommonService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.Map;
+
+import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
+import static org.springframework.web.servlet.function.ServerResponse.ok;
 
 @CrossOrigin(origins = "*", maxAge = 4800)
 @RestController
@@ -93,6 +106,49 @@ public class CommonController {
 
         }catch(Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        }
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/file")
+    public ResponseEntity<Map<String, String>> filepost(@RequestPart("file") MultipartFile file) {
+        System.out.println("helllllllllllllo");
+        System.out.println("handling request parts: {}"+ file);
+        try {
+
+            File f = new ClassPathResource("").getFile();
+            final Path path = Paths.get(f.getAbsolutePath() + File.separator + "static" + File.separator + "files");
+            System.out.println(path);
+            if (!Files.exists(path)) {
+                System.out.println("doesnt exist");
+                try {
+                    Files.createDirectories(path);
+                } catch (IOException e) {
+                    throw new RuntimeException("Could not initialize folder for upload!");
+                }
+            } else{
+                System.out.println("exist");
+
+            }
+
+            Path filePath = path.resolve(file.getOriginalFilename());
+            Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+            String fileUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                    .path("/files/")
+                    .path(file.getOriginalFilename())
+                    .toUriString();
+
+            var result = Map.of(
+                    "filename", file.getOriginalFilename(),
+                    "fileUri", fileUri
+            );
+            return new ResponseEntity<>(result, HttpStatus.OK);
+
+
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
