@@ -16,6 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -131,17 +132,23 @@ public class CommonController {
 
             }
 
-            Path filePath = path.resolve(file.getOriginalFilename());
-            Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            Long val = timestamp.getTime();
+            String pathFinal = path + File.separator + val + ".pdf";
+            Path saveTO = Paths.get(pathFinal);
 
-            String fileUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                    .path("/files/")
-                    .path(file.getOriginalFilename())
-                    .toUriString();
+            Path filePath = path.resolve(file.getOriginalFilename());
+            Files.copy(file.getInputStream(), saveTO, StandardCopyOption.REPLACE_EXISTING);
+
+//            String fileUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+//                    .path("/files/")
+//                    .path(file.getOriginalFilename())
+//                    .toUriString();
 
             var result = Map.of(
                     "filename", file.getOriginalFilename(),
-                    "fileUri", fileUri
+                    "fileUri", saveTO.toString()
+
             );
             return new ResponseEntity<>(result, HttpStatus.OK);
 
