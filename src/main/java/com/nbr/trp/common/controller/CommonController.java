@@ -4,7 +4,11 @@ import com.nbr.trp.common.entity.*;
 import com.nbr.trp.common.service.CommonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,6 +16,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -113,7 +118,6 @@ public class CommonController {
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/file")
     public ResponseEntity<Map<String, String>> filepost(@RequestPart("file") MultipartFile file) {
-        System.out.println("helllllllllllllo");
         System.out.println("handling request parts: {}"+ file);
         try {
 
@@ -156,6 +160,39 @@ public class CommonController {
         } catch (IOException e) {
             System.out.println(e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/file/{filename}")
+    public ResponseEntity<Resource> load(@PathVariable String filename) {
+        try {
+            Path root = Paths.get("target/classes/static/files");
+            System.out.println(root);
+            Path file = root.resolve(filename);
+            System.out.println(file);
+            Resource resource = new UrlResource(file.toUri());
+
+            if (resource.exists() || resource.isReadable()) {
+//                HttpHeaders headers = new HttpHeaders();
+//                headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+//                headers.add("Pragma", "no-cache");
+//                headers.add("Expires", "0");
+//
+//                return ResponseEntity.ok().headers(headers)
+//                        .contentType(MediaType.parseMediaType("application/pdf"))
+//                        .body(new InputStreamResource(pdfFile.getInputStream()));
+                return ResponseEntity
+                        .status(HttpStatus.OK)
+                        .contentType(MediaType.parseMediaType("application/pdf"))
+                        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"").body(resource);
+
+
+            } else {
+                throw new RuntimeException("Could not read the file!");
+            }
+        } catch (MalformedURLException e) {
+            throw new RuntimeException("Error: " + e.getMessage());
         }
     }
 }
