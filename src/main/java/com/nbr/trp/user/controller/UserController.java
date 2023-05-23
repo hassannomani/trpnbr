@@ -141,5 +141,17 @@ public class UserController {
         }
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/reject/{uuid}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> rejectUser(@PathVariable String uuid) {
+
+        try{
+            User user = userService.approveRepuser(uuid);
+            return ResponseEntity.ok(user);
+        }catch(Exception e){
+            return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
+        }
+    }
 
 }

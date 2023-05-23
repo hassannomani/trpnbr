@@ -23,4 +23,8 @@ public interface UserService {
 
     public User approveRepUserByTin(String tin);
 
+    public User rejectRepuser(String tin);
+
+//    public User rejectRepUserByTin(String tin);
+
 }

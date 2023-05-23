@@ -71,8 +71,10 @@ public class AuthController {
                             roles
                     )
             );
-        }else{
+        }else if(userDetails.getStatus().equals("0")){
             return ResponseEntity.status(403).body("Approval Required");
+        }else {
+            return ResponseEntity.status(403).body("Log In Blocked");
         }
 
     }
