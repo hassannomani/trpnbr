@@ -37,6 +37,9 @@ public class Representative {
     @Column(name = "re_mobile_no")
     public String reMobileNo;
 
+    @Column(name = "re_photo")
+    public String rePhoto;
+
     @Column(name = "nid")
     public String nid;
 
@@ -45,6 +48,15 @@ public class Representative {
 
     @Column(name="ref_no", nullable = false)
     public String refNo;
+
+    @Column(name="cert_no", nullable = false)
+    public String certNo;
+
+    @Column(name="cert_serial", nullable = false)
+    public String certSerial;
+
+    @Column(name = "cert_pass")
+    public Date certPass;
 
     @Column(name="file_path", nullable = false)
     public String filePath;
@@ -65,20 +77,23 @@ public class Representative {
     )
     private Set<BankInformationDetails> re_bankinformation = new HashSet<>();
 
-
-    public Representative(String uuid, String name, String agentId, String tin, Date dob, String mobileNo, String nid, Set<Address> address, Set<BankInformationDetails> bank, String trpid, String refNo,String filepath ) {
-        this.userid = uuid;
-        this.reName = name;
+    public Representative(String userid, String reName, String agentId, String tinNo, Date reDob, String reMobileNo, String rePhoto, String nid, String trpId, String refNo, String certNo, String certSerial, Date certPass, String filePath, Set<Address> re_address, Set<BankInformationDetails> re_bankinformation) {
+        this.userid = userid;
+        this.reName = reName;
         this.agentId = agentId;
-        this.tinNo = tin;
-        this.reDob = dob;
-        this.reMobileNo = mobileNo;
+        this.tinNo = tinNo;
+        this.reDob = reDob;
+        this.reMobileNo = reMobileNo;
+        this.rePhoto = rePhoto;
         this.nid = nid;
-        this.re_address = address;
-        this.re_bankinformation = bank;
-        this.trpId = trpid;
+        this.trpId = trpId;
         this.refNo = refNo;
-        this.filePath = filepath;
+        this.certNo = certNo;
+        this.certSerial = certSerial;
+        this.certPass = certPass;
+        this.filePath = filePath;
+        this.re_address = re_address;
+        this.re_bankinformation = re_bankinformation;
     }
 }
 

@@ -52,6 +52,12 @@ public class Agent {
 	@Column(name = "contact_email",nullable = false)
 	public String contactEmail;
 
+	@Column(name = "contact_designation")
+	public String contactDesignation;
+
+	@Column(name = "contact_photo")
+	public String contactPhoto;
+
 //	@Column(name = "business_address_id")
 //	public int businessAddressId;
 
@@ -101,7 +107,7 @@ public class Agent {
 //	@ManyToMany
 
 
-	public Agent(String uuid, String name, String tin, String phone, String registrationType, String regNo, String contactPerson, String contactNumber, String contactEmail/*, int businessAddressId, int currentAddressId, int permanentAddressId*/, Set<BankInformationDetails> bank, String mobileNo, String regAssNID, Date regDate, Set<Address> address) {
+	public Agent(String uuid, String name, String tin, String phone, String registrationType, String regNo, String contactPerson, String contactNumber, String contactEmail, String contactDesignation, String contactPhoto/*, int businessAddressId, int currentAddressId, int permanentAddressId*/, Set<BankInformationDetails> bank, String mobileNo, String regAssNID, Date regDate, Set<Address> address) {
 		this.id = uuid;
 		this.name = name;
 		this.tin = tin;
@@ -111,6 +117,8 @@ public class Agent {
 		this.contactPerson = contactPerson;
 		this.contactNumber = contactNumber;
 		this.contactEmail = contactEmail;
+		this.contactDesignation = contactDesignation;
+		this.contactPhoto = contactPhoto;
 //		this.businessAddressId = businessAddressId;
 //		this.currentAddressId = currentAddressId;
 //		this.permanentAddressId = permanentAddressId;
