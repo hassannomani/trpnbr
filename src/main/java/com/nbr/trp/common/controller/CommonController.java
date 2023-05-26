@@ -2,6 +2,7 @@ package com.nbr.trp.common.controller;
 
 import com.nbr.trp.common.entity.*;
 import com.nbr.trp.common.service.CommonService;
+import com.nbr.trp.common.service.FileUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -35,6 +36,9 @@ public class CommonController {
 
     @Autowired
     public CommonService commonService;
+
+    @Autowired
+    public FileUploadService fileUploadService;
 
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/division")
@@ -117,44 +121,17 @@ public class CommonController {
 
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/file")
-    public ResponseEntity<Map<String, String>> filepost(@RequestPart("file") MultipartFile file) {
-        System.out.println("handling request parts: {}"+ file);
+    public ResponseEntity<FileResponse> filepost(@RequestPart("file") MultipartFile file) {
+
+
         try {
 
             File f = new ClassPathResource("").getFile();
             final Path path = Paths.get(f.getAbsolutePath() + File.separator + "static" + File.separator + "files");
-            System.out.println(path);
-            if (!Files.exists(path)) {
-                System.out.println("doesnt exist");
-                try {
-                    Files.createDirectories(path);
-                } catch (IOException e) {
-                    throw new RuntimeException("Could not initialize folder for upload!");
-                }
-            } else{
-                System.out.println("exist");
 
-            }
+            FileResponse fileResponse = fileUploadService.uploadFile(path, file, 1);
 
-            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-            Long val = timestamp.getTime();
-            String pathFinal = path + File.separator + val + ".pdf";
-            Path saveTO = Paths.get(pathFinal);
-
-            Path filePath = path.resolve(file.getOriginalFilename());
-            Files.copy(file.getInputStream(), saveTO, StandardCopyOption.REPLACE_EXISTING);
-
-//            String fileUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-//                    .path("/files/")
-//                    .path(file.getOriginalFilename())
-//                    .toUriString();
-
-            var result = Map.of(
-                    "filename", file.getOriginalFilename(),
-                    "fileUri", saveTO.toString()
-
-            );
-            return new ResponseEntity<>(result, HttpStatus.OK);
+            return new ResponseEntity<>(fileResponse, HttpStatus.OK);
 
 
         } catch (IOException e) {
@@ -169,30 +146,65 @@ public class CommonController {
         try {
             Path root = Paths.get("target/classes/static/files");
             System.out.println(root);
-            Path file = root.resolve(filename);
-            System.out.println(file);
-            Resource resource = new UrlResource(file.toUri());
 
-            if (resource.exists() || resource.isReadable()) {
-//                HttpHeaders headers = new HttpHeaders();
-//                headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
-//                headers.add("Pragma", "no-cache");
-//                headers.add("Expires", "0");
-//
-//                return ResponseEntity.ok().headers(headers)
-//                        .contentType(MediaType.parseMediaType("application/pdf"))
-//                        .body(new InputStreamResource(pdfFile.getInputStream()));
-                return ResponseEntity
-                        .status(HttpStatus.OK)
-                        .contentType(MediaType.parseMediaType("application/pdf"))
-                        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"").body(resource);
+            Resource resource = fileUploadService.retrieve(root, filename,1);
+
+            return ResponseEntity
+                .status(HttpStatus.OK)
+                .contentType(MediaType.parseMediaType("application/pdf"))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"").body(resource);
 
 
-            } else {
-                throw new RuntimeException("Could not read the file!");
-            }
-        } catch (MalformedURLException e) {
-            throw new RuntimeException("Error: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity
+                    .status(HttpStatus.CONFLICT)
+                    .contentType(MediaType.parseMediaType("application/pdf"))
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" +"\"").body(null);
+
+        }
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/photo")
+    public ResponseEntity<FileResponse> photopost(@RequestPart("file") MultipartFile file) {
+
+        try {
+            File f = new ClassPathResource("").getFile();
+            final Path path = Paths.get(f.getAbsolutePath() + File.separator + "static" + File.separator + "photo");
+
+            FileResponse fileResponse = fileUploadService.uploadFile(path, file, 0);
+
+            return new ResponseEntity<>(fileResponse, HttpStatus.OK);
+
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/photo/{filename}")
+    public ResponseEntity<Resource> loadPhoto(@PathVariable String filename) {
+        try {
+            Path root = Paths.get("target/classes/static/photo");
+            System.out.println(root);
+
+            Resource resource = fileUploadService.retrieve(root, filename,0);
+
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .contentType(MediaType.parseMediaType("application/pdf"))
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"").body(resource);
+
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity
+                    .status(HttpStatus.CONFLICT)
+                    .contentType(MediaType.parseMediaType("application/pdf"))
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" +"\"").body(null);
+
         }
     }
 }
