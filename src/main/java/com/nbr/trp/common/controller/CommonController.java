@@ -184,7 +184,7 @@ public class CommonController {
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
-    @GetMapping("/photo/{filename}")
+    @GetMapping(value="/photo/{filename}",produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<Resource> loadPhoto(@PathVariable String filename) {
         try {
             Path root = Paths.get("target/classes/static/photo");
@@ -194,16 +194,15 @@ public class CommonController {
 
             return ResponseEntity
                     .status(HttpStatus.OK)
-                    .contentType(MediaType.parseMediaType("application/pdf"))
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"").body(resource);
+                    .contentLength(resource.contentLength())
+                    .body(resource);
 
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return ResponseEntity
                     .status(HttpStatus.CONFLICT)
-                    .contentType(MediaType.parseMediaType("application/pdf"))
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" +"\"").body(null);
+                    .body(null);
 
         }
     }
