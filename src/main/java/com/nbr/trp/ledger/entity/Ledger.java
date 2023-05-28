@@ -25,6 +25,9 @@ public class Ledger {
     @Column(name = "paid_amount",nullable = false)
     public String paidAmount;
 
+    @Column(name = "minimum_tax",nullable = false)
+    public String minimumTax;
+
     @Column(name = "payment_rule",nullable = false)
     public String paymentRule;
 
@@ -37,29 +40,27 @@ public class Ledger {
     @Column(name = "assessment_year",nullable = false)
     public String assessmentYear;
 
-    @Column(name = "agent_id")
-    public String agentId;
-
     @Column(name = "agent_tin")
     public String agentTin;
 
-    @Column(name = "representative_id")
-    public String representativeId;
+    @Column(name = "representative_tin")
+    public String representativeTin;
 
     @Column(name = "created_at")
     @CreationTimestamp
     public Timestamp created_at;
 
-    public Ledger(String lid, String taxpayerId, String paidAmount, String paymentRule, String paymentMethod, String transactionId, String assessmentYear, String agentId, String agentTin, String representativeId) {
+    public Ledger(String lid, String taxpayerId, String paidAmount, String minimumTax, String paymentRule, String paymentMethod, String transactionId, String assessmentYear, String agentTin, String representativeTin, Timestamp created_at) {
         this.lid = lid;
         this.taxpayerId = taxpayerId;
         this.paidAmount = paidAmount;
+        this.minimumTax = minimumTax;
         this.paymentRule = paymentRule;
         this.paymentMethod = paymentMethod;
         this.transactionId = transactionId;
         this.assessmentYear = assessmentYear;
-        this.agentId = agentId;
         this.agentTin = agentTin;
-        this.representativeId = representativeId;
+        this.representativeTin = representativeTin;
+        this.created_at = created_at;
     }
 }

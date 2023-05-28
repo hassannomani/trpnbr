@@ -147,7 +147,7 @@ public class UserController {
     public ResponseEntity<?> rejectUser(@PathVariable String uuid) {
 
         try{
-            User user = userService.approveRepuser(uuid);
+            User user = userService.rejectRepuser(uuid);
             return ResponseEntity.ok(user);
         }catch(Exception e){
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));

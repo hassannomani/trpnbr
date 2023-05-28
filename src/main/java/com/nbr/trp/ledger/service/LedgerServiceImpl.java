@@ -38,11 +38,11 @@ public class LedgerServiceImpl implements  LedgerService
 
     @Override
     public List<Ledger> getLadgersOfAnAgent(String id){
-        return ledgerRepository.findByAgentId(id);
+        return ledgerRepository.findByAgentTin(id);
     }
 
     public List<Ledger> getLedgersOfARepresentative(String id){
-        return ledgerRepository.findByRepresentativeId(id);
+        return ledgerRepository.findByRepresentativeTin(id);
     }
 
     public List<Ledger> getLedgersOfAdmin(){
