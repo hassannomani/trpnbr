@@ -29,7 +29,7 @@ public class Action {
     public String message;
 
     @Column(name = "action_type",nullable = false)
-    public String messageType;
+    public String actionType;
 
     @Column(name = "attachment")
     public String attachment;
@@ -56,7 +56,7 @@ public class Action {
         this.sender = sender;
         this.receiver = receiver;
         this.message = message;
-        this.messageType = messageType;
+        this.actionType = messageType;
         this.attachment = attachment;
         this.actionFrom = actionFrom;
         this.actionTo = actionTo;
