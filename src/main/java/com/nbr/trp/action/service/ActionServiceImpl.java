@@ -1,7 +1,9 @@
 package com.nbr.trp.action.service;
 
 import com.nbr.trp.action.entity.Action;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ActionServiceImpl implements ActionService{
     @Override
     public Action save(Action action) {

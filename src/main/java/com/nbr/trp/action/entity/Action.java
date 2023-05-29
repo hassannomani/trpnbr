@@ -17,7 +17,7 @@ public class Action {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(columnDefinition = "uniqueidentifier default newid()")
-    public String action_id;
+    public String actionId;
 
     @Column(name = "sender",nullable = false)
     public String sender;
@@ -52,7 +52,7 @@ public class Action {
 
 
     public Action(String msg_id, String sender, String receiver, String message, String messageType, String attachment, Date actionFrom, Date actionTo, Date actionSent, Date actionRead) {
-        this.action_id = msg_id;
+        this.actionId = msg_id;
         this.sender = sender;
         this.receiver = receiver;
         this.message = message;
