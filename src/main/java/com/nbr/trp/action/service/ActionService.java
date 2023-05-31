@@ -22,5 +22,7 @@ public interface ActionService {
 
     public Action markRead(String id);
 
+    public Action getActionByTypeAndTin(String type, String tin);
+
 
 }

@@ -1,5 +1,7 @@
 package com.nbr.trp.user.controller;
 
+import com.nbr.trp.action.entity.Action;
+import com.nbr.trp.action.service.ActionService;
 import com.nbr.trp.user.entity.ERole;
 import com.nbr.trp.user.entity.Role;
 import com.nbr.trp.user.entity.User;
@@ -46,6 +48,9 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
+    @Autowired
+    ActionService actionService;
+
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
 
@@ -73,9 +78,26 @@ public class AuthController {
             );
         }else if(userDetails.getStatus().equals("0")){
             return ResponseEntity.status(403).body("Approval Required");
-        }else {
+        }else if(userDetails.getStatus().equals("-3")){
+            Action action = actionService.getActionByTypeAndTin("DENY",userDetails.getUsername());
             return ResponseEntity.status(403).body("Log In Blocked");
         }
+        else if(userDetails.getStatus().equals("-2")){
+            Action action = actionService.getActionByTypeAndTin("BLOCK",userDetails.getUsername());
+            return ResponseEntity.status(403).body("Log In Blocked");
+        }
+        else if(userDetails.getStatus().equals("-3")){
+            Action action = actionService.getActionByTypeAndTin("SUSPENDED",userDetails.getUsername());
+            return ResponseEntity.status(403).body("Log In Blocked");
+        }else
+            return ResponseEntity.status(403).body("Error! Please try again");
+
+
+        //0 is for unapproved user
+        //1 is for approved user
+        //-1 is for suspended user
+        //-2 for blocked user
+        // -3 for denied user
 
     }
 

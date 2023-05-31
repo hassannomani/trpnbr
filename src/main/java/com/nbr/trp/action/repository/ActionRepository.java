@@ -3,7 +3,9 @@ package com.nbr.trp.action.repository;
 import com.nbr.trp.action.entity.Action;
 import com.nbr.trp.agent.entity.Agent;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,5 +23,7 @@ public interface ActionRepository extends JpaRepository<Action, String> {
     List<Action> findByReceiver(String tin);
 
     Action findByActionType(String type);
+    @Query(value = "select top 1 * from action where receiver= :tin and action_type= :type order by action_sent desc",nativeQuery = true)
+    Action findActionWithTypeAndTin(@Param("type") String type, @Param("tin") String tin);
 
 }

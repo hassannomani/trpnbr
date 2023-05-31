@@ -25,6 +25,9 @@ public interface UserService {
 
     public User rejectRepuser(String tin);
 
+    public User blockRepuser(String tin);
+
+    public User suspendRepuser(String tin);
 //    public User rejectRepUserByTin(String tin);
 
 }

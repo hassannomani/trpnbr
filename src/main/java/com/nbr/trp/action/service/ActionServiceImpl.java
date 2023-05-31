@@ -49,4 +49,9 @@ public class ActionServiceImpl implements ActionService{
         action.setActionRead(new Date());
         return actionRepository.save(action);
     }
+
+    public Action getActionByTypeAndTin(String type, String tin){
+        Action action = actionRepository.findActionWithTypeAndTin(type, tin);
+        return action;
+    }
 }

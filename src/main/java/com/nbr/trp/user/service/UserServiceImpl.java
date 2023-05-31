@@ -71,6 +71,22 @@ public class UserServiceImpl implements UserService {
     @Override
     public User rejectRepuser(String id) {
         User u = userRepository.findByUuid(id);
+        u.setStatus("-3");
+        User user = userRepository.save(u);
+        return user;
+    }
+
+    @Override
+    public User blockRepuser(String id) {
+        User u = userRepository.findByUuid(id);
+        u.setStatus("-2");
+        User user = userRepository.save(u);
+        return user;
+    }
+
+    @Override
+    public User suspendRepuser(String id) {
+        User u = userRepository.findByUuid(id);
         u.setStatus("-1");
         User user = userRepository.save(u);
         return user;
