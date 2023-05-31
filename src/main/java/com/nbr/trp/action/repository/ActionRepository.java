@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @EnableJpaRepositories
 public interface ActionRepository extends JpaRepository<Action, String> {
@@ -14,9 +16,9 @@ public interface ActionRepository extends JpaRepository<Action, String> {
 
     Action findByActionId(String id);
 
-    Action findBySender(String tin);
+    List<Action> findBySender(String tin);
 
-    Action findByReceiver(String tin);
+    List<Action> findByReceiver(String tin);
 
     Action findByActionType(String type);
 

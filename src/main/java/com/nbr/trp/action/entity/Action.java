@@ -25,7 +25,9 @@ public class Action {
     @Column(name = "receiver",nullable = false)
     public String receiver;
 
-    @Column(name = "message",nullable = false)
+    @Column(name = "message_title",nullable = false)
+    public String messageTitle;
+    @Column(name = "message",nullable = false,columnDefinition = "TEXT")
     public String message;
 
     @Column(name = "action_type",nullable = false)
@@ -51,10 +53,11 @@ public class Action {
     public Date actionRead;
 
 
-    public Action(String msg_id, String sender, String receiver, String message, String messageType, String attachment, Date actionFrom, Date actionTo, Date actionSent, Date actionRead) {
+    public Action(String msg_id, String sender, String receiver, String title, String message, String messageType, String attachment, Date actionFrom, Date actionTo, Date actionSent, Date actionRead) {
         this.actionId = msg_id;
         this.sender = sender;
         this.receiver = receiver;
+        this.messageTitle = title;
         this.message = message;
         this.actionType = messageType;
         this.attachment = attachment;

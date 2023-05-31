@@ -1,18 +1,27 @@
 package com.nbr.trp.action.service;
 
 import com.nbr.trp.action.entity.Action;
+import com.nbr.trp.action.repository.ActionRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class ActionServiceImpl implements ActionService{
+
+    @Autowired
+    ActionRepository actionRepository;
+
     @Override
     public Action save(Action action) {
-        return null;
+       return actionRepository.save(action);
     }
 
     @Override
     public Action getAction(String id) {
-        return null;
+        return actionRepository.findByActionId(id);
     }
 
     @Override
@@ -21,8 +30,8 @@ public class ActionServiceImpl implements ActionService{
     }
 
     @Override
-    public Action getActionTrp(String tin) {
-        return null;
+    public List<Action> getActionTrp(String tin) {
+        return actionRepository.findByReceiver(tin);
     }
 
     @Override
@@ -33,5 +42,11 @@ public class ActionServiceImpl implements ActionService{
     @Override
     public Action getActionTrpWithTime(String tin) {
         return null;
+    }
+
+    public Action markRead(String id){
+        Action action = actionRepository.findByActionId(id);
+        action.setActionRead(new Date());
+        return actionRepository.save(action);
     }
 }
