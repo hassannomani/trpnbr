@@ -30,8 +30,10 @@ public class ActionController {
             String actionType = action.getActionType();
             if(actionType.equals("DENY"))
                 userService.rejectRepuser(action.getReceiver());
-//            else if(actionType.equals("BLOCK"))
-//                userService.blockRepuser(action.getReceiver());
+            else if(actionType.equals("BLOCK"))
+                userService.blockRepuser(action.getReceiver());
+            else if(actionType.equals("SUSPEND"))
+                userService.suspendRepuser(action.getReceiver());
 
             return ResponseEntity.ok(action);
         }catch(Exception e){
@@ -57,6 +59,18 @@ public class ActionController {
         try{
             Action  action = actionService.getAction(id);
             actionService.markRead(id);
+            return ResponseEntity.ok(action);
+        }catch(Exception e){
+            System.out.println(e);
+            return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
+        }
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/blocked")
+    public ResponseEntity<?> getBlockedUsers() {
+        try{
+            List<Action>  action = actionService.getActionByType("BLOCK");
             return ResponseEntity.ok(action);
         }catch(Exception e){
             System.out.println(e);

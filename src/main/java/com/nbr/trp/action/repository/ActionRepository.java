@@ -22,7 +22,7 @@ public interface ActionRepository extends JpaRepository<Action, String> {
 
     List<Action> findByReceiver(String tin);
 
-    Action findByActionType(String type);
+    List<Action> findByActionType(String type);
     @Query(value = "select top 1 * from action where receiver= :tin and action_type= :type order by action_sent desc",nativeQuery = true)
     Action findActionWithTypeAndTin(@Param("type") String type, @Param("tin") String tin);
 

@@ -24,5 +24,7 @@ public interface ActionService {
 
     public Action getActionByTypeAndTin(String type, String tin);
 
+    public List<Action> getActionByType(String type);
+
 
 }

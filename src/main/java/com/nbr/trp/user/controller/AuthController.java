@@ -20,13 +20,11 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -80,15 +78,31 @@ public class AuthController {
             return ResponseEntity.status(403).body("Approval Required");
         }else if(userDetails.getStatus().equals("-3")){
             Action action = actionService.getActionByTypeAndTin("DENY",userDetails.getUsername());
-            return ResponseEntity.status(403).body("Log In Blocked");
+            return ResponseEntity.status(403).body(action);
         }
         else if(userDetails.getStatus().equals("-2")){
             Action action = actionService.getActionByTypeAndTin("BLOCK",userDetails.getUsername());
-            return ResponseEntity.status(403).body("Log In Blocked");
+            return ResponseEntity.status(403).body(action);
         }
-        else if(userDetails.getStatus().equals("-3")){
-            Action action = actionService.getActionByTypeAndTin("SUSPENDED",userDetails.getUsername());
-            return ResponseEntity.status(403).body("Log In Blocked");
+        else if(userDetails.getStatus().equals("-1")){
+            Action action = actionService.getActionByTypeAndTin("SUSPEND",userDetails.getUsername());
+            long timeStart = action.getActionFrom().getTime();
+            long timeEnd = action.getActionTo().getTime();
+            long now = new Date().getTime();
+            if(now<timeEnd)
+                return ResponseEntity.status(403).body(action);
+            else{
+                User user = userRepository.getByTin(userDetails.getUsername());
+                user.setStatus("1");
+                User u = userRepository.save(user);
+                List<String> roles = userDetails.getAuthorities()
+                        .stream().map(item -> item.getAuthority())
+                        .collect(Collectors.toList());
+
+                return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUuid(), userDetails.getUsername(),
+                        userDetails.getEmail(), roles)
+                );
+            }
         }else
             return ResponseEntity.status(403).body("Error! Please try again");
 

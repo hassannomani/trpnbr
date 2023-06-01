@@ -154,4 +154,31 @@ public class UserController {
         }
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/blocked")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> blockeduser() {
+
+        try{
+            List<User> user = userService.getAllBlockedUsers();
+            return ResponseEntity.ok(user);
+        }catch(Exception e){
+            return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
+        }
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/unblock/{tin}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> unblock(@PathVariable String tin) {
+
+        try{
+            User user = userService.approveRepUserByTin(tin);
+            return ResponseEntity.ok(user);
+        }catch(Exception e){
+            return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
+        }
+    }
+
+
 }

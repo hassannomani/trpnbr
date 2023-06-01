@@ -54,4 +54,9 @@ public class ActionServiceImpl implements ActionService{
         Action action = actionRepository.findActionWithTypeAndTin(type, tin);
         return action;
     }
+
+    public List<Action> getActionByType(String type){
+        List<Action> ls = actionRepository.findByActionType(type);
+        return ls;
+    }
 }

@@ -28,6 +28,9 @@ public interface UserService {
     public User blockRepuser(String tin);
 
     public User suspendRepuser(String tin);
+
+    public List<User> getAllBlockedUsers();
+
 //    public User rejectRepUserByTin(String tin);
 
 }

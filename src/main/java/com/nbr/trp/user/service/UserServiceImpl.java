@@ -69,24 +69,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User rejectRepuser(String id) {
-        User u = userRepository.findByUuid(id);
+    public User rejectRepuser(String uname) {
+        System.out.println("reched here");
+        User u = userRepository.getByTin(uname);
         u.setStatus("-3");
         User user = userRepository.save(u);
         return user;
     }
 
     @Override
-    public User blockRepuser(String id) {
-        User u = userRepository.findByUuid(id);
+    public User blockRepuser(String uname) {
+        User u = userRepository.getByTin(uname);
         u.setStatus("-2");
         User user = userRepository.save(u);
         return user;
     }
 
     @Override
-    public User suspendRepuser(String id) {
-        User u = userRepository.findByUuid(id);
+    public User suspendRepuser(String uname) {
+        User u = userRepository.getByTin(uname);
         u.setStatus("-1");
         User user = userRepository.save(u);
         return user;
@@ -110,5 +111,11 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.save(u);
         return user;
     }
+
+    public List<User> getAllBlockedUsers(){
+        List<User> ls = userRepository.findByStatus("-2");
+        return ls;
+    }
+
 
 }
