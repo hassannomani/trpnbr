@@ -180,5 +180,18 @@ public class UserController {
         }
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/denied")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> denieduser() {
+
+        try{
+            List<User> user = userService.getAllDeniedUsers();
+            return ResponseEntity.ok(user);
+        }catch(Exception e){
+            return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
+        }
+    }
+
 
 }

@@ -31,6 +31,8 @@ public interface UserService {
 
     public List<User> getAllBlockedUsers();
 
+    public List<User> getAllDeniedUsers();
+
 //    public User rejectRepUserByTin(String tin);
 
 }

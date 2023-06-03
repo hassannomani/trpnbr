@@ -117,5 +117,12 @@ public class UserServiceImpl implements UserService {
         return ls;
     }
 
+    public List<User> getAllDeniedUsers(){
+        List<User> ls = userRepository.findByStatus("-3");
+        return ls;
+    }
+
+
+
 
 }
