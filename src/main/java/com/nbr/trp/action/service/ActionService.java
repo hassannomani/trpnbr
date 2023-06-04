@@ -26,5 +26,4 @@ public interface ActionService {
 
     public List<Action> getActionByType(String type);
 
-
 }
