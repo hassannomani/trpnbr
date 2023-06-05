@@ -19,9 +19,6 @@ public class Metrics {
     @Column(name = "assessment_year",nullable = false)
     public String assessmentYear;
 
-    @Column(name = "fiscal_year",nullable = false)
-    public String fiscalYear;
-
     @Column(name = "minimum_tax",nullable = false)
     public Double minimumTax;
 
@@ -34,13 +31,16 @@ public class Metrics {
     @Column(name = "representative_rate",nullable = false)
     public Double representativeRate;
 
-    public Metrics(String mid, String assessmentYear, String fiscalYear, Double minimumTax, Double taxAmount, Double agentRate, Double representativeRate) {
+    @Column(name = "year_no",nullable = false)
+    public Double yearNo;
+
+    public Metrics(String mid, String assessmentYear, Double minimumTax, Double taxAmount, Double agentRate, Double representativeRate, Double yearNo) {
         this.mid = mid;
         this.assessmentYear = assessmentYear;
-        this.fiscalYear = fiscalYear;
         this.minimumTax = minimumTax;
         this.taxAmount = taxAmount;
         this.agentRate = agentRate;
         this.representativeRate = representativeRate;
+        this.yearNo = yearNo;
     }
 }
