@@ -89,8 +89,17 @@ public class AuthController {
             long timeStart = action.getActionFrom().getTime();
             long timeEnd = action.getActionTo().getTime();
             long now = new Date().getTime();
-            if(now<timeEnd)
+            if(now>=timeStart&&now<timeEnd)
                 return ResponseEntity.status(403).body(action);
+            else if(now<timeStart){
+                List<String> roles = userDetails.getAuthorities()
+                        .stream().map(item -> item.getAuthority())
+                        .collect(Collectors.toList());
+
+                return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUuid(), userDetails.getUsername(),
+                        userDetails.getEmail(), roles)
+                );
+            }
             else{
                 User user = userRepository.getByTin(userDetails.getUsername());
                 user.setStatus("1");

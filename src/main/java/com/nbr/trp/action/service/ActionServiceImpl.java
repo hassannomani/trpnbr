@@ -31,7 +31,8 @@ public class ActionServiceImpl implements ActionService{
 
     @Override
     public List<Action> getActionTrp(String tin) {
-        return actionRepository.findByReceiver(tin);
+
+        return actionRepository.findByReceiverOrderByActionSentDesc(tin);
     }
 
     @Override

@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.sql.Timestamp;
 
 @Entity
 @Setter
@@ -19,8 +22,8 @@ public class Metrics {
     @Column(name = "assessment_year",nullable = false)
     public String assessmentYear;
 
-    @Column(name = "minimum_tax",nullable = false)
-    public Double minimumTax;
+//    @Column(name = "minimum_tax",nullable = false)
+//    public Double minimumTax;
 
     @Column(name = "tax_amount",nullable = false)
     public Double taxAmount;
@@ -32,15 +35,23 @@ public class Metrics {
     public Double representativeRate;
 
     @Column(name = "year_no",nullable = false)
-    public Double yearNo;
+    public int yearNo;
 
-    public Metrics(String mid, String assessmentYear, Double minimumTax, Double taxAmount, Double agentRate, Double representativeRate, Double yearNo) {
+    @Column(name = "slot_no",nullable = false)
+    public int slotNo;
+
+    @Column(name = "created_at")
+    @CreationTimestamp
+    public Timestamp created_at;
+
+    public Metrics(String mid, String assessmentYear, Double taxAmount, Double agentRate, Double representativeRate, int yearNo, int slotNo, Timestamp created_at) {
         this.mid = mid;
         this.assessmentYear = assessmentYear;
-        this.minimumTax = minimumTax;
         this.taxAmount = taxAmount;
         this.agentRate = agentRate;
         this.representativeRate = representativeRate;
         this.yearNo = yearNo;
+        this.slotNo = slotNo;
+        this.created_at = created_at;
     }
 }

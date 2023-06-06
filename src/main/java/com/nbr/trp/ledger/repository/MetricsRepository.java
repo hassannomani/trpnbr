@@ -15,12 +15,13 @@ public interface MetricsRepository extends JpaRepository<Metrics, String> {
 
     List<Metrics> findByAssessmentYear(String id);
 
-    List<Metrics> findByFiscalYear(String id);
-
     Metrics save(Metrics metrics);
 
     Optional<Metrics> findByMid(String id);
 
     List<Metrics> findAll();
+
+    Metrics findByAssessmentYearAndSlotNo(String year,int slot);
+
 
 }
