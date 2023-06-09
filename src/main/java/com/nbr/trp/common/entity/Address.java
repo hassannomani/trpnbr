@@ -33,14 +33,26 @@ public class Address {
     @Column(name = "house")
     public String house;
 
+    @Column(name = "flat")
+    public String flat;
+
     @Column(name = "road")
     public String road;
+
+    @Column(name = "citycorporation")
+    public String citycorporation;
 
     @Column(name = "block")
     public String block;
 
+    @Column(name = "village_union")
+    public String villageUnion;
+
     @Column(name = "ward")
     public String ward;
+
+    @Column(name = "others")
+    public String others;
 
     @Column(name = "added_by")
     public String addedBy;
@@ -62,15 +74,19 @@ public class Address {
     @Column(name = "Updated_from_ip")
     public String updatedFromIP;
 
-    public Address(String uuid, String type, String thana, String district, String house, String road, String block, String ward, String addedBy, LocalDateTime addedDate, String addedFromIP, String updatedBy, LocalDateTime updatedDate, String updatedFromIP) {
+    public Address(String uuid, String type, String thana, String district, String house, String flat, String road, String citycorporation, String block, String villageUnion, String ward, String others, String addedBy, LocalDateTime addedDate, String addedFromIP, String updatedBy, LocalDateTime updatedDate, String updatedFromIP) {
         this.uuid = uuid;
         this.type = type;
         this.thana = thana;
         this.district = district;
         this.house = house;
+        this.flat = flat;
         this.road = road;
+        this.citycorporation = citycorporation;
         this.block = block;
+        this.villageUnion = villageUnion;
         this.ward = ward;
+        this.others = others;
         this.addedBy = addedBy;
         this.addedDate = addedDate;
         this.addedFromIP = addedFromIP;

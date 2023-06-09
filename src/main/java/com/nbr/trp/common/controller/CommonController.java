@@ -106,6 +106,19 @@ public class CommonController {
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/citycorporation")
+    public ResponseEntity<?> getCityCorporation() {
+        try{
+            List<CityCorporation> ds = commonService.getAllCityCorporation();
+            // return ResponseEntity.ok(new MessageResponse("Representative registered successfully!"));
+            return new ResponseEntity<>(ds, HttpStatus.CREATED);
+
+        }catch(Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        }
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/bankbranches/{name}/{district}")
     public ResponseEntity<?> getBankBranches(@PathVariable String name, @PathVariable String district) {
         System.out.println(name+" "+district);

@@ -17,5 +17,7 @@ public interface CommonService {
     List<BankDistrict> getAllBankDist();
     List<Bank> getAllBankBranches(String bank, String district);
 
+    List<CityCorporation> getAllCityCorporation();
+
 
 }
