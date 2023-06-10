@@ -16,10 +16,11 @@ public class MetricsServiceImpl implements MetricsService{
     }
 
     @Override
-    public Metrics saveMetrics(Metrics metrics) {
+    public void saveMetrics(Metrics metrics) {
 
-        Metrics metrics1 = metricsRepository.findByAssessmentYearAndSlotNo(metrics.getAssessmentYear(),metrics.getSlotNo());
-        return metricsRepository.save(metrics);
+        //Metrics metrics1 = metricsRepository.findByAssessmentYearAndSlotNo(metrics.getAssessmentYear(),metrics.getSlotNo());
+
+         metricsRepository.save(metrics);
     }
 
     @Override
@@ -35,5 +36,11 @@ public class MetricsServiceImpl implements MetricsService{
     @Override
     public Metrics getByMid(String mid) {
         return null;
+    }
+
+    @Override
+    public List<Metrics> getAllMetrics(){
+        List<Metrics> ls = metricsRepository.findAllByOrderBySlotNoAscYearNoAsc();
+        return  ls;
     }
 }

@@ -23,5 +23,7 @@ public interface MetricsRepository extends JpaRepository<Metrics, String> {
 
     Metrics findByAssessmentYearAndSlotNo(String year,int slot);
 
+    List<Metrics> findAllByOrderBySlotNoAscYearNoAsc();
+
 
 }

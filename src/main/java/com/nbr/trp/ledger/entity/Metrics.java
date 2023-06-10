@@ -22,8 +22,8 @@ public class Metrics {
     @Column(name = "assessment_year",nullable = false)
     public String assessmentYear;
 
-//    @Column(name = "minimum_tax",nullable = false)
-//    public Double minimumTax;
+    @Column(name = "payment_rule")
+    public Double paymentRule;
 
     @Column(name = "tax_amount",nullable = false)
     public Double taxAmount;
@@ -44,9 +44,10 @@ public class Metrics {
     @CreationTimestamp
     public Timestamp created_at;
 
-    public Metrics(String mid, String assessmentYear, Double taxAmount, Double agentRate, Double representativeRate, int yearNo, int slotNo, Timestamp created_at) {
+    public Metrics(String mid, String assessmentYear, Double paymentRule, Double taxAmount, Double agentRate, Double representativeRate, int yearNo, int slotNo, Timestamp created_at) {
         this.mid = mid;
         this.assessmentYear = assessmentYear;
+        this.paymentRule = paymentRule;
         this.taxAmount = taxAmount;
         this.agentRate = agentRate;
         this.representativeRate = representativeRate;

@@ -34,23 +34,32 @@ public class Ledger {
     @Column(name = "payment_method",nullable = false)
     public String paymentMethod;
 
-    @Column(name = "transaction_id",nullable = false)
+    @Column(name = "transaction_id")
     public String transactionId;
+
+    @Column(name = "challan_id")
+    public String challanId;
 
     @Column(name = "assessment_year",nullable = false)
     public String assessmentYear;
 
-    @Column(name = "agent_tin")
+    @Column(name = "agent_tin",nullable = false)
     public String agentTin;
 
-    @Column(name = "representative_tin")
+    @Column(name = "representative_tin",nullable = false)
     public String representativeTin;
+
+    @Column(name = "year_no")
+    public String yearNo;
+
+    @Column(name = "remarks")
+    public String remarks;
 
     @Column(name = "created_at")
     @CreationTimestamp
     public Timestamp created_at;
 
-    public Ledger(String lid, String taxpayerId, String paidAmount, String minimumTax, String paymentRule, String paymentMethod, String transactionId, String assessmentYear, String agentTin, String representativeTin, Timestamp created_at) {
+    public Ledger(String lid, String taxpayerId, String paidAmount, String minimumTax, String paymentRule, String paymentMethod, String transactionId, String challanId, String assessmentYear, String agentTin, String representativeTin, String yearNo, String remarks, Timestamp created_at) {
         this.lid = lid;
         this.taxpayerId = taxpayerId;
         this.paidAmount = paidAmount;
@@ -58,9 +67,12 @@ public class Ledger {
         this.paymentRule = paymentRule;
         this.paymentMethod = paymentMethod;
         this.transactionId = transactionId;
+        this.challanId = challanId;
         this.assessmentYear = assessmentYear;
         this.agentTin = agentTin;
         this.representativeTin = representativeTin;
+        this.yearNo = yearNo;
+        this.remarks = remarks;
         this.created_at = created_at;
     }
 }
