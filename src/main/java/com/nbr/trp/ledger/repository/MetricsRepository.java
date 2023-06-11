@@ -21,7 +21,7 @@ public interface MetricsRepository extends JpaRepository<Metrics, String> {
 
     List<Metrics> findAll();
 
-    Metrics findByAssessmentYearAndSlotNo(String year,int slot);
+    List<Metrics> findByAssessmentYearAndYearNoOrderBySlotNo(String year,int yearno);
 
     List<Metrics> findAllByOrderBySlotNoAscYearNoAsc();
 

@@ -31,7 +31,7 @@ public class Commission {
 
     @NonNull
     @Column(nullable = false ,name = "credit_code")
-    private double creditCode;
+    private String creditCode;
 
     @NonNull
     @Column(nullable = false,name = "amount")
@@ -67,7 +67,7 @@ public class Commission {
     @Column(name = "payment_no")
     private String paymentNo;
 
-    public Commission(String creation_no, Date creationDate, String debitCode, double creditCode, String amount, String remarks, String invoiceDate, String billDate, String paymentDate, String billNo, String invoiceNo, String paymentNo) {
+    public Commission(String creation_no, Date creationDate, String debitCode, String creditCode, String amount, String remarks, String invoiceDate, String billDate, String paymentDate, String billNo, String invoiceNo, String paymentNo) {
         this.creationNo = creation_no;
         this.creationDate = creationDate;
         this.debitCode = debitCode;

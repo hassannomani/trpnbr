@@ -1,5 +1,6 @@
 package com.nbr.trp.ledger.service;
 
+import com.nbr.trp.commission.exception.ItemNotFoundException;
 import com.nbr.trp.ledger.entity.Ledger;
 import org.springframework.stereotype.Service;
 
@@ -24,5 +25,11 @@ public interface LedgerService {
 
     public List<Ledger> getLedgersOfARepresentativeRange(String id, String Start, String end);
     public List<Ledger> getLedgersOfAnAgentRange(String id, String Start, String end);
+
+    public void checkItems(Ledger ledger);
+
+    public void saveCommission(Ledger ledger) throws ItemNotFoundException;
+
+    public List<Ledger> getByAssmentYrAndTin(String assmnt, String tin);
 
 }

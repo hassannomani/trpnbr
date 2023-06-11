@@ -2,6 +2,8 @@ package com.nbr.trp.ledger.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.nbr.trp.commission.entity.Items;
+import com.nbr.trp.commission.service.ItemsService;
 import com.nbr.trp.ledger.entity.Ledger;
 import com.nbr.trp.ledger.service.LedgerService;
 import com.nbr.trp.user.response.MessageResponse;
@@ -11,6 +13,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,11 +25,25 @@ public class LedgerController {
     @Autowired
     LedgerService ledgerService;
 
+    @Autowired
+    ItemsService itemsService;
+
     @PostMapping("/")
     public ResponseEntity<?> saveLedger(@RequestBody Ledger ld){
         try{
-            Ledger ldg = ledgerService.saveLedger(ld);
-            return ResponseEntity.ok(ldg);
+            List<Ledger> ldPreli = ledgerService.getByAssmentYrAndTin(ld.getAssessmentYear(),ld.getTaxpayerId());
+            System.out.println(ldPreli.size());
+            if(ldPreli.size()==0){
+                System.out.println("null found");
+                Ledger ldg = ledgerService.saveLedger(ld);
+                ledgerService.checkItems(ld);
+                ledgerService.saveCommission(ld);
+                return ResponseEntity.ok(ldg);
+            }else{
+                System.out.println("bad request");
+                return ResponseEntity.badRequest().body(new MessageResponse("Duplicate entry not allowed"));
+            }
+
         } catch(Exception e){
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
         }
