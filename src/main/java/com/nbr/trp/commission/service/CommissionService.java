@@ -19,4 +19,6 @@ public interface CommissionService {
     public List<Commission> getCommissionByCreditCode(String code);
 
     public HashMap<String, String> calculateCommission(Ledger ld);
+
+    public List<Commission> getAll();
 }

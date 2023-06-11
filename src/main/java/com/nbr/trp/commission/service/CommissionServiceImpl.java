@@ -39,7 +39,7 @@ public class CommissionServiceImpl implements CommissionService {
 
     @Override
     public List<Commission> getCommissionByCreditCode(String code) {
-        return null;
+        return commissionRepository.findByCreditCode(code);
     }
 
     public HashMap<String, String> calculateCommission(Ledger ld){
@@ -100,6 +100,11 @@ public class CommissionServiceImpl implements CommissionService {
         return hashMap;
 
     }
+
+    public List<Commission> getAll(){
+        return commissionRepository.findAll();
+    }
+
 
 }
 
