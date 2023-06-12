@@ -19,7 +19,7 @@ public interface LedgerRepository extends JpaRepository<Ledger, String>{
 
     Ledger save(Ledger ledger);
 
-    Optional<Ledger> findByLid(String id);
+    Ledger findByLid(String id);
 
     List<Ledger> findAll();
 

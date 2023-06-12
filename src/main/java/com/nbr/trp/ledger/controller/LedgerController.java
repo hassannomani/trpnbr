@@ -37,7 +37,7 @@ public class LedgerController {
                 System.out.println("null found");
                 Ledger ldg = ledgerService.saveLedger(ld);
                 ledgerService.checkItems(ld);
-                ledgerService.saveCommission(ld);
+                ledgerService.saveCommission(ldg);
                 return ResponseEntity.ok(ldg);
             }else{
                 System.out.println("bad request");
@@ -122,6 +122,17 @@ public class LedgerController {
         try{
             List<Ledger> ldglist = ledgerService.getLedgersOfAnAgentRange(agentId,start,end);
             return ResponseEntity.ok(ldglist);
+        } catch(Exception e){
+            return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
+        }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getLedgerById(@PathVariable String id){
+
+        try{
+            Ledger ldg = ledgerService.getByLid(id);
+            return ResponseEntity.ok(ldg);
         } catch(Exception e){
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
         }

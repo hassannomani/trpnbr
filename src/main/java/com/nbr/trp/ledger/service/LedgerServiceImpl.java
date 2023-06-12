@@ -152,6 +152,7 @@ public class LedgerServiceImpl implements  LedgerService
                 cmtrp.setCreditCode(trp.getItemCode());
                 cmtrp.setAmount(String.valueOf(commission*0.9));
                 cmtrp.setRemarks(remarks);
+                cmtrp.setLedgerId(ledger.getLid());
                 Commission cmsaved = commissionService.saveCommission(cmtrp);
 
             }
@@ -161,6 +162,7 @@ public class LedgerServiceImpl implements  LedgerService
                 cmag.setCreditCode(agent.getItemCode());
                 cmag.setAmount(String.valueOf(commission*0.1));
                 cmag.setRemarks(remarks);
+                cmag.setLedgerId(ledger.getLid());
                 Commission cmsaved = commissionService.saveCommission(cmag);
             }
         }else {
@@ -173,6 +175,11 @@ public class LedgerServiceImpl implements  LedgerService
         List<Ledger> ld = ledgerRepository.findByAssessmentYearAndTaxpayerId(assmnt,tin);
         return ld;
     }
+
+    public Ledger getByLid(String id){
+        return ledgerRepository.findByLid(id);
+    }
+
 
 
 

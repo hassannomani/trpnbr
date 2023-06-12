@@ -68,31 +68,31 @@ public class CommissionServiceImpl implements CommissionService {
             rest = paidAmount - amount[0];
             if(rest>amount[1]){
                 sum = amount[0] *rate[0] + (amount[1]*rate[1]);
-                remarks = "Added commission for amount "+amount[0]+ " at rate "+ rate[0]+". ";
-                remarks+= "Added commission for amount "+amount[1]+ " at rate "+ rate[1]+". ";
+                remarks = "Added commission for amount "+String.format("%.2f", amount[0])+ " at rate "+ String.format("%.2f", rate[0])+". ";
+                remarks+= "Added commission for amount "+String.format("%.2f", amount[1])+ " at rate "+ String.format("%.2f", rate[1])+". ";
 
                 rest = paidAmount - amount[0] - amount[1];
                 if(rest>amount[2]){
                     sum = sum+ (amount[2]*rate[2]);
                     rest = rest - amount[2];
                     sum = sum + (rest*rate[3]);
-                    remarks+= "Added commission for amount "+amount[2]+ " at rate "+ rate[2]+". ";
-                    remarks+= "Added commission for amount "+rest+ " at rate "+ rate[3]+". ";
+                    remarks+= "Added commission for amount "+String.format("%.2f", amount[2])+ " at rate "+ String.format("%.2f", rate[2])+". ";
+                    remarks+= "Added commission for amount "+String.format("%.2f", rest)+ " at rate "+ String.format("%.2f", rate[3])+". ";
 
                 }else{
                     sum= sum+ (rest*rate[2]);
-                    remarks+= "Added commission for amount "+rest+ " at rate "+ rate[2]+". ";
+                    remarks+= "Added commission for amount "+String.format("%.2f", rest)+ " at rate "+ String.format("%.2f", rate[2])+". ";
 
                 }
             } else {
                 sum = amount[0] *rate[0] + (paidAmount-amount[0])*rate[1];
-                remarks = "Added commission for amount "+amount[0]+ " at rate "+ rate[0]+". ";
-                remarks+= "Added commission for amount "+(paidAmount-amount[0])+ " at rate "+ rate[1]+". ";
+                remarks = "Added commission for amount "+String.format("%.2f", amount[0])+ " at rate "+ String.format("%.2f", rate[0])+". ";
+                remarks+= "Added commission for amount "+String.format("%.2f", (paidAmount-amount[0]))+ " at rate "+ String.format("%.2f", rate[1])+". ";
 
             }
         }else{   //otherwise
             sum = paidAmount * (rate[0]);
-            remarks = "Added commission for amount "+paidAmount+ " at rate "+ rate[0]+". ";
+            remarks = "Added commission for amount "+String.format("%.2f", paidAmount)+ " at rate "+ String.format("%.2f", rate[0])+". ";
         }
         HashMap <String, String> hashMap= new HashMap<>();
         hashMap.put("sum", String.valueOf(sum));

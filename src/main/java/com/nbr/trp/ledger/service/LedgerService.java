@@ -32,4 +32,7 @@ public interface LedgerService {
 
     public List<Ledger> getByAssmentYrAndTin(String assmnt, String tin);
 
+    public Ledger getByLid(String id);
+
+
 }

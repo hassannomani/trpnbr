@@ -67,7 +67,10 @@ public class Commission {
     @Column(name = "payment_no")
     private String paymentNo;
 
-    public Commission(String creation_no, Date creationDate, String debitCode, String creditCode, String amount, String remarks, String invoiceDate, String billDate, String paymentDate, String billNo, String invoiceNo, String paymentNo) {
+    @Column(name = "ledger_id")
+    private String ledgerId;
+
+    public Commission(String creation_no, Date creationDate, String debitCode, String creditCode, String amount, String remarks, String invoiceDate, String billDate, String paymentDate, String billNo, String invoiceNo, String paymentNo, String ledgerId) {
         this.creationNo = creation_no;
         this.creationDate = creationDate;
         this.debitCode = debitCode;
@@ -80,6 +83,7 @@ public class Commission {
         this.billNo = billNo;
         this.invoiceNo = invoiceNo;
         this.paymentNo = paymentNo;
+        this.ledgerId = ledgerId;
     }
 }
 
