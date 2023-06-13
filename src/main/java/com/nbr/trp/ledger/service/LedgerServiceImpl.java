@@ -180,6 +180,11 @@ public class LedgerServiceImpl implements  LedgerService
         return ledgerRepository.findByLid(id);
     }
 
+    public List<Object[]> getGraphData(){
+        return ledgerRepository.graphDataSample();
+    }
+
+
 
 
 

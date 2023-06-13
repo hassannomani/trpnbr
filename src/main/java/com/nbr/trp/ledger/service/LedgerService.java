@@ -34,5 +34,7 @@ public interface LedgerService {
 
     public Ledger getByLid(String id);
 
+    public List<Object[]> getGraphData();
+
 
 }

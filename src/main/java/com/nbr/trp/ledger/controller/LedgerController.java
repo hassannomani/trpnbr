@@ -12,10 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @CrossOrigin(origins = "*", maxAge = 4800)
 @RestController
@@ -133,6 +130,17 @@ public class LedgerController {
         try{
             Ledger ldg = ledgerService.getByLid(id);
             return ResponseEntity.ok(ldg);
+        } catch(Exception e){
+            return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
+        }
+    }
+
+    @GetMapping("/graph/trp")
+    public ResponseEntity<?> getGraphTrp(){
+
+        try{
+            List<Object[]> ob = ledgerService.getGraphData();
+            return ResponseEntity.ok(ob);
         } catch(Exception e){
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
         }
