@@ -22,7 +22,7 @@ public interface UserRepository extends JpaRepository<User, String> {
     User findByUuid(String uuid);
 
 
-    @Query(value = "select * from users where status=0",
+    @Query(value = "select * from users where status=0 order by added_date desc",
             nativeQuery = true)
     List<User> findAllPending();
 

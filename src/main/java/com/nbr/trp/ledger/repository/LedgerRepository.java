@@ -42,6 +42,10 @@ public interface LedgerRepository extends JpaRepository<Ledger, String>{
     @Query(value = "select sum(isnull(cast(paid_amount as float),0)) as sum, representative_tin from ledger group by representative_tin",nativeQuery = true)
     List<Object[]> graphDataSample();
 
+    @Query(value = "select sum(isnull(cast(paid_amount as float),0)) as amount, sum(representative_commission) as trp, sum(agent_commission) as agent, representative_tin\n" +
+            "from ledger where agent_tin = :agentTin group by representative_tin",nativeQuery = true)
+    List<Object[]> agentCommissionView(@Param("agentTin") String id);
+
 
 }
 

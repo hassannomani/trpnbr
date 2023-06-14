@@ -12,6 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.*;
 
 @CrossOrigin(origins = "*", maxAge = 4800)
@@ -32,9 +35,10 @@ public class LedgerController {
             System.out.println(ldPreli.size());
             if(ldPreli.size()==0){
                 System.out.println("null found");
-                Ledger ldg = ledgerService.saveLedger(ld);
                 ledgerService.checkItems(ld);
-                ledgerService.saveCommission(ldg);
+                Ledger ldg = ledgerService.saveLedger(ld);
+
+                //ledgerService.saveCommission(ldg);
                 return ResponseEntity.ok(ldg);
             }else{
                 System.out.println("bad request");
@@ -60,6 +64,16 @@ public class LedgerController {
     public ResponseEntity<?> getLadgersOfAnAgent(@PathVariable String id){
         try{
             List<Ledger> ldgs = ledgerService.getLadgersOfAnAgent(id);
+            return ResponseEntity.ok(ldgs);
+        } catch(Exception e){
+            return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
+        }
+    }
+
+    @GetMapping("/agent/commission/{id}")
+    public ResponseEntity<?> getAgentCommissionView(@PathVariable String id){
+        try{
+            List<Object[]> ldgs = ledgerService.getAgentCommissionView(id);
             return ResponseEntity.ok(ldgs);
         } catch(Exception e){
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
@@ -144,6 +158,17 @@ public class LedgerController {
         } catch(Exception e){
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
         }
+    }
+
+    @GetMapping("/calc/{num}")
+    public ResponseEntity<?> numTest(@PathVariable String num){
+
+      Double d= Double.parseDouble(num);
+        DecimalFormat df = new DecimalFormat("#.#");
+        df.setRoundingMode(RoundingMode.CEILING);
+                System.out.println(df.format(d));
+        return ResponseEntity.ok(df.format(d));
+
     }
 
 

@@ -9,16 +9,15 @@ import com.nbr.trp.ledger.entity.Ledger;
 import com.nbr.trp.ledger.repository.LedgerRepository;
 import com.nbr.trp.user.entity.User;
 import com.nbr.trp.user.repository.UserRepository;
-import com.nbr.trp.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.RoundingMode;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -41,8 +40,45 @@ public class LedgerServiceImpl implements  LedgerService
     @Override
     public Ledger saveLedger(Ledger ledger) {
 
+        HashMap<String, String> returnedVal = commissionService.calculateCommission(ledger);
+        Double commission = Double.valueOf(returnedVal.get("sum"));
+        String remarks = returnedVal.get("remarks");
+        ledger.setRemarks(remarks);
+        Double agent = commission*0.1;
+        Double trp = commission *0.9;
+        DecimalFormat df = new DecimalFormat("#.#");
+        df.setRoundingMode(RoundingMode.CEILING);
+        Double agentFin = Double.valueOf(df.format(agent));
+        Double trpFin = Double.valueOf(df.format(trp));
+        ledger.setAgentCommission(agentFin);
+        ledger.setRepresentativeCommission(trpFin);
+        ledger.setBillSubmitted("0");
         Ledger ldg = ledgerRepository.save(ledger);
         return ldg;
+
+//        ledger.setAgentCommission();
+//            if(trp!=null){
+//                Commission cmtrp = new Commission();
+//                cmtrp.setDebitCode(bank.getItemCode());
+//                cmtrp.setCreditCode(trp.getItemCode());
+//                cmtrp.setTaxpayerId(ledger.getTaxpayerId());
+//                cmtrp.setAmount(String.valueOf(commission*0.9));
+//                cmtrp.setRemarks(remarks);
+//                cmtrp.setLedgerId(ledger.getLid());
+//                Commission cmsaved = commissionService.saveCommission(cmtrp);
+//
+//            }
+//            if(agent!=null){
+//                Commission cmag = new Commission();
+//                cmag.setDebitCode(bank.getItemCode());
+//                cmag.setCreditCode(agent.getItemCode());
+//                cmag.setTaxpayerId(ledger.getTaxpayerId());
+//                cmag.setAmount(String.valueOf(commission*0.1));
+//                cmag.setRemarks(remarks);
+//                cmag.setLedgerId(ledger.getLid());
+//                Commission cmsaved = commissionService.saveCommission(cmag);
+//            }
+
     }
 
     @Override
@@ -150,6 +186,7 @@ public class LedgerServiceImpl implements  LedgerService
                 Commission cmtrp = new Commission();
                 cmtrp.setDebitCode(bank.getItemCode());
                 cmtrp.setCreditCode(trp.getItemCode());
+                cmtrp.setTaxpayerId(ledger.getTaxpayerId());
                 cmtrp.setAmount(String.valueOf(commission*0.9));
                 cmtrp.setRemarks(remarks);
                 cmtrp.setLedgerId(ledger.getLid());
@@ -160,6 +197,7 @@ public class LedgerServiceImpl implements  LedgerService
                 Commission cmag = new Commission();
                 cmag.setDebitCode(bank.getItemCode());
                 cmag.setCreditCode(agent.getItemCode());
+                cmag.setTaxpayerId(ledger.getTaxpayerId());
                 cmag.setAmount(String.valueOf(commission*0.1));
                 cmag.setRemarks(remarks);
                 cmag.setLedgerId(ledger.getLid());
@@ -183,6 +221,11 @@ public class LedgerServiceImpl implements  LedgerService
     public List<Object[]> getGraphData(){
         return ledgerRepository.graphDataSample();
     }
+
+    public List<Object[]> getAgentCommissionView(String tin){
+        return ledgerRepository.agentCommissionView(tin);
+    }
+
 
 
 

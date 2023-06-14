@@ -4,7 +4,6 @@ import com.nbr.trp.commission.exception.ItemNotFoundException;
 import com.nbr.trp.ledger.entity.Ledger;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -19,6 +18,8 @@ public interface LedgerService {
     public List<Ledger> getAll();
 
     public List<Ledger> getLadgersOfAnAgent(String id);
+    public List<Object[]> getAgentCommissionView(String tin);
+
     public List<Ledger> getLedgersOfARepresentative(String id);
 
     public List<Ledger> getLedgersOfAdmin();

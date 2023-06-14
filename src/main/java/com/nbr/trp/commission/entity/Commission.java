@@ -38,6 +38,10 @@ public class Commission {
     private String amount;
 
     @NonNull
+    @Column(nullable = false,name = "taxpayerId")
+    private String taxpayerId;
+
+    @NonNull
     @Column(name = "remarks")
     private String remarks;
 
@@ -70,12 +74,13 @@ public class Commission {
     @Column(name = "ledger_id")
     private String ledgerId;
 
-    public Commission(String creation_no, Date creationDate, String debitCode, String creditCode, String amount, String remarks, String invoiceDate, String billDate, String paymentDate, String billNo, String invoiceNo, String paymentNo, String ledgerId) {
+    public Commission(String creation_no, Date creationDate, String debitCode, String creditCode, String amount, String taxpayerId, String remarks, String invoiceDate, String billDate, String paymentDate, String billNo, String invoiceNo, String paymentNo, String ledgerId) {
         this.creationNo = creation_no;
         this.creationDate = creationDate;
         this.debitCode = debitCode;
         this.creditCode = creditCode;
         this.amount = amount;
+        this.taxpayerId = taxpayerId;
         this.remarks = remarks;
         this.invoiceDate = invoiceDate;
         this.billDate = billDate;
