@@ -2,6 +2,7 @@ package com.nbr.trp.ledger.service;
 
 import com.nbr.trp.commission.exception.ItemNotFoundException;
 import com.nbr.trp.ledger.entity.Ledger;
+import com.nbr.trp.ledger.entity.LedgerAdminView;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public interface LedgerService {
 
     public List<Ledger> getLedgerWithinRange(String start, String end);
 
-    public List<Ledger> getAll();
+    public List<LedgerAdminView> getAll();
 
     public List<Ledger> getLadgersOfAnAgent(String id);
     public List<Object[]> getAgentCommissionView(String tin);

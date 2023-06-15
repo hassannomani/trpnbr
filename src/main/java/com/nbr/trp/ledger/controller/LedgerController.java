@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.nbr.trp.commission.entity.Items;
 import com.nbr.trp.commission.service.ItemsService;
 import com.nbr.trp.ledger.entity.Ledger;
+import com.nbr.trp.ledger.entity.LedgerAdminView;
 import com.nbr.trp.ledger.service.LedgerService;
 import com.nbr.trp.user.response.MessageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,10 +51,11 @@ public class LedgerController {
         }
     }
 
-    @GetMapping("/")
+    @GetMapping("")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getLadgers(){
         try{
-            List<Ledger> ldgs = ledgerService.getAll();
+            List<LedgerAdminView> ldgs = ledgerService.getAll();
             return ResponseEntity.ok(ldgs);
         } catch(Exception e){
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));

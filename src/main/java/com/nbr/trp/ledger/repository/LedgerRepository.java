@@ -1,6 +1,7 @@
 package com.nbr.trp.ledger.repository;
 
 import com.nbr.trp.ledger.entity.Ledger;
+import com.nbr.trp.ledger.entity.LedgerAdminView;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -22,6 +23,14 @@ public interface LedgerRepository extends JpaRepository<Ledger, String>{
     Ledger findByLid(String id);
 
     List<Ledger> findAll();
+
+    @Query(value = "select ledger.*, agent.name as name, representative.re_name as re_name from ledger \n" +
+            "join agent on \n" +
+            "ledger.agent_tin=agent.tin  \n" +
+            "join representative on\n" +
+            "ledger.representative_tin=representative.tin_no order by created_at desc",nativeQuery = true)
+    List<LedgerAdminView> findAllSorted();
+
 
 
     List<Ledger> findByAgentTin(String id);

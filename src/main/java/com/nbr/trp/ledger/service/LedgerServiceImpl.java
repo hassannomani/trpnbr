@@ -6,6 +6,7 @@ import com.nbr.trp.commission.exception.ItemNotFoundException;
 import com.nbr.trp.commission.service.CommissionService;
 import com.nbr.trp.commission.service.ItemsService;
 import com.nbr.trp.ledger.entity.Ledger;
+import com.nbr.trp.ledger.entity.LedgerAdminView;
 import com.nbr.trp.ledger.repository.LedgerRepository;
 import com.nbr.trp.user.entity.User;
 import com.nbr.trp.user.repository.UserRepository;
@@ -87,8 +88,8 @@ public class LedgerServiceImpl implements  LedgerService
     }
 
     @Override
-    public List<Ledger> getAll() {
-        return null;
+    public List<LedgerAdminView> getAll() {
+        return ledgerRepository.findAllSorted();
     }
 
     @Override
