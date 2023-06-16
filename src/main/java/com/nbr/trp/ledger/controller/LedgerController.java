@@ -152,7 +152,7 @@ public class LedgerController {
     }
 
     @GetMapping("/graph/trp")
-    public ResponseEntity<?> getGraphTrp(){
+    public ResponseEntity<?> getGraphOfTrpForAdmin(){
 
         try{
             List<Object[]> ob = ledgerService.getGraphData();
@@ -172,6 +172,41 @@ public class LedgerController {
         return ResponseEntity.ok(df.format(d));
 
     }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/graph/agent/{tin}")
+    public ResponseEntity<?> getGraphTrp(@PathVariable String tin){
+
+        try{
+            List<Object[]> ob = ledgerService.getGraphDataForAgent(tin);
+            return ResponseEntity.ok(ob);
+        } catch(Exception e){
+            return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
+        }
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/agenttrp/{agent}/{trp}")
+    public ResponseEntity<?> getGraphTrp(@PathVariable String agent, @PathVariable String trp){
+        try{
+            List<Ledger> ob = ledgerService.getTRPCommissionOfAnAgent(agent,trp);
+            return ResponseEntity.ok(ob);
+        } catch(Exception e){
+            return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
+        }
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/rangetrp/{agent}/{trp}/{start}/{end}")
+    public ResponseEntity<?> getTrpOfAnAgentLedgerRange(@PathVariable String agent,@PathVariable String trp,@PathVariable String start, @PathVariable String end){
+        try{
+            List<Ledger> ldglist = ledgerService.getTRPCommissionWithinRange(agent, trp,start,end);
+            return ResponseEntity.ok(ldglist);
+        } catch(Exception e){
+            return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
+        }
+    }
+
 
 
 

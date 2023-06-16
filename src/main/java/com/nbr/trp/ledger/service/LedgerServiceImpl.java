@@ -228,6 +228,21 @@ public class LedgerServiceImpl implements  LedgerService
     }
 
 
+    public List<Object[]> getGraphDataForAgent(String agent){
+        return ledgerRepository.graphDataAgent(agent);
+    }
+
+    public List<Ledger> getTRPCommissionOfAnAgent(String agent, String trp){
+        return ledgerRepository.findByAgentTinAndRepresentativeTin(agent,trp);
+    }
+
+    public List<Ledger> getTRPCommissionWithinRange(String agent, String trp, String start, String end){
+        java.sql.Timestamp t1 = convertStringToTimestamp(start,0);
+        java.sql.Timestamp t2 = convertStringToTimestamp(end,1);
+        return ledgerRepository.getTRPCommissionWithinRange(agent, trp, t1, t2);
+    }
+
+
 
 
 

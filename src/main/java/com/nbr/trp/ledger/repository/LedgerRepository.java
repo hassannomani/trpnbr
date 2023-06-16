@@ -48,15 +48,23 @@ public interface LedgerRepository extends JpaRepository<Ledger, String>{
 
     List<Ledger> findByAssessmentYearAndTaxpayerId(String year, String id);
 
-    @Query(value = "select sum(isnull(cast(paid_amount as float),0)) as sum, representative_tin from ledger group by representative_tin",nativeQuery = true)
+    @Query(value = "select top 10 sum(isnull(cast(paid_amount as float),0)) as sum, representative_tin from ledger group by representative_tin",nativeQuery = true)
     List<Object[]> graphDataSample();
 
     @Query(value = "select sum(isnull(cast(paid_amount as float),0)) as amount, sum(representative_commission) as trp, sum(agent_commission) as agent, representative_tin\n" +
             "from ledger where agent_tin = :agentTin group by representative_tin",nativeQuery = true)
     List<Object[]> agentCommissionView(@Param("agentTin") String id);
 
+    @Query(value = "select top 10 sum(isnull(cast(paid_amount as float),0)) as sum, representative_tin from ledger where agent_tin = :agentTin group by representative_tin",nativeQuery = true)
+    List<Object[]> graphDataAgent(@Param("agentTin") String tin);
 
-}
+    List<Ledger> findByAgentTinAndRepresentativeTin(String agent, String trp);
+
+    @Query(value = "select * from ledger where created_at >= :startDate AND created_at <=:endDate AND agent_tin=:agTin AND representative_tin=:trpTin",nativeQuery = true)
+    List<Ledger> getTRPCommissionWithinRange(@Param("agTin") String agTin, @Param("trpTin") String trpTin, @Param("startDate") Timestamp startDate, @Param("endDate")Timestamp endDate);
+
+
+    }
 
 
 
