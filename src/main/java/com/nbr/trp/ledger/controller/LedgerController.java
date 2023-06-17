@@ -207,6 +207,17 @@ public class LedgerController {
         }
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/taxpayertrp/{trp}/{tin}")
+    public ResponseEntity<?> getTaxpayerofAnTrp(@PathVariable String trp,@PathVariable String tin){
+        try{
+            Ledger ldg = ledgerService.getTaxPayerOfATRP(trp, tin);
+            return ResponseEntity.ok(ldg);
+        } catch(Exception e){
+            return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
+        }
+    }
+
 
 
 

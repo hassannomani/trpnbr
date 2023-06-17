@@ -242,6 +242,9 @@ public class LedgerServiceImpl implements  LedgerService
         return ledgerRepository.getTRPCommissionWithinRange(agent, trp, t1, t2);
     }
 
+    public Ledger getTaxPayerOfATRP(String trp, String tin){
+        return ledgerRepository.findByRepresentativeTinAndTaxpayerId(trp, tin);
+    }
 
 
 

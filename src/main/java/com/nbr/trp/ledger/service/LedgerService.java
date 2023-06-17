@@ -44,4 +44,6 @@ public interface LedgerService {
 
     public List<Ledger> getTRPCommissionWithinRange(String agent, String trp, String start, String end);
 
+    public Ledger getTaxPayerOfATRP(String trp, String tin);
+
 }

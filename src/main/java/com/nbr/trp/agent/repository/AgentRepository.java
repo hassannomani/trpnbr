@@ -22,7 +22,7 @@ public interface AgentRepository extends JpaRepository<Agent, String> {
 
     Optional<Agent> findById(String id);
 
-    @Query(value = "select * from users, agent where agent.tin=users.username",
+    @Query(value = "select * from users, agent where agent.tin=users.username order by added_date desc",
             nativeQuery = true)
     List<Agent> findAll();
 }
