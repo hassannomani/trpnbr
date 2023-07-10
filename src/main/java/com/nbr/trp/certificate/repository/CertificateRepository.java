@@ -3,6 +3,7 @@ package com.nbr.trp.certificate.repository;
 import com.nbr.trp.certificate.entity.Certificate;
 import com.nbr.trp.representative.entity.Representative;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Repository;
 
@@ -19,4 +20,7 @@ public interface CertificateRepository extends JpaRepository<Certificate, String
     Certificate findByExamineeTin (String id);
 
     List<Certificate> findAll();
+
+    @Query(value = "select * from certificates where examinee_tin in :arr ",nativeQuery = true)
+    List<Certificate> checkDuplicacy(List<String> arr);
 }

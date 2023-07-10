@@ -11,9 +11,13 @@ public interface CertificateService {
 
     public Certificate saveCertificate(Certificate certificate);
 
+    public void saveCertificateBulk(List<Certificate> certificates);
+
     public List<Certificate> getAllCertificates();
 
     public Certificate getCertifcateByTin(String tin);
 
     public Certificate getUserById(String id);
+
+    public List<Certificate> checkDuplicacy(List<String> tin);
 }

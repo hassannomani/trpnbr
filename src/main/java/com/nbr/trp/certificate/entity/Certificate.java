@@ -17,7 +17,7 @@ public class Certificate {
     @Column(columnDefinition = "uniqueidentifier default newid()")
     public String certid;
 
-    @Column(name = "examinee_tin",nullable = false)
+    @Column(name = "examinee_tin",nullable = false, unique = true)
     public String examineeTin;
 
     @Column(name = "examinee_nid",nullable = false)
