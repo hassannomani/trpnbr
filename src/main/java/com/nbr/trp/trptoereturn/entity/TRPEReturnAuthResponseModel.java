@@ -9,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 public class TRPEReturnAuthResponseModel {
 
-    private TRPEReturnAuthReplyMessage trpeReturnAuthReplyMessage;
+    private TRPEReturnAuthReplyMessage replyMessage;
 
     private Boolean success;
 }

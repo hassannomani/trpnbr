@@ -15,5 +15,5 @@ public class TRPEReturnAuthRequestModel {
 
     private String grantType;
 
-    private String rememberMe;
+    private Boolean rememberMe;
 }

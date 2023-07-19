@@ -7,7 +7,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TRPEReturnAuthBody {
+public class TRPEReturnOTPValidatedReplyMessages {
 
     private String id_token;
 
@@ -18,5 +18,6 @@ public class TRPEReturnAuthBody {
     private Boolean success;
 
     private String redirectURL;
+
 
 }
