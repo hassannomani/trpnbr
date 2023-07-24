@@ -42,6 +42,9 @@ public class WebSecurityConfig {
                 .requestMatchers("/api/test/**").permitAll()
                 .requestMatchers("/api/action/message/**").permitAll()
                 .requestMatchers("/api/common/file/**").permitAll()
+                .requestMatchers("/api/certificate/check/**").permitAll()
+                .requestMatchers("/api/etin/tin/**").permitAll()
+                .requestMatchers("/api/otp/**").permitAll()
                 .anyRequest()
                 .authenticated();
 

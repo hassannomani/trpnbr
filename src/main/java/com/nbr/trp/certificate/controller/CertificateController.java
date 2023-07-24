@@ -42,4 +42,16 @@ public class CertificateController {
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
         }
     }
+
+    @GetMapping("/check/{tin}/{nid}")
+    public ResponseEntity<?> checkCertificate(@PathVariable String tin, @PathVariable String nid){
+        try{
+            Boolean certificate = certificateService.getCertificateByTinNNid(tin, nid);
+            System.out.println("cert"+certificate);
+            return ResponseEntity.ok(certificate);
+
+        } catch(Exception e){
+            return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
+        }
+    }
 }

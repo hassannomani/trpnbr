@@ -15,9 +15,10 @@ public interface CertificateService {
 
     public List<Certificate> getAllCertificates();
 
-    public Certificate getCertifcateByTin(String tin);
+    public Boolean getCertificateByTinNNid(String tin, String nid);
 
     public Certificate getUserById(String id);
 
     public List<Certificate> checkDuplicacy(List<String> tin);
+
 }
