@@ -17,4 +17,7 @@ public interface AgentService {
 
     public Optional<Agent> getAgentById(String uuid);
 
+    public List<Object[]> getAllAgentsFront();
+
+
 }

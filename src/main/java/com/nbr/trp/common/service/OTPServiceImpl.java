@@ -5,7 +5,9 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.google.gson.Gson;
 import com.nbr.trp.common.entity.ETinResponseModel;
+import com.nbr.trp.common.entity.OTP;
 import com.nbr.trp.common.entity.OTPResponseModel;
+import com.nbr.trp.common.repository.OTPRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -37,6 +39,9 @@ public class OTPServiceImpl implements OTPService{
 
     @Autowired
     private RestTemplate restTemplate;
+
+    @Autowired
+    private OTPRepository otpRepository;
 
     private static final Integer EXPIRE_MINS = 5;
     private LoadingCache<String, Integer> otpCache;
@@ -79,7 +84,14 @@ public class OTPServiceImpl implements OTPService{
             if (otpResponseModelret == null) {
                 return null;
             }
-            return otpResponseModelret;
+            else{
+                OTP otpObj = new OTP();
+                otpObj.setOtp(String.valueOf(otp));
+                otpObj.setMobile(mobile);
+                otpRepository.save((otpObj));
+                return otpResponseModelret;
+
+            }
         }catch (Exception e){
             System.out.println("came here");
 
@@ -117,5 +129,15 @@ public class OTPServiceImpl implements OTPService{
             return true;
         else
             return false;
+    }
+
+    @Override
+    public OTP saveOTP(OTP otp) {
+        return otpRepository.save(otp);
+    }
+
+    @Override
+    public OTP getOTP(String mobile) {
+        return otpRepository.findByMobile(mobile);
     }
 }

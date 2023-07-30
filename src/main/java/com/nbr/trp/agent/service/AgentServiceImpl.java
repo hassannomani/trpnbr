@@ -63,4 +63,9 @@ public class AgentServiceImpl implements AgentService{
     public Optional<Agent> getAgentById(String uuid) {
         return Optional.ofNullable(agentRepository.findById(uuid).orElse(null));
     }
+
+    @Override
+    public List<Object[]> getAllAgentsFront() {
+        return agentRepository.agentFrontEnd();
+    }
 }

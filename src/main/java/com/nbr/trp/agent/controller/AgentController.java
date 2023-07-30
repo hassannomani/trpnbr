@@ -46,6 +46,12 @@ public class AgentController {
         return ResponseEntity.ok(ls);
     }
 
+    @GetMapping("/allfront")
+    public ResponseEntity<?> allAgentForFrontEnd() {
+        List<Object[]> ls = agentService.getAllAgentsFront();
+        return ResponseEntity.ok(ls);
+    }
+
     @GetMapping("/{tin}")
     public ResponseEntity<?> getAnAgent(@PathVariable String tin) {
         try{

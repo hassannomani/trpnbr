@@ -5,6 +5,7 @@ import com.nbr.trp.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -25,4 +26,7 @@ public interface AgentRepository extends JpaRepository<Agent, String> {
     @Query(value = "select * from users, agent where agent.tin=users.username order by added_date desc",
             nativeQuery = true)
     List<Agent> findAll();
+
+    @Query(value = "select id, tin, name from agent",nativeQuery = true)
+    List<Object[]> agentFrontEnd();
 }

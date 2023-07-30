@@ -45,6 +45,15 @@ public class WebSecurityConfig {
                 .requestMatchers("/api/certificate/check/**").permitAll()
                 .requestMatchers("/api/etin/tin/**").permitAll()
                 .requestMatchers("/api/otp/**").permitAll()
+                .requestMatchers("/api/common/district").permitAll()
+                .requestMatchers("/api/common/division").permitAll()
+                .requestMatchers("/api/common/thana").permitAll()
+                .requestMatchers("/api/common/bank").permitAll()
+                .requestMatchers("/api/common/bankbranches").permitAll()
+                .requestMatchers("/api/common/bankdist").permitAll()
+                .requestMatchers("/api/common/citycorporation").permitAll()
+                .requestMatchers("/api/agent/allfront").permitAll()
+                .requestMatchers("/api/users/roles").permitAll()
                 .anyRequest()
                 .authenticated();
 
