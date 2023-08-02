@@ -11,8 +11,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+
+import static com.nbr.trp.user.entity.ERole.ROLE_ADMIN;
+import static com.nbr.trp.user.entity.ERole.ROLE_REPRESENTATIVE;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -121,6 +126,19 @@ public class UserServiceImpl implements UserService {
     public List<User> getAllDeniedUsers(){
         List<User> ls = userRepository.findByStatus("-3");
         return ls;
+    }
+
+    public User registerUser(User user) {
+        //String password = user.getPassword();
+        this.passwordEncoder = new BCryptPasswordEncoder();
+        String pass = this.passwordEncoder.encode(user.getPassword());
+        user.setPassword(pass);
+        Set<Role> roleRep = new HashSet<Role>();
+        Role role = roleRepository.findByName(String.valueOf(ROLE_REPRESENTATIVE)).orElse(null);
+        roleRep.add(role);
+        user.setRoles(roleRep);
+        User u = userRepository.save(user);
+        return u;
     }
 
 

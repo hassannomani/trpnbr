@@ -34,6 +34,9 @@ public interface UserService {
 
     public List<User> getAllDeniedUsers();
 
+    public User registerUser(User user);
+
+
 //    public User rejectRepUserByTin(String tin);
 
 }

@@ -43,6 +43,7 @@ public class WebSecurityConfig {
                 .requestMatchers("/api/action/message/**").permitAll()
                 .requestMatchers("/api/common/file/**").permitAll()
                 .requestMatchers("/api/certificate/check/**").permitAll()
+                .requestMatchers("/api/certificate/get/**").permitAll()
                 .requestMatchers("/api/etin/tin/**").permitAll()
                 .requestMatchers("/api/otp/**").permitAll()
                 .requestMatchers("/api/common/district").permitAll()
@@ -54,6 +55,7 @@ public class WebSecurityConfig {
                 .requestMatchers("/api/common/citycorporation").permitAll()
                 .requestMatchers("/api/agent/allfront").permitAll()
                 .requestMatchers("/api/users/roles").permitAll()
+                .requestMatchers("/api/users/register").permitAll()
                 .anyRequest()
                 .authenticated();
 

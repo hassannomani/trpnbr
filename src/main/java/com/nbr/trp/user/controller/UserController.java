@@ -59,7 +59,7 @@ public class UserController {
 
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/add")
-    //@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> addUser(@RequestBody User user) {
         System.out.println(user.getRoles());
 
@@ -188,6 +188,19 @@ public class UserController {
         try{
             List<User> user = userService.getAllDeniedUsers();
             return ResponseEntity.ok(user);
+        }catch(Exception e){
+            return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
+        }
+    }
+
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/register")
+    //@PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> registerUser(@RequestBody User user) {
+        try{
+            User user1 = userService.registerUser(user);
+            return ResponseEntity.ok(user1);
         }catch(Exception e){
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
         }

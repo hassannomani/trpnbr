@@ -21,4 +21,7 @@ public interface CertificateService {
 
     public List<Certificate> checkDuplicacy(List<String> tin);
 
+    public Certificate returnCertificateByTinNNid(String tin, String nid);
+
+
 }

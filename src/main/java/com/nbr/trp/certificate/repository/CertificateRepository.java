@@ -21,6 +21,9 @@ public interface CertificateRepository extends JpaRepository<Certificate, String
 
     List<Certificate> findAll();
 
+
+    Certificate findByExamineeTinAndExamineeNid(String tin,String nid);
+
     @Query(value = "select * from certificates where examinee_tin in :arr ",nativeQuery = true)
     List<Certificate> checkDuplicacy(List<String> arr);
 }

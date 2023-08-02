@@ -37,6 +37,12 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     @Override
+    public Certificate returnCertificateByTinNNid(String tin, String nid) {
+
+        return certificateRepository.findByExamineeTinAndExamineeNid(tin, nid);
+    }
+
+    @Override
     public Certificate getUserById(String id) {
         return null;
     }
