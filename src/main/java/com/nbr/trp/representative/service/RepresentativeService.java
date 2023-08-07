@@ -19,4 +19,6 @@ public interface RepresentativeService {
 
     public List<Representative> getAllRepresentativesOfAnAgent(String id);
 
+    public Representative assignAgent(String tin, String agent);
+
 }

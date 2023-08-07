@@ -1,5 +1,6 @@
 package com.nbr.trp.user.controller;
 
+import com.nbr.trp.user.entity.ApproveTRPView;
 import com.nbr.trp.user.entity.Role;
 import com.nbr.trp.user.entity.User;
 import com.nbr.trp.user.repository.RoleRepository;
@@ -108,7 +109,7 @@ public class UserController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getAllPendingUsers() {
         try{
-            List<User> users = userService.getAllPendingUsers();
+            List<ApproveTRPView> users = userService.getAllPendingUsers();
             return ResponseEntity.ok(users);
         }catch(Exception e){
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));

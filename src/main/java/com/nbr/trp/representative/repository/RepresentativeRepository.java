@@ -27,6 +27,9 @@ public interface RepresentativeRepository extends JpaRepository<Representative, 
 
     List<Representative> findAll();
 
+    @Query(value = "select * from representative where tin_no = :trpTin",nativeQuery = true)
+    Representative findByTin(@Param("trpTin") String tin);
+
 
 
 

@@ -8,6 +8,7 @@ import com.nbr.trp.user.response.MessageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -64,4 +65,16 @@ public class RepresentativeController {
         return ResponseEntity.ok(representativeList);
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/assign/{tin}/{agent}")
+    public ResponseEntity<?> assignAgent(@PathVariable String tin, @PathVariable String agent){
+        try{
+            Representative representative1 = representativeService.assignAgent(tin, agent);
+            return new ResponseEntity<>(representative1, HttpStatus.OK);
+
+        }catch(Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        }
+    }
 }

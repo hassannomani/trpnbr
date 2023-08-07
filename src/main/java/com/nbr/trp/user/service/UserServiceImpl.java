@@ -1,5 +1,6 @@
 package com.nbr.trp.user.service;
 
+import com.nbr.trp.user.entity.ApproveTRPView;
 import com.nbr.trp.user.entity.Role;
 import com.nbr.trp.user.entity.User;
 import com.nbr.trp.user.repository.RoleRepository;
@@ -62,8 +63,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAllPendingUsers() {
-        return userRepository.findAllPending();
+    public List<ApproveTRPView> getAllPendingUsers() {
+        return userRepository.getAllTRPForApproval();
     }
 
     @Override
