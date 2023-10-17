@@ -8,6 +8,7 @@ import com.nbr.trp.ledger.repository.MetricsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -103,6 +104,20 @@ public class CommissionServiceImpl implements CommissionService {
 
     public List<Commission> getAll(){
         return commissionRepository.findAll();
+    }
+
+    public Boolean SaveBulkCommission(String role, String tin, String[] ids){
+        List<Commission> cm = new ArrayList<>();
+        for(int i=0;i<ids.length;i++){
+            Commission cm_individual = new Commission();
+            cm_individual.setPayee(tin);
+            cm_individual.setLedgerId(ids[i]);
+            cm_individual.setPayeeType(role);
+            cm_individual.setStatus("0");
+            cm.add(cm_individual);
+        }
+        commissionRepository.saveAll(cm);
+        return true;
     }
 
 

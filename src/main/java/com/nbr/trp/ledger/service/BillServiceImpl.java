@@ -34,4 +34,10 @@ public class BillServiceImpl implements  BillService{
     public List<Ledger> getTRPBillableList(String trp) {
         return ledgerRepository.findTRPBillable(trp);
     }
+
+    @Override
+    public Boolean saveBill(String role, String[] ids, String tin){
+        return commissionService.SaveBulkCommission(role,tin,ids);
+
+    }
 }

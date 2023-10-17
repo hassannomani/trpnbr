@@ -187,9 +187,9 @@ public class LedgerServiceImpl implements  LedgerService
                 Commission cmtrp = new Commission();
                 cmtrp.setDebitCode(bank.getItemCode());
                 cmtrp.setCreditCode(trp.getItemCode());
-                cmtrp.setTaxpayerId(ledger.getTaxpayerId());
-                cmtrp.setAmount(String.valueOf(commission*0.9));
-                cmtrp.setRemarks(remarks);
+//                cmtrp.setTaxpayerId(ledger.getTaxpayerId());
+//                cmtrp.setAmount(String.valueOf(commission*0.9));
+                //cmtrp.setRemarks(remarks);
                 cmtrp.setLedgerId(ledger.getLid());
                 Commission cmsaved = commissionService.saveCommission(cmtrp);
 
@@ -198,9 +198,9 @@ public class LedgerServiceImpl implements  LedgerService
                 Commission cmag = new Commission();
                 cmag.setDebitCode(bank.getItemCode());
                 cmag.setCreditCode(agent.getItemCode());
-                cmag.setTaxpayerId(ledger.getTaxpayerId());
-                cmag.setAmount(String.valueOf(commission*0.1));
-                cmag.setRemarks(remarks);
+//                cmag.setTaxpayerId(ledger.getTaxpayerId());
+//                cmag.setAmount(String.valueOf(commission*0.1));
+                //cmag.setRemarks(remarks);
                 cmag.setLedgerId(ledger.getLid());
                 Commission cmsaved = commissionService.saveCommission(cmag);
             }
