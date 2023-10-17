@@ -21,4 +21,6 @@ public interface CommissionService {
     public HashMap<String, String> calculateCommission(Ledger ld);
 
     public List<Commission> getAll();
+
+    public Boolean SaveBulkCommission(String role, String tin, String[] ids);
 }

@@ -9,4 +9,6 @@ public interface BillService {
     public List<Ledger> getAgentBillableList (String agent);
 
     public List<Ledger> getTRPBillableList (String agent);
+
+    public Boolean saveBill(String role, String[] ids, String tin);
 }

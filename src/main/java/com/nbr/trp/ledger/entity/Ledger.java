@@ -34,14 +34,14 @@ public class Ledger {
     @Column(name = "payment_rule",nullable = false)
     public String paymentRule;
 
-    @Column(name = "payment_method",nullable = false)
-    public String paymentMethod;
+//    @Column(name = "payment_method",nullable = false)
+//    public String paymentMethod;
 
-    @Column(name = "transaction_id")
-    public String transactionId;
+    @Column(name = "reference_no")
+    public String referenceNo;
 
-    @Column(name = "challan_id")
-    public String challanId;
+    @Column(name = "challan_no")
+    public String challanNo;
 
     @Column(name = "assessment_year",nullable = false)
     public String assessmentYear;
@@ -68,33 +68,11 @@ public class Ledger {
     @Column(name = "year_no")
     public String yearNo;
 
-    @Column(name = "remarks")
-    public String remarks;
-
     @Column(name = "created_at")
     @CreationTimestamp
     public Timestamp created_at;
 
+    @Column(name = "remarks")
+    public String remarks;
 
-    public Ledger(String lid, String taxpayerId, String taxpayerName, String paidAmount, String minimumTax, String paymentRule, String paymentMethod, String transactionId, String challanId, String assessmentYear, String agentTin, String representativeTin, Double agentCommission, Double representativeCommission, String billSubmitted, String billDate, String yearNo, String remarks, Timestamp created_at) {
-        this.lid = lid;
-        this.taxpayerId = taxpayerId;
-        this.taxpayerName = taxpayerName;
-        this.paidAmount = paidAmount;
-        this.minimumTax = minimumTax;
-        this.paymentRule = paymentRule;
-        this.paymentMethod = paymentMethod;
-        this.transactionId = transactionId;
-        this.challanId = challanId;
-        this.assessmentYear = assessmentYear;
-        this.agentTin = agentTin;
-        this.representativeTin = representativeTin;
-        this.agentCommission = agentCommission;
-        this.representativeCommission = representativeCommission;
-        this.billSubmitted = billSubmitted;
-        this.billDate = billDate;
-        this.yearNo = yearNo;
-        this.remarks = remarks;
-        this.created_at = created_at;
-    }
 }
