@@ -65,10 +65,10 @@ public interface LedgerRepository extends JpaRepository<Ledger, String>{
 
     Ledger findByRepresentativeTinAndTaxpayerId(String trp, String taxpayer);
 
-    @Query(value = "select * from ledger where bill_submitted=0 and agent_tin = :agTin",nativeQuery = true)
+    @Query(value = "select * from ledger where bill_submitted_ag=0 and agent_tin = :agTin",nativeQuery = true)
     List<Ledger> findAgentBillable(@Param("agTin") String agTin);
 
-    @Query(value = "select * from ledger where bill_submitted=0 and representative_tin = :repTin",nativeQuery = true)
+    @Query(value = "select * from ledger where bill_submitted_trp=0 and representative_tin = :repTin",nativeQuery = true)
     List<Ledger> findTRPBillable(@Param("repTin") String repTin);
 
 }

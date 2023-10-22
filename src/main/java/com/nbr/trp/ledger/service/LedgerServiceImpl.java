@@ -53,7 +53,8 @@ public class LedgerServiceImpl implements  LedgerService
         Double trpFin = Double.valueOf(df.format(trp));
         ledger.setAgentCommission(agentFin);
         ledger.setRepresentativeCommission(trpFin);
-        ledger.setBillSubmitted("0");
+        ledger.setBillSubmittedAg("0");
+        ledger.setBillSubmittedTrp("0");
         Ledger ldg = ledgerRepository.save(ledger);
         return ldg;
 

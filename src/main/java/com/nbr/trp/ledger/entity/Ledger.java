@@ -58,8 +58,11 @@ public class Ledger {
     @Column(name = "representative_commission",nullable = false)
     public Double representativeCommission;
 
-    @Column(name = "bill_submitted")
-    public String billSubmitted;
+    @Column(name = "bill_submitted_ag")
+    public String billSubmittedAg;
+
+    @Column(name = "bill_submitted_trp")
+    public String billSubmittedTrp;
 
     @Column(name="bill_date")
     @Temporal(TemporalType.TIMESTAMP)

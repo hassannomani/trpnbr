@@ -1,7 +1,9 @@
 package com.nbr.trp.commission.service;
 
 import com.nbr.trp.commission.entity.Commission;
+import com.nbr.trp.commission.entity.CommissionBillView;
 import com.nbr.trp.commission.repository.CommissionRepository;
+import com.nbr.trp.commission.request.ValidateRequest;
 import com.nbr.trp.ledger.entity.Ledger;
 import com.nbr.trp.ledger.entity.Metrics;
 import com.nbr.trp.ledger.repository.MetricsRepository;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -119,6 +122,35 @@ public class CommissionServiceImpl implements CommissionService {
         commissionRepository.saveAll(cm);
         return true;
     }
+
+    public List<CommissionBillView> getAdminPendingBill(){
+        return commissionRepository.findPendingBillAdmin();
+    }
+
+    public HashMap<String, String> valiDateCommission(ValidateRequest[] reqs){
+        HashMap<String, String> map = new HashMap<>();
+        for(int i=0;i< reqs.length;i++){
+            String ledger = reqs[i].getLedger();
+            String role = reqs[i].getRole();
+            Integer count = commissionRepository.findDuplicatePayment(ledger,role);
+            map.put(reqs[i].getId(),count.toString());
+        }
+        return map;
+    }
+
+    public Boolean approveBills(ValidateRequest[] reqs){
+        List<Commission> cm = new ArrayList<>();
+        for(int i=0;i< reqs.length;i++) {
+            Commission cm_individual = commissionRepository.findByCreationNo(reqs[i].getId());
+            cm_individual.setStatus("1");
+            cm_individual.setPaymentDate(new Date());
+            cm.add(cm_individual);
+        }
+        commissionRepository.saveAll(cm);
+        return true;
+    }
+
+
 
 
 }
