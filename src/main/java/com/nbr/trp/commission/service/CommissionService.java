@@ -26,10 +26,17 @@ public interface CommissionService {
 
     public Boolean SaveBulkCommission(String role, String tin, String[] ids);
 
-    public List<CommissionBillView> getAdminPendingBill();
+    public List<CommissionBillView> getPendingBill(String tin);
 
     public HashMap<String, String> valiDateCommission(ValidateRequest[] reqs);
 
     public Boolean approveBills(ValidateRequest[] reqs);
+
+    public Boolean rejectBills(ValidateRequest[] reqs);
+
+    public List<CommissionBillView> getRejectedBill(String tin);
+
+    public List<CommissionBillView> getApprovedBill(String tin);
+
 
 }
