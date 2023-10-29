@@ -138,5 +138,16 @@ public class CommissionController {
     }
 
 
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/get_applicants")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> getApplicants(){
+        try{
+            Object[] ldgs = commissionService.get_Applicants();
+            return ResponseEntity.ok(ldgs);
+        } catch(Exception e){
+            return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
+        }
+    }
 
 }

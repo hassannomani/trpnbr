@@ -216,6 +216,9 @@ public class CommissionServiceImpl implements CommissionService {
         return role1.getName();
     }
 
+    public Object[] get_Applicants(){
+        return commissionRepository.get_applicants();
+    }
 
 
 

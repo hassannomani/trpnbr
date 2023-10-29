@@ -38,5 +38,6 @@ public interface CommissionService {
 
     public List<CommissionBillView> getApprovedBill(String tin);
 
+    public Object[] get_Applicants();
 
 }
