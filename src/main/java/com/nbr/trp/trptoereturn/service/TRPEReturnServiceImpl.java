@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
 @Service
@@ -36,7 +37,7 @@ public class TRPEReturnServiceImpl implements TRPEReturnService{
     private RestTemplate restTemplate;
     @Override
     public TRPEReturnAuthResponseModel getAuthResponse() {
-        TRPEReturnAuthRequestModel request = new TRPEReturnAuthRequestModel(userName, password,"password",true);
+        TRPEReturnAuthRequestModel request = new TRPEReturnAuthRequestModel(userName, password,"password",true,"string");
         String url = baseURL + authTokenURL;
         HttpHeaders headers = new HttpHeaders();
         //headers.setContentType(MediaType.APPLICATION_JSON);
@@ -80,23 +81,26 @@ public class TRPEReturnServiceImpl implements TRPEReturnService{
         //System.out.println("url : " + url);
         HttpEntity<?> httpEntity = new HttpEntity<>(request, headers.getHeaders());
         ResponseEntity<TRPEReturnOTPReponseModel> eReturnResponse;
-
+        TRPEReturnOTPReponseModel finalAlternateResponseToReturn = new TRPEReturnOTPReponseModel();
 
         try {
              eReturnResponse = restTemplate.exchange(url, HttpMethod.POST, httpEntity, TRPEReturnOTPReponseModel.class);
 
             //eReturnResponse = restTemplate.exchange(url, HttpMethod.GET, httpHeadersEntity, String.class).getBody();
-        } catch (Exception ex) {
+        } catch (HttpStatusCodeException ex) {
             System.out.println(ex.getMessage());
-            throw ex;
+            finalAlternateResponseToReturn.setErrorCode(String.valueOf(ex.getRawStatusCode()));
+            finalAlternateResponseToReturn.setErrorMessage(String.valueOf(ex.getResponseBodyAsString()));
+
+            return finalAlternateResponseToReturn;
         }
         TRPEReturnOTPReponseModel finalResponseToReturn;
         finalResponseToReturn = eReturnResponse.getBody();
         //eReturnResponse = new Gson().fromJson(tinResponse, ETinResponseModel.class);
-        if (finalResponseToReturn == null) {
-            return null;
-        }
-        //System.out.println(eReturnResponse.toString());
+//        if (finalResponseToReturn == null) {
+//            return null;
+//        }
+        System.out.println(eReturnResponse.toString());
         return finalResponseToReturn;
     }
 
@@ -108,7 +112,6 @@ public class TRPEReturnServiceImpl implements TRPEReturnService{
         String url = baseURL + ereturnURL;
         HttpEntity<?> httpEntity = new HttpEntity<>(model, headers.getHeaders());
         ResponseEntity<TRPEReturnOTPValidatedResponse> eReturnResponse;
-
 
         try {
             eReturnResponse = restTemplate.exchange(url, HttpMethod.POST, httpEntity, TRPEReturnOTPValidatedResponse.class);
