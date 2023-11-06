@@ -73,8 +73,18 @@ public class UserController {
             roletobeAdded.add(singlerole);
             System.out.println(roletobeAdded);
             user.setRoles(roletobeAdded);*/
-            User user1 = userService.saveUser(user);
-            return ResponseEntity.ok(user1);
+            String username= user.getUsername();
+            String email= user.getEmail();
+            String password= user.getPassword();
+            String role= String.valueOf(user.getRoles());
+            if(username!=""&&email!=""&&password!=""&&role!="")
+            {
+                User user1 = userService.saveUser(user);
+                return ResponseEntity.ok(user1);
+            }else{
+                return ResponseEntity.status(400).body(new MessageResponse("Required Fields Missing"));
+            }
+
         }catch(Exception e){
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
         }
