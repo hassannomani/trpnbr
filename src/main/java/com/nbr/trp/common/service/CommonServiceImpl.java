@@ -2,7 +2,11 @@ package com.nbr.trp.common.service;
 
 import com.nbr.trp.common.entity.*;
 import com.nbr.trp.common.repository.*;
+import com.nbr.trp.user.service.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -70,6 +74,13 @@ public class CommonServiceImpl implements CommonService{
     public List<CityCorporation> getAllCityCorporation(){
         List<CityCorporation> cityCorporations = cityCorporationRepository.findAll();
         return cityCorporations;
+    }
+
+    public UserDetailsImpl getDetails(){
+        SecurityContext context = SecurityContextHolder.getContext();
+        Authentication authentication = context.getAuthentication();
+        UserDetailsImpl userDetails1 = (UserDetailsImpl) authentication.getPrincipal();
+        return userDetails1;
     }
 
 }

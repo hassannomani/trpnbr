@@ -1,6 +1,7 @@
 package com.nbr.trp.common.service;
 
 import com.nbr.trp.common.entity.*;
+import com.nbr.trp.user.service.UserDetailsImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +19,8 @@ public interface CommonService {
     List<Bank> getAllBankBranches(String bank, String district);
 
     List<CityCorporation> getAllCityCorporation();
+
+    UserDetailsImpl getDetails();
 
 
 }
