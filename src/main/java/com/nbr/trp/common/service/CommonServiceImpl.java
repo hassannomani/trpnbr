@@ -79,8 +79,15 @@ public class CommonServiceImpl implements CommonService{
     public UserDetailsImpl getDetails(){
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication authentication = context.getAuthentication();
-        UserDetailsImpl userDetails1 = (UserDetailsImpl) authentication.getPrincipal();
-        return userDetails1;
+        Object temp =  authentication.getPrincipal();
+        String type = temp.getClass().getName();
+        if(type.equals("java.lang.String")){
+            return null;
+        }else{
+            UserDetailsImpl userDetails = (UserDetailsImpl) temp;
+            return userDetails;
+        }
+         //java.lang.String
     }
 
 }

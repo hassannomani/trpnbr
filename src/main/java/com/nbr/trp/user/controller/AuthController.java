@@ -235,7 +235,12 @@ public class AuthController {
     public ResponseEntity<?> logoutUser() {
 
         UserDetailsImpl userDetails1 = commonService.getDetails();
-        String uuid = userDetails1.getUuid();
+        System.out.println("reched here");
+        String uuid = "";
+        if(userDetails1!=null)
+             uuid = userDetails1.getUuid();
+        else
+            uuid= "";
         loggerController.Logout(uuid);
         //logger.info(uuid+ " User logging out");
         return new ResponseEntity<>(true, HttpStatus.OK);
