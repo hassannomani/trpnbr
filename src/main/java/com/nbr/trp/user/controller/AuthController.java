@@ -235,7 +235,7 @@ public class AuthController {
     public ResponseEntity<?> logoutUser() {
 
         UserDetailsImpl userDetails1 = commonService.getDetails();
-        System.out.println("reched here");
+        //System.out.println("reched here");
         String uuid = "";
         if(userDetails1!=null)
              uuid = userDetails1.getUuid();

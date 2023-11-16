@@ -53,4 +53,25 @@ public class LoggerController {
     public void RegistrationSuccess(String username){
         logger.warn(username+ " has successfully registered");
     }
+
+    public void BillSubmit(String username, String role){
+        logger.info(username+ " with role "+role+ " has successfully submitted bill");
+    }
+
+    public void ErrorHandler(Exception e){
+        logger.error("Error Occurred "+e);
+    }
+
+    public void BillCheck(String role, String tin){
+        logger.info(tin+ " with role "+role+ " is checking bill");
+    }
+
+    public void UnAuthorized(String ip){
+        logger.error("Unauthorized attempt from "+ip);
+    }
+
+    public void IncomingRequest(String ip, String url){
+        logger.info("Incoming request from "+ip+ " for accessing the url "+url);
+    }
+
 }

@@ -5,6 +5,7 @@ import com.nbr.trp.ledger.entity.LedgerAdminView;
 import com.nbr.trp.ledger.request.BillRequest;
 import com.nbr.trp.ledger.service.BillService;
 import com.nbr.trp.ledger.service.LedgerService;
+import com.nbr.trp.log.LoggerController;
 import com.nbr.trp.user.filter.AuthTokenFilter;
 import com.nbr.trp.user.response.MessageResponse;
 import com.nbr.trp.user.service.UserDetailsImpl;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -36,11 +38,15 @@ public class BillController {
     @Autowired
     UserDetailsImpl userDetails;
 
+    @Autowired
+    LoggerController loggerController;
+
     @GetMapping("/billable-agt/{agent}")
     @PreAuthorize("hasRole('AGENT')")
     public ResponseEntity<?> getAgentBill(@PathVariable String agent){
         try{
             List<Ledger> ldgs = billService.getAgentBillableList(agent);
+            loggerController.BillCheck("AGENT",agent);
             return ResponseEntity.ok(ldgs);
         } catch(Exception e){
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
@@ -52,6 +58,7 @@ public class BillController {
     public ResponseEntity<?> getTRPBill(@PathVariable String trp){
         try{
             List<Ledger> ldgs = billService.getTRPBillableList(trp);
+            loggerController.BillCheck("REPRESENTATIVE",trp);
             return ResponseEntity.ok(ldgs);
         } catch(Exception e){
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
@@ -73,8 +80,10 @@ public class BillController {
             HashMap<String, String> map = new HashMap<>();
             map.put("status", "200");
             map.put("success", "true");
+            loggerController.BillSubmit(tin,role);
             return ResponseEntity.ok(map);
         } catch(Exception e){
+            loggerController.ErrorHandler(e);
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
         }
     }
