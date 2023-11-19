@@ -1,11 +1,14 @@
 package com.nbr.trp.user.controller;
 
+import com.nbr.trp.common.service.CommonService;
+import com.nbr.trp.log.LoggerController;
 import com.nbr.trp.user.entity.ApproveTRPView;
 import com.nbr.trp.user.entity.Role;
 import com.nbr.trp.user.entity.User;
 import com.nbr.trp.user.repository.RoleRepository;
 import com.nbr.trp.user.response.MessageResponse;
 import com.nbr.trp.user.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +30,12 @@ public class UserController {
 
     @Autowired
     RoleRepository roleRepository;
+
+    @Autowired
+    CommonService commonService;
+
+    @Autowired
+    LoggerController loggerController;
     /*
     @GetMapping("/all")
     public MessageResponse allAccess() {
@@ -51,6 +60,7 @@ public class UserController {
    // @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getAllRoles() {
         try{
+
             List<Role> roles = userService.getRoles();
             return ResponseEntity.ok(roles);
         }catch(Exception e){
@@ -61,7 +71,7 @@ public class UserController {
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/add")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> addUser(@RequestBody User user) {
+    public ResponseEntity<?> addUser(HttpServletRequest request, @RequestBody User user) {
         System.out.println(user.getRoles());
 
         try{
@@ -73,6 +83,7 @@ public class UserController {
             roletobeAdded.add(singlerole);
             System.out.println(roletobeAdded);
             user.setRoles(roletobeAdded);*/
+            String ip = commonService.getIPAddress(request);
             String username= user.getUsername();
             String email= user.getEmail();
             String password= user.getPassword();
@@ -80,12 +91,16 @@ public class UserController {
             if(username!=""&&email!=""&&password!=""&&role!="")
             {
                 User user1 = userService.saveUser(user);
+                loggerController.UserAddition(username,role,ip);
                 return ResponseEntity.ok(user1);
+
             }else{
+                loggerController.UserAdditionFailed(username,role,ip);
                 return ResponseEntity.status(400).body(new MessageResponse("Required Fields Missing"));
             }
 
         }catch(Exception e){
+            loggerController.ErrorHandler(e);
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
         }
     }
@@ -93,11 +108,14 @@ public class UserController {
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/all")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> getAllUsers() {
+    public ResponseEntity<?> getAllUsers(HttpServletRequest request) {
+        String ip = commonService.getIPAddress(request);
         try{
             List<User> all_users = userService.getAllUsers();
+            loggerController.ListGeneration("","All Users","Admin",ip);
             return ResponseEntity.ok(all_users);
         }catch(Exception e){
+            loggerController.ErrorHandler(e);
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
         }
     }
@@ -117,9 +135,11 @@ public class UserController {
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/pending-all")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> getAllPendingUsers() {
+    public ResponseEntity<?> getAllPendingUsers(HttpServletRequest request) {
+        String ip = commonService.getIPAddress(request);
         try{
             List<ApproveTRPView> users = userService.getAllPendingUsers();
+            loggerController.ListGeneration("","Pending Users","Admin",ip);
             return ResponseEntity.ok(users);
         }catch(Exception e){
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
@@ -129,12 +149,15 @@ public class UserController {
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/approve/{uuid}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> approveUser(@PathVariable String uuid) {
+    public ResponseEntity<?> approveUser(HttpServletRequest request,@PathVariable String uuid) {
+        String ip = commonService.getIPAddress(request);
 
         try{
             User user = userService.approveRepuser(uuid);
+            loggerController.UserApproval(uuid, ip);
             return ResponseEntity.ok(user);
         }catch(Exception e){
+            loggerController.ErrorHandler(e);
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
         }
     }
@@ -142,12 +165,16 @@ public class UserController {
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/tinapprove/{username}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> approveUserByTin(@PathVariable String username) {
+    public ResponseEntity<?> approveUserByTin(HttpServletRequest request,@PathVariable String username) {
+        String ip = commonService.getIPAddress(request);
 
         try{
             User user = userService.approveRepUserByTin(username);
+            loggerController.UserApproval(username, ip);
+
             return ResponseEntity.ok(user);
         }catch(Exception e){
+            loggerController.ErrorHandler(e);
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
         }
     }
@@ -155,12 +182,14 @@ public class UserController {
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/reject/{uuid}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> rejectUser(@PathVariable String uuid) {
-
+    public ResponseEntity<?> rejectUser(HttpServletRequest request, @PathVariable String uuid) {
+        String ip = commonService.getIPAddress(request);
         try{
             User user = userService.rejectRepuser(uuid);
+            loggerController.UserRejection(uuid, ip);
             return ResponseEntity.ok(user);
         }catch(Exception e){
+            loggerController.ErrorHandler(e);
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
         }
     }
@@ -168,12 +197,15 @@ public class UserController {
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/blocked")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> blockeduser() {
+    public ResponseEntity<?> blockeduser(HttpServletRequest request) {
+        String ip = commonService.getIPAddress(request);
 
         try{
             List<User> user = userService.getAllBlockedUsers();
+            loggerController.ListGeneration("","Blocked Users","Admin",ip);
             return ResponseEntity.ok(user);
         }catch(Exception e){
+            loggerController.ErrorHandler(e);
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
         }
     }
@@ -181,12 +213,15 @@ public class UserController {
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/unblock/{tin}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> unblock(@PathVariable String tin) {
+    public ResponseEntity<?> unblock(HttpServletRequest request, @PathVariable String tin) {
+        String ip = commonService.getIPAddress(request);
 
         try{
+            loggerController.UserApproval(tin,ip);
             User user = userService.approveRepUserByTin(tin);
             return ResponseEntity.ok(user);
         }catch(Exception e){
+            loggerController.ErrorHandler(e);
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
         }
     }
@@ -194,10 +229,12 @@ public class UserController {
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/denied")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> denieduser() {
-
+    public ResponseEntity<?> denieduser(HttpServletRequest request) {
+        String ip = commonService.getIPAddress(request);
         try{
             List<User> user = userService.getAllDeniedUsers();
+            loggerController.ListGeneration("","Denied Users","Admin",ip);
+
             return ResponseEntity.ok(user);
         }catch(Exception e){
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
@@ -208,11 +245,14 @@ public class UserController {
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/register")
     //@PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> registerUser(@RequestBody User user) {
+    public ResponseEntity<?> registerUser(HttpServletRequest request, @RequestBody User user) {
+        String ip = commonService.getIPAddress(request);
         try{
             User user1 = userService.registerUser(user);
+            loggerController.RegistrationSuccess(user.getUsername(),ip);
             return ResponseEntity.ok(user1);
         }catch(Exception e){
+            loggerController.ErrorHandler(e);
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
         }
     }

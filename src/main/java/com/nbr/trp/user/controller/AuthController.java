@@ -15,6 +15,7 @@ import com.nbr.trp.user.response.JwtResponse;
 import com.nbr.trp.user.response.MessageResponse;
 import com.nbr.trp.user.service.UserDetailsImpl;
 import com.nbr.trp.user.utils.JwtUtils;
+import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,8 +64,9 @@ public class AuthController {
     private static final Logger logger =  LoggerFactory.getLogger(AuthController.class);
 
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<?> authenticateUser(HttpServletRequest request, @RequestBody LoginRequest loginRequest) {
 
+        String ip = commonService.getIPAddress(request);
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),loginRequest.getPassword()));
 
@@ -77,7 +79,7 @@ public class AuthController {
         //System.out.println("status is "+userDetails.getStatus());
 
         if(userDetails.getStatus().equals("1")){
-            loggerController.Login(userDetails.getUuid());
+            loggerController.Login(userDetails.getUuid(),ip);
             //logger.debug(userDetails.getUuid()+ " User is logging in");
             List<String> roles = userDetails.getAuthorities()
                     .stream().map(item -> item.getAuthority())
@@ -92,11 +94,11 @@ public class AuthController {
             );
         }else if(userDetails.getStatus().equals("0")){
             //logger.info(userDetails.getUuid()+" Unapproved user trying to access");
-            loggerController.LoginFailedUnApproved(userDetails.getUuid());
+            loggerController.LoginFailedUnApproved(userDetails.getUuid(),ip);
 
             return ResponseEntity.status(403).body("Approval Required");
         }else if(userDetails.getStatus().equals("-3")){
-            loggerController.LoginFailedDeny(userDetails.getUuid());
+            loggerController.LoginFailedDeny(userDetails.getUuid(),ip);
             //logger.info("Denied user trying to access");
             //System.out.println("sending");
             Action action = actionService.getActionByTypeAndTin("DENY",userDetails.getUsername());
@@ -105,7 +107,7 @@ public class AuthController {
         else if(userDetails.getStatus().equals("-2")){
             Action action = actionService.getActionByTypeAndTin("BLOCK",userDetails.getUsername());
             //logger.info(userDetails.getUuid()+ " Blocked user trying to access");
-            loggerController.LoginFailedBlocked(userDetails.getUuid());
+            loggerController.LoginFailedBlocked(userDetails.getUuid(),ip);
             return ResponseEntity.status(403).body(action);
         }
         else if(userDetails.getStatus().equals("-1")){
@@ -115,12 +117,12 @@ public class AuthController {
             long now = new Date().getTime();
             if(now>=timeStart&&now<timeEnd){
                 //logger.info(userDetails.getUuid()+ " Suspended user trying to access");
-                loggerController.LoginFailedSuspended(userDetails.getUuid());
+                loggerController.LoginFailedSuspended(userDetails.getUuid(),ip);
                 return ResponseEntity.status(403).body(action);
             }
             else if(now<timeStart){
                 //logger.info(userDetails.getUuid()+ " User is loggin in");
-                loggerController.Login(userDetails.getUuid());
+                loggerController.Login(userDetails.getUuid(),ip);
                 List<String> roles = userDetails.getAuthorities()
                         .stream().map(item -> item.getAuthority())
                         .collect(Collectors.toList());
@@ -133,7 +135,7 @@ public class AuthController {
                 User user = userRepository.getByTin(userDetails.getUsername());
                 user.setStatus("1");
                 User u = userRepository.save(user);
-                loggerController.Login(userDetails.getUuid());
+                loggerController.Login(userDetails.getUuid(),ip);
                 List<String> roles = userDetails.getAuthorities()
                         .stream().map(item -> item.getAuthority())
                         .collect(Collectors.toList());
@@ -143,7 +145,7 @@ public class AuthController {
                 );
             }
         }else{
-            loggerController.LoginError(userDetails.getUuid());
+            loggerController.LoginError(userDetails.getUuid(),ip);
 
             return ResponseEntity.status(403).body("Error! Please try again");
         }
@@ -158,15 +160,15 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@RequestBody SignupRequest signUpRequest) {
-
+    public ResponseEntity<?> registerUser(HttpServletRequest request, @RequestBody SignupRequest signUpRequest) {
+        String ip = commonService.getIPAddress(request);
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-            loggerController.ReRegistration(signUpRequest.getUsername());
+            loggerController.ReRegistration(signUpRequest.getUsername(),ip);
             return ResponseEntity.badRequest().body(new MessageResponse("Error: username is already taken!"));
         }
 
         if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-            loggerController.ReRegistration(signUpRequest.getEmail());
+            loggerController.ReRegistration(signUpRequest.getEmail(),ip);
 
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
         }
@@ -190,7 +192,7 @@ public class AuthController {
         Set<Role> roles = new HashSet<>();
 
         if (strRoles == null) {
-            logger.error(signUpRequest.getUsername()+ " is trying for blank role ");
+            logger.error(signUpRequest.getUsername()+ " is trying for blank role from ip"+ip);
 
             Role repRole = roleRepository.findByName(String.valueOf(ERole.ROLE_REPRESENTATIVE))
                     .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
@@ -201,7 +203,7 @@ public class AuthController {
             strRoles.forEach(role -> {
 
                 if (role.equals("admin")) {
-                    loggerController.AdminRoleTry(signUpRequest.getUsername());
+                    loggerController.AdminRoleTry(signUpRequest.getUsername(),ip);
                     Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN.name())
                             .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                     roles.add(adminRole);
@@ -215,7 +217,7 @@ public class AuthController {
                     roles.add(repRole);
                 } else {
                     //logger.warn(signUpRequest.getUsername()+ " is trying for role "+role);
-                    loggerController.RoleErrorTry(signUpRequest.getUsername(),role);
+                    loggerController.RoleErrorTry(signUpRequest.getUsername(),role,ip);
 
                     Role viewerRole = roleRepository.findByName(ERole.ROLE_REPRESENTATIVE.name())
                             .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
@@ -227,7 +229,7 @@ public class AuthController {
 
         employee.setRoles(roles);
         userRepository.save(employee);
-        loggerController.RegistrationSuccess(employee.getUsername());
+        loggerController.RegistrationSuccess(employee.getUsername(),ip);
         return ResponseEntity.ok(new MessageResponse("Employee registered successfully!"));
     }
     @CrossOrigin(origins = "http://localhost:4200")
