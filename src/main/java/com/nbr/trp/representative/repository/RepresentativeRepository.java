@@ -25,6 +25,7 @@ public interface RepresentativeRepository extends JpaRepository<Representative, 
     @Query(value = "select * from representative left join users on users.username=representative.tin_no where agent_id = :agentTin and status='1'",nativeQuery = true)
     List<Representative> findByAgentId(@Param("agentTin") String tin);
 
+    @Query(value="select * from representative join users on representative.tin_no=users.username where users.status='1'", nativeQuery = true)
     List<Representative> findAll();
 
     @Query(value = "select * from representative where tin_no = :trpTin",nativeQuery = true)

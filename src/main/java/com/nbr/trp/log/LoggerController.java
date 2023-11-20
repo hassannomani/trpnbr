@@ -98,4 +98,49 @@ public class LoggerController {
         logger.info("User with tin/uuid "+uname_id+ " faced action "+type+ " by admin from ip: "+ip);
     }
 
+    public void AgentAdditionError(String username, String ip){
+        logger.info("Agent with username is being duplicately added by admin from ip: "+ip);
+    }
+
+    public void CertificateBulk(String ip){
+        logger.info("Bulk certificate is being uploaded by admin from ip: "+ip);
+    }
+
+    public void CertificateDuplicacyCheck(String ip){
+        logger.info("Bulk certificate is being checked for duplicate by admin from ip: "+ip);
+    }
+
+    public void CertificateCheck(String ip){
+        logger.info("Certificate is being checked from ip: "+ip);
+    }
+
+    public void CommissionValidate(String ip,String ids){
+        logger.info("Admin is validating bills from ip: "+ip+ " with ids: "+ids);
+    }
+
+    public void CommissionApprove(String ip, String reqs){
+        logger.info("Admin is approving bills from ip: "+ip+ " with ids: "+reqs);
+    }
+
+    public void CommissionRejection(String ip, String reqs){
+        logger.info("Admin is rejecting bills from ip: "+ip+ " with ids: "+reqs);
+    }
+
+    public void OTPRequest(String ip){
+        logger.info("OTP is being requested from ip : "+ip);
+    }
+
+    public void OTPValidate(String ip){
+        logger.info("OTP is being validated from ip : "+ip);
+    }
+
+    public void TRPIndividualRetrival(String id, String trp, String ip){
+        logger.info("TRP with id "+trp+" is being requested by "+id+" from ip : "+ip);
+    }
+
+    public void TRPAssign(String trp, String agent, String ip){
+        logger.info("TRP with id "+trp+" has been assigned with agent "+agent+" from ip : "+ip);
+    }
+
+
 }
