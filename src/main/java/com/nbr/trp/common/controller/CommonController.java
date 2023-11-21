@@ -3,6 +3,8 @@ package com.nbr.trp.common.controller;
 import com.nbr.trp.common.entity.*;
 import com.nbr.trp.common.service.CommonService;
 import com.nbr.trp.common.service.FileUploadService;
+import com.nbr.trp.log.LoggerController;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -40,127 +42,158 @@ public class CommonController {
     @Autowired
     public FileUploadService fileUploadService;
 
+    @Autowired
+    LoggerController loggerController;
+
+
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/division")
-    public ResponseEntity<?> getDiv() {
+    public ResponseEntity<?> getDiv(HttpServletRequest request) {
         try{
+            String ip = commonService.getIPAddress(request);
             List<Division> dv = commonService.getAllDivision();
+            loggerController.ListGeneration("","All Division","",ip);
             // return ResponseEntity.ok(new MessageResponse("Representative registered successfully!"));
             return new ResponseEntity<>(dv, HttpStatus.CREATED);
 
         }catch(Exception e){
+            loggerController.ErrorHandler(e);
+
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
         }
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/district")
-    public ResponseEntity<?> getDistr() {
+    public ResponseEntity<?> getDistr(HttpServletRequest request) {
         try{
+            String ip = commonService.getIPAddress(request);
             List<District> ds = commonService.getAllDistrict();
+            loggerController.ListGeneration("","All Division","",ip);
             // return ResponseEntity.ok(new MessageResponse("Representative registered successfully!"));
             return new ResponseEntity<>(ds, HttpStatus.CREATED);
 
         }catch(Exception e){
+            loggerController.ErrorHandler(e);
+
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
         }
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/thana")
-    public ResponseEntity<?> getThana() {
+    public ResponseEntity<?> getThana(HttpServletRequest request) {
+        String ip = commonService.getIPAddress(request);
+
         try{
+
             List<Thana> ds = commonService.getAllThana();
+            loggerController.ListGeneration("","All Thana","",ip);
             // return ResponseEntity.ok(new MessageResponse("Representative registered successfully!"));
             return new ResponseEntity<>(ds, HttpStatus.CREATED);
 
         }catch(Exception e){
+            loggerController.ErrorHandler(e);
+
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
         }
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/bank")
-    public ResponseEntity<?> getBank() {
+    public ResponseEntity<?> getBank(HttpServletRequest request) {
+        String ip = commonService.getIPAddress(request);
         try{
             List<BankName> ds = commonService.getAllBank();
+            loggerController.ListGeneration("","All Bank","",ip);
             // return ResponseEntity.ok(new MessageResponse("Representative registered successfully!"));
             return new ResponseEntity<>(ds, HttpStatus.CREATED);
 
         }catch(Exception e){
+            loggerController.ErrorHandler(e);
+
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
         }
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/bankdist")
-    public ResponseEntity<?> getBankDist() {
+    public ResponseEntity<?> getBankDist(HttpServletRequest request) {
+        String ip = commonService.getIPAddress(request);
+
         try{
             List<BankDistrict> ds = commonService.getAllBankDist();
+            loggerController.ListGeneration("","All Bank District","",ip);
             // return ResponseEntity.ok(new MessageResponse("Representative registered successfully!"));
             return new ResponseEntity<>(ds, HttpStatus.CREATED);
 
         }catch(Exception e){
+            loggerController.ErrorHandler(e);
+
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
         }
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/citycorporation")
-    public ResponseEntity<?> getCityCorporation() {
+    public ResponseEntity<?> getCityCorporation(HttpServletRequest request) {
+        String ip = commonService.getIPAddress(request);
         try{
             List<CityCorporation> ds = commonService.getAllCityCorporation();
-            // return ResponseEntity.ok(new MessageResponse("Representative registered successfully!"));
+            loggerController.ListGeneration("","All City Corporation","",ip);
             return new ResponseEntity<>(ds, HttpStatus.CREATED);
 
         }catch(Exception e){
+            loggerController.ErrorHandler(e);
+
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
         }
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/bankbranches/{name}/{district}")
-    public ResponseEntity<?> getBankBranches(@PathVariable String name, @PathVariable String district) {
-        System.out.println(name+" "+district);
+    public ResponseEntity<?> getBankBranches(HttpServletRequest request,@PathVariable String name, @PathVariable String district) {
+        String ip = commonService.getIPAddress(request);
         try{
             List<Bank> ds = commonService.getAllBankBranches(name,district);
-            // return ResponseEntity.ok(new MessageResponse("Representative registered successfully!"));
+            loggerController.ListGeneration("","All Branches of "+name+ " in "+district,"",ip);
             return new ResponseEntity<>(ds, HttpStatus.CREATED);
 
         }catch(Exception e){
+            loggerController.ErrorHandler(e);
+
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
         }
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/file")
-    public ResponseEntity<FileResponse> filepost(@RequestPart("file") MultipartFile file) {
-
-
+    public ResponseEntity<FileResponse> filepost(HttpServletRequest request, @RequestPart("file") MultipartFile file) {
+        String ip = commonService.getIPAddress(request);
         try {
 
             File f = new ClassPathResource("").getFile();
             final Path path = Paths.get(f.getAbsolutePath() + File.separator + "static" + File.separator + "files");
-
             FileResponse fileResponse = fileUploadService.uploadFile(path, file, 1);
-
+            loggerController.IncomingRequest(ip,"File Upload");
             return new ResponseEntity<>(fileResponse, HttpStatus.OK);
 
 
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            loggerController.ErrorHandler(e);
+
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/file/{filename}")
-    public ResponseEntity<Resource> load(@PathVariable String filename) {
+    public ResponseEntity<Resource> load(HttpServletRequest request, @PathVariable String filename) {
+        String ip = commonService.getIPAddress(request);
         try {
             Path root = Paths.get("target/classes/static/files");
-            System.out.println(root);
-
             Resource resource = fileUploadService.retrieve(root, filename,1);
+            loggerController.IncomingRequest(ip,"File Retrieval");
 
             return ResponseEntity
                 .status(HttpStatus.OK)
@@ -169,7 +202,8 @@ public class CommonController {
 
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            loggerController.ErrorHandler(e);
+
             return ResponseEntity
                     .status(HttpStatus.CONFLICT)
                     .contentType(MediaType.parseMediaType("application/pdf"))
@@ -180,30 +214,31 @@ public class CommonController {
 
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/photo")
-    public ResponseEntity<FileResponse> photopost(@RequestPart("file") MultipartFile file) {
-
+    public ResponseEntity<FileResponse> photopost(HttpServletRequest request,@RequestPart("file") MultipartFile file) {
+        String ip = commonService.getIPAddress(request);
         try {
             File f = new ClassPathResource("").getFile();
             final Path path = Paths.get(f.getAbsolutePath() + File.separator + "static" + File.separator + "photo");
-
             FileResponse fileResponse = fileUploadService.uploadFile(path, file, 0);
-
+            loggerController.IncomingRequest(ip,"Photo Upload");
             return new ResponseEntity<>(fileResponse, HttpStatus.OK);
 
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            loggerController.ErrorHandler(e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping(value="/photo/{filename}",produces = MediaType.IMAGE_JPEG_VALUE)
-    public ResponseEntity<Resource> loadPhoto(@PathVariable String filename) {
+    public ResponseEntity<Resource> loadPhoto(HttpServletRequest request,@PathVariable String filename) {
+        String ip = commonService.getIPAddress(request);
         try {
             Path root = Paths.get("target/classes/static/photo");
             System.out.println(root);
 
             Resource resource = fileUploadService.retrieve(root, filename,0);
+            loggerController.IncomingRequest(ip,"Photo Retrieval");
 
             return ResponseEntity
                     .status(HttpStatus.OK)
@@ -212,7 +247,7 @@ public class CommonController {
 
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            loggerController.ErrorHandler(e);
             return ResponseEntity
                     .status(HttpStatus.CONFLICT)
                     .body(null);

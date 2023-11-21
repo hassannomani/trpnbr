@@ -4,8 +4,11 @@ package com.nbr.trp.common.controller;
 import com.nbr.trp.common.entity.Address;
 import com.nbr.trp.common.repository.AddressRepository;
 import com.nbr.trp.common.service.AddressService;
+import com.nbr.trp.common.service.CommonService;
+import com.nbr.trp.log.LoggerController;
 import com.nbr.trp.representative.entity.Representative;
 import com.nbr.trp.user.response.MessageResponse;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,15 +25,23 @@ public class AddressController {
     @Autowired
     AddressService addressService;
 
+    @Autowired
+    CommonService commonService;
+
+    @Autowired
+    LoggerController loggerController;
+
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/add")
-    public ResponseEntity<?> addAddress(@RequestBody Address address) {
+    public ResponseEntity<?> addAddress(HttpServletRequest request,@RequestBody Address address) {
+        String ip = commonService.getIPAddress(request);
         try{
             Address address1 = addressService.saveAddress(address);
-            // return ResponseEntity.ok(new MessageResponse("Representative registered successfully!"));
+            loggerController.InfoSave("Address",ip);
             return new ResponseEntity<>(address1, HttpStatus.CREATED);
 
         }catch(Exception e){
+            loggerController.ErrorHandler(e);
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
         }
     }

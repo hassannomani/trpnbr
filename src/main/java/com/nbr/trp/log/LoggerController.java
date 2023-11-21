@@ -142,5 +142,30 @@ public class LoggerController {
         logger.info("TRP with id "+trp+" has been assigned with agent "+agent+" from ip : "+ip);
     }
 
+    public void MetricsSave(String ip, String metrics){
+        logger.info("Metrics: "+metrics+" is being saved from ip : "+ip);
+    }
+
+    public void LedgerRequest(String ip){
+        logger.info("Ledger Request initiated from ip : "+ip);
+    }
+
+    public void LedgerRequestSaved(String ip, String agent, String trp, String taxpayer){
+        logger.info("Ledger Request by trp:"+trp+ " of agent: "+agent+" for taxpayer: "+taxpayer+" initiated from ip : "+ip);
+    }
+    public void LedgerRequestDuplicate(String ip, String agent, String trp, String taxpayer){
+        logger.info("Ledger Request by trp:"+trp+ " of agent: "+agent+" for taxpayer: "+taxpayer+" initiated from ip : "+ip);
+    }
+
+    public void LedgerIndividual(String ip, String id, String viewer){
+        logger.info("Ledger with id:"+id+ " is viewed by: "+viewer+" initiated from ip : "+ip);
+    }
+
+    public void InfoSave(String info, String ip){
+        logger.info(info+" being saved from ip: "+ip);
+    }
+
+
+
 
 }
