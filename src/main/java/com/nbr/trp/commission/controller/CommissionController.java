@@ -131,7 +131,7 @@ public class CommissionController {
 
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/rejected_bill")
-    @PreAuthorize("hasRole('ADMIN')")
+   // @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getRejectedBills(HttpServletRequest request){
         String ip = commonService.getIPAddress(request);
         try{

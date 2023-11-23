@@ -32,7 +32,7 @@ public interface CommissionRepository extends JpaRepository<Commission, String> 
 
     @Query(value = "select first_name, last_name,payee,payee_type,ledger_id,creationNo,creation_date, taxpayer_id," +
             "taxpayer_name,agent_commission,representative_commission, c.status from users u join commission c" +
-            " on u.username=c.payee join ledger l on c.ledger_id=l.lid where c.status=:status and u.username=:tin order by created_date desc",nativeQuery = true)
+            " on u.username=c.payee join ledger l on c.ledger_id=l.lid where c.status=:status and u.username=:tin order by creation_date desc",nativeQuery = true)
     public List<CommissionBillView> findBillUser(@Param("tin") String tin, @Param("status") String status);
 
 
