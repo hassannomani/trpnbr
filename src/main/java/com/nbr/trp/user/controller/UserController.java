@@ -55,7 +55,7 @@ public class UserController {
         return new MessageResponse("Admin zone");
     }*/
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    //@CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/roles")
    // @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getAllRoles() {
@@ -68,7 +68,7 @@ public class UserController {
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    //@CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/add")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> addUser(HttpServletRequest request, @RequestBody User user) {
@@ -105,7 +105,7 @@ public class UserController {
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    //@CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/all")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getAllUsers(HttpServletRequest request) {
@@ -120,7 +120,7 @@ public class UserController {
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    //@CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/user/{username}")
     public ResponseEntity<?> getAUser(@PathVariable String username) {
         System.out.println(username);
@@ -132,7 +132,7 @@ public class UserController {
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    //@CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/pending-all")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getAllPendingUsers(HttpServletRequest request) {
@@ -146,7 +146,7 @@ public class UserController {
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    //@CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/approve/{uuid}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> approveUser(HttpServletRequest request,@PathVariable String uuid) {
@@ -162,7 +162,7 @@ public class UserController {
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    //@CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/tinapprove/{username}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> approveUserByTin(HttpServletRequest request,@PathVariable String username) {
@@ -179,7 +179,7 @@ public class UserController {
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    //@CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/reject/{uuid}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> rejectUser(HttpServletRequest request, @PathVariable String uuid) {
@@ -194,7 +194,7 @@ public class UserController {
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+   // @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/blocked")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> blockeduser(HttpServletRequest request) {
@@ -210,7 +210,7 @@ public class UserController {
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    //@CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/unblock/{tin}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> unblock(HttpServletRequest request, @PathVariable String tin) {
@@ -226,7 +226,7 @@ public class UserController {
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    //@CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/denied")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> denieduser(HttpServletRequest request) {
@@ -242,7 +242,7 @@ public class UserController {
     }
 
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    //@CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/register")
     //@PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> registerUser(HttpServletRequest request, @RequestBody User user) {
