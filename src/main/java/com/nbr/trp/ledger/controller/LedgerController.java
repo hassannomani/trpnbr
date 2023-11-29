@@ -286,7 +286,21 @@ public class LedgerController {
         }
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/graph/trp/{tin}")
+    public ResponseEntity<?> getGraphRepresentative(HttpServletRequest request, @PathVariable String tin){
+        String ip = commonService.getIPAddress(request);
+        UserDetailsImpl userDetails = commonService.getDetails();
+        try{
+            List<Object[]> ob = ledgerService.getGraphDataForTrp(tin);
+            loggerController.ListGeneration(userDetails.getUsername(),"Graph plotting for trp: "+tin+" for graph", "",ip);
 
+            return ResponseEntity.ok(ob);
+        } catch(Exception e){
+            loggerController.ErrorHandler(e);
+            return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
+        }
+    }
 
 
 }

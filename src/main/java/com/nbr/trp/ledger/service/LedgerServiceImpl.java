@@ -247,6 +247,11 @@ public class LedgerServiceImpl implements  LedgerService
         return ledgerRepository.findByRepresentativeTinAndTaxpayerId(trp, tin);
     }
 
+    public List<Object[]> getGraphDataForTrp(String trp){
+        return ledgerRepository.graphDataTrp(trp);
+    }
+
+
 
 
 }
