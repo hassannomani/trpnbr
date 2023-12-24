@@ -61,10 +61,10 @@ public class TRPEReturnServiceImpl implements TRPEReturnService{
     @Override
     public HttpEntity createHttpHeaders() {
         TRPEReturnAuthResponseModel authModel = getAuthResponse();
-        System.out.println("printing----");
+        //System.out.println("printing----");
         System.out.println(authModel);
         TRPEReturnAuthReplyMessage msg = authModel.getReplyMessage();
-        System.out.println(msg);
+        //System.out.println(msg);
         TRPEReturnAuthBody body = msg.getBody();
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
@@ -91,7 +91,7 @@ public class TRPEReturnServiceImpl implements TRPEReturnService{
             System.out.println(ex.getMessage());
             finalAlternateResponseToReturn.setErrorCode(String.valueOf(ex.getRawStatusCode()));
             finalAlternateResponseToReturn.setErrorMessage(String.valueOf(ex.getResponseBodyAsString()));
-
+            //System.out.println(finalAlternateResponseToReturn);
             return finalAlternateResponseToReturn;
         }
         TRPEReturnOTPReponseModel finalResponseToReturn;
