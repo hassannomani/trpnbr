@@ -165,6 +165,9 @@ public class LoggerController {
         logger.info(info+" being saved from ip: "+ip);
     }
 
+    public void PasswordChange(String id, String ip){
+        logger.info("User with tin "+id+" is requesting to change password from ip : "+ip);
+    }
 
 
 

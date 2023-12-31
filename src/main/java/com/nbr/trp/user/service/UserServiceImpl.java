@@ -142,6 +142,16 @@ public class UserServiceImpl implements UserService {
         return u;
     }
 
+    public Boolean changePassword(User user){
+        String tin = user.getUsername();
+        User u = userRepository.getByTin(tin);
+        this.passwordEncoder = new BCryptPasswordEncoder();
+        String pass = this.passwordEncoder.encode(user.getPassword());
+        u.setPassword(pass);
+        userRepository.save(u);
+        return true;
+    }
+
 
 
 }

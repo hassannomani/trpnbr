@@ -7,12 +7,16 @@ import com.nbr.trp.user.entity.Role;
 import com.nbr.trp.user.entity.User;
 import com.nbr.trp.user.repository.RoleRepository;
 import com.nbr.trp.user.response.MessageResponse;
+import com.nbr.trp.user.service.UserDetailsImpl;
 import com.nbr.trp.user.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,7 +25,7 @@ import java.util.Optional;
 
 //@CrossOrigin(origins = "*", maxAge = 4800)
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/v1/users")
 //@RequestMapping("/api/test")
 public class UserController {
 
@@ -255,6 +259,26 @@ public class UserController {
             loggerController.ErrorHandler(e);
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
         }
+    }
+
+    @PostMapping("/changePassword")
+    public ResponseEntity<?> changePassword(HttpServletRequest request, @RequestBody User user) {
+        String ip = commonService.getIPAddress(request);
+        UserDetailsImpl userDetails1 = getDetails();
+        try{
+            Boolean bool = userService.changePassword(user);
+            loggerController.PasswordChange(user.getUsername(),ip);
+            return ResponseEntity.ok(bool);
+        }catch(Exception e){
+            loggerController.ErrorHandler(e);
+            return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
+        }
+    }
+
+    private UserDetailsImpl getDetails(){
+        SecurityContext context = SecurityContextHolder.getContext();
+        Authentication authentication = context.getAuthentication();
+        return (UserDetailsImpl) authentication.getPrincipal();
     }
 
 
