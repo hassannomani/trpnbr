@@ -32,6 +32,9 @@ public class TRPAgentChange {
     @Column(name = "request_for_type",nullable = false)
     public String requestForType;
 
+    @Column(name = "previously_assigned",nullable = false)
+    public String previouslyAssigned;
+
     @Column(name = "reason",nullable = false)
     public String reason;
 
