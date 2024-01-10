@@ -3,6 +3,7 @@ package com.nbr.trp.representative.controller;
 import com.nbr.trp.common.service.CommonService;
 import com.nbr.trp.log.LoggerController;
 import com.nbr.trp.representative.entity.Representative;
+import com.nbr.trp.representative.entity.RepresentativeAgentView;
 import com.nbr.trp.representative.repository.RepresentativeRepository;
 import com.nbr.trp.representative.service.RepresentativeService;
 import com.nbr.trp.user.repository.RoleRepository;
@@ -20,7 +21,7 @@ import java.util.Optional;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/representative")
+@RequestMapping("/api/v1/representative")
 public class RepresentativeController {
 
     @Autowired
@@ -97,4 +98,18 @@ public class RepresentativeController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
         }
     }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PreAuthorize("hasRole('REPRESENTATIVE')")
+    @GetMapping("/agentinfo/{tin}")
+    public ResponseEntity<?> getAgentDetails(HttpServletRequest request, @PathVariable String tin){
+        String ip = commonService.getIPAddress(request);
+        UserDetailsImpl userDetails = commonService.getDetails();
+        loggerController.TRPIndividualRetrival(userDetails.getUsername(),tin,ip);
+        RepresentativeAgentView representative = representativeService.getAgentInfo(tin);
+        return ResponseEntity.ok(representative);
+
+    }
+
+
 }

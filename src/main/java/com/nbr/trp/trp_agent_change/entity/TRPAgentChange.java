@@ -21,19 +21,19 @@ public class TRPAgentChange {
     public String transferid;
 
     @Column(name = "requested_by",nullable = false)
-    public String requestedBy;
+    public String requestedBy;   // the one who initiated the req
 
     @Column(name = "requested_by_type",nullable = false)
-    public String requestedType;
+    public String requestedType;  // his type
 
     @Column(name = "request_for",nullable = false)
-    public String requestFor;
+    public String requestFor;   // the one he chooses
 
     @Column(name = "request_for_type",nullable = false)
-    public String requestForType;
+    public String requestForType; // the one he chooses type
 
     @Column(name = "previously_assigned",nullable = false)
-    public String previouslyAssigned;
+    public String previouslyAssigned;  // his ex
 
     @Column(name = "reason",nullable = false)
     public String reason;

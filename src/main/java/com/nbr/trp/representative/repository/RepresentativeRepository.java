@@ -2,6 +2,7 @@ package com.nbr.trp.representative.repository;
 
 import com.nbr.trp.agent.entity.Agent;
 import com.nbr.trp.representative.entity.Representative;
+import com.nbr.trp.representative.entity.RepresentativeAgentView;
 import com.nbr.trp.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -30,6 +31,10 @@ public interface RepresentativeRepository extends JpaRepository<Representative, 
 
     @Query(value = "select * from representative where tin_no = :trpTin",nativeQuery = true)
     Representative findByTin(@Param("trpTin") String tin);
+
+
+    @Query(value = "select * from representative join agent on representative.agent_id=agent.tin where representative.tin_no = :trpTin",nativeQuery = true)
+    RepresentativeAgentView findAgentInfoByTin(@Param("trpTin") String tin);
 
 
 
