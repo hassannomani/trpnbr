@@ -169,6 +169,10 @@ public class LoggerController {
         logger.info("User with tin "+id+" is requesting to change password from ip : "+ip);
     }
 
+    public void AgentChange(String id, String ip){
+        logger.info("TRP with tin "+id+" is requesting to change agent from ip : "+ip);
+    }
+
 
 
 }

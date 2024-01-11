@@ -19,4 +19,6 @@ public interface TRPAgentChangeRepository extends JpaRepository<TRPAgentChange, 
     List<TRPAgentChange> findByRequestedBy(String id);
 
     TRPAgentChange save(TRPAgentChange req);
+
+    List<TRPAgentChange> findByStatus(String status);
 }
