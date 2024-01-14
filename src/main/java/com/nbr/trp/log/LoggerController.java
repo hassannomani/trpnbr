@@ -173,6 +173,14 @@ public class LoggerController {
         logger.info("TRP with tin "+id+" is requesting to change agent from ip : "+ip);
     }
 
+    public void TRPRequestApprove(String id, String ip){
+        logger.info("Admin is approving transfer request of "+id+" to change agent from ip : "+ip);
+    }
+
+    public void TRPRequestReject(String id, String ip){
+        logger.info("Admin is rejecting transfer request of "+id+" to change agent from ip : "+ip);
+    }
+
 
 
 }

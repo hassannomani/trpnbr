@@ -1,5 +1,6 @@
 package com.nbr.trp.trp_agent_change.service;
 
+import com.nbr.trp.representative.entity.AdminTRPTransferView;
 import com.nbr.trp.trp_agent_change.entity.TRPAgentChange;
 import com.nbr.trp.trp_agent_change.repository.TRPAgentChangeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,8 @@ public class TRPAgentChangeServiceImpl implements TRPAgentChangeService{
     }
 
     @Override
-    public List<TRPAgentChange> getAll() {
-        return trpAgentChangeRepository.findByStatus("0");
+    public List<AdminTRPTransferView> getAll() {
+        return trpAgentChangeRepository.findAllRequestsTRP();
     }
 
     @Override
@@ -30,7 +31,13 @@ public class TRPAgentChangeServiceImpl implements TRPAgentChangeService{
     }
 
     @Override
-    public Boolean updateRequest(TRPAgentChange req, String id) {
-        return null;
+    public Boolean updateRequest(String id, String approve) {
+        TRPAgentChange req = trpAgentChangeRepository.findByTransferid(id);
+        if(approve.equals("0"))
+            req.setStatus("-1");
+        else
+            req.setStatus("1");
+        trpAgentChangeRepository.save(req);
+        return true;
     }
 }

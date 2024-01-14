@@ -2,6 +2,7 @@ package com.nbr.trp.trp_agent_change.controller;
 
 import com.nbr.trp.common.service.CommonService;
 import com.nbr.trp.log.LoggerController;
+import com.nbr.trp.representative.entity.AdminTRPTransferView;
 import com.nbr.trp.representative.entity.Representative;
 import com.nbr.trp.trp_agent_change.entity.TRPAgentChange;
 import com.nbr.trp.trp_agent_change.service.TRPAgentChangeService;
@@ -49,7 +50,7 @@ public class TRPAgentChangeController {
         try {
             String ip = commonService.getIPAddress(request);
             UserDetailsImpl userDetails = commonService.getDetails();
-            List<TRPAgentChange> trpAgentChangeList = trpAgentChangeService.getAll();
+            List<AdminTRPTransferView> trpAgentChangeList = trpAgentChangeService.getAll();
             loggerController.AgentChange(userDetails.getUsername(),ip);
             return new ResponseEntity<>(trpAgentChangeList, HttpStatus.OK);
         }catch(Exception e){
@@ -57,4 +58,32 @@ public class TRPAgentChangeController {
         }
 
     }
+
+    @GetMapping("/approve/{id}")
+    public ResponseEntity<?> ApproveReq(HttpServletRequest request,@PathVariable String id) {
+        try {
+            String ip = commonService.getIPAddress(request);
+            UserDetailsImpl userDetails = commonService.getDetails();
+            Boolean bool = trpAgentChangeService.updateRequest(id,"1");
+            loggerController.TRPRequestApprove(id,ip);
+            return new ResponseEntity<>(bool, HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        }
+    }
+
+    @GetMapping("/reject/{id}")
+    public ResponseEntity<?> RejectReq(HttpServletRequest request,@PathVariable String id) {
+        try {
+            String ip = commonService.getIPAddress(request);
+            UserDetailsImpl userDetails = commonService.getDetails();
+            Boolean bool = trpAgentChangeService.updateRequest(id,"0");
+            loggerController.TRPRequestApprove(id,ip);
+            return new ResponseEntity<>(bool, HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        }
+    }
+
+
 }
