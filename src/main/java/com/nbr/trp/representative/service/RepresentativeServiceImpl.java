@@ -57,5 +57,8 @@ public class RepresentativeServiceImpl implements RepresentativeService{
         return representativeRepository.findAgentInfoByTin(tin);
     }
 
-
+    @Override
+    public Representative getSingleRepresentativesOfAnAgent(String agent, String trp){
+        return representativeRepository.findSingleTRPOfAgent(agent, trp);
+    }
 }

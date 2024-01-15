@@ -24,4 +24,7 @@ public interface RepresentativeService {
 
     public RepresentativeAgentView getAgentInfo(String tin);
 
+    public Representative getSingleRepresentativesOfAnAgent(String agent, String trp);
+
+
 }

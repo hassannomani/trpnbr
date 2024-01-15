@@ -111,5 +111,15 @@ public class RepresentativeController {
 
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/single/{agent}/{trp}")
+    public ResponseEntity<?> getSingleTRPOfAnAgent(HttpServletRequest request,@PathVariable String agent, @PathVariable String trp){
+        String ip = commonService.getIPAddress(request);
+        UserDetailsImpl userDetails = commonService.getDetails();
+        Representative representative = representativeService.getSingleRepresentativesOfAnAgent(agent, trp);
+        //loggerController.ListGeneration(userDetails.getUsername(),"All TRP of Agent: "+tin,"",ip);
+        return ResponseEntity.ok(representative);
+    }
+
 
 }
