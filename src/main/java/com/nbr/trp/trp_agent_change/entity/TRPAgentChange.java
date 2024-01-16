@@ -26,14 +26,17 @@ public class TRPAgentChange {
     @Column(name = "requested_by_type",nullable = false)
     public String requestedType;  // his type
 
-    @Column(name = "request_for",nullable = false)
+    @Column(name = "request_for")
     public String requestFor;   // the one he chooses
 
-    @Column(name = "request_for_type",nullable = false)
+    @Column(name = "request_for_type")
     public String requestForType; // the one he chooses type
 
     @Column(name = "previously_assigned",nullable = false)
     public String previouslyAssigned;  // his ex
+
+    @Column(name = "previously_assigned_name",nullable = false)
+    public String previouslyAssignedName;
 
     @Column(name = "reason",nullable = false)
     public String reason;
