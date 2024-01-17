@@ -15,5 +15,7 @@ public interface TRPAgentChangeService {
     public List<AdminTRPTransferView> getAll ();
     public Boolean saveNewRequest(TRPAgentChange req);
     public Boolean updateRequest(String id, String approve);
+    public List<TRPAgentChange> getAllAgent ();
+
 
 }

@@ -29,4 +29,7 @@ public interface TRPAgentChangeRepository extends JpaRepository<TRPAgentChange, 
     TRPAgentChange save(TRPAgentChange req);
 
     List<TRPAgentChange> findByStatus(String status);
+
+    @Query(value = "select * from transfer where status='0' and requested_by_type='ROLE_AGENT'",nativeQuery = true)
+    List<TRPAgentChange> findAllRequestsAgent();
 }

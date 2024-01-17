@@ -40,4 +40,10 @@ public class TRPAgentChangeServiceImpl implements TRPAgentChangeService{
         trpAgentChangeRepository.save(req);
         return true;
     }
+
+    @Override
+    public List<TRPAgentChange> getAllAgent (){
+        return trpAgentChangeRepository.findAllRequestsAgent();
+    }
+
 }

@@ -45,7 +45,7 @@ public class TRPAgentChangeController {
 
     }
 
-    @GetMapping("/all")
+    @GetMapping("/all-trp")
     public ResponseEntity<?> GetAllRequest(HttpServletRequest request) {
         try {
             String ip = commonService.getIPAddress(request);
@@ -83,6 +83,20 @@ public class TRPAgentChangeController {
         }catch(Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
         }
+    }
+
+    @GetMapping("/all-agent")
+    public ResponseEntity<?> GetAllAgentRequest(HttpServletRequest request) {
+        try {
+            String ip = commonService.getIPAddress(request);
+            UserDetailsImpl userDetails = commonService.getDetails();
+            List<TRPAgentChange> trpAgentChangeList = trpAgentChangeService.getAllAgent();
+            loggerController.AgentChange(userDetails.getUsername(),ip);
+            return new ResponseEntity<>(trpAgentChangeList, HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        }
+
     }
 
 
