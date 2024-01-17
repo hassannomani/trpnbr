@@ -6,6 +6,8 @@ import com.nbr.trp.trp_agent_change.repository.TRPAgentChangeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.xml.crypto.Data;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -33,8 +35,10 @@ public class TRPAgentChangeServiceImpl implements TRPAgentChangeService{
     @Override
     public Boolean updateRequest(String id, String approve) {
         TRPAgentChange req = trpAgentChangeRepository.findByTransferid(id);
-        if(approve.equals("0"))
+        req.setDecisionAt(new Date().toString());
+        if(approve.equals("0")) {
             req.setStatus("-1");
+        }
         else
             req.setStatus("1");
         trpAgentChangeRepository.save(req);
