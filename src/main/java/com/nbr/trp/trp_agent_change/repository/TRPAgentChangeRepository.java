@@ -21,7 +21,7 @@ public interface TRPAgentChangeRepository extends JpaRepository<TRPAgentChange, 
             "where a.requested_by = u.username\n" +
             "and a.request_for=j.username\n" +
             "and a.previously_assigned=k.username" +
-            " and a.status='0' and a.requested_by_type='ROLE_REPRESENTATIVE'",nativeQuery = true)
+            " and a.status='0' and a.requested_by_type='ROLE_REPRESENTATIVE' order by created_at desc",nativeQuery = true)
     List<AdminTRPTransferView> findAllRequestsTRP();
 
     List<TRPAgentChange> findByRequestedBy(String id);
@@ -30,6 +30,9 @@ public interface TRPAgentChangeRepository extends JpaRepository<TRPAgentChange, 
 
     List<TRPAgentChange> findByStatus(String status);
 
-    @Query(value = "select * from transfer where status='0' and requested_by_type='ROLE_AGENT'",nativeQuery = true)
+    @Query(value = "select * from transfer where status='0' and requested_by_type='ROLE_AGENT' order by created_at desc",nativeQuery = true)
     List<TRPAgentChange> findAllRequestsAgent();
+
+    TRPAgentChange findByRequestedByAndStatusAndPreviouslyAssigned(String req, String stat, String prev);
+
 }

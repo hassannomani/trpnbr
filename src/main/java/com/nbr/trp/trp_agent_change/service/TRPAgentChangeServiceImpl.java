@@ -1,6 +1,8 @@
 package com.nbr.trp.trp_agent_change.service;
 
 import com.nbr.trp.representative.entity.AdminTRPTransferView;
+import com.nbr.trp.representative.entity.Representative;
+import com.nbr.trp.representative.repository.RepresentativeRepository;
 import com.nbr.trp.trp_agent_change.entity.TRPAgentChange;
 import com.nbr.trp.trp_agent_change.repository.TRPAgentChangeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,9 @@ public class TRPAgentChangeServiceImpl implements TRPAgentChangeService{
     @Autowired
     TRPAgentChangeRepository trpAgentChangeRepository;
 
+    @Autowired
+    RepresentativeRepository representativeRepository;
+
     @Override
     public List<TRPAgentChange> getLists(String requestedBy) {
         return null;
@@ -28,19 +33,23 @@ public class TRPAgentChangeServiceImpl implements TRPAgentChangeService{
 
     @Override
     public Boolean saveNewRequest(TRPAgentChange req) {
-        trpAgentChangeRepository.save(req);
-        return true;
+        TRPAgentChange trpAgentChange = trpAgentChangeRepository.findByRequestedByAndStatusAndPreviouslyAssigned(req.getRequestedBy(),"0",req.getPreviouslyAssigned());
+        if(trpAgentChange!=null)
+            return false;
+        else{
+            trpAgentChangeRepository.save(req);
+            return true;
+        }
     }
 
     @Override
-    public Boolean updateRequest(String id, String approve) {
+    public Boolean ApproveRequestTRP(String id) {
         TRPAgentChange req = trpAgentChangeRepository.findByTransferid(id);
         req.setDecisionAt(new Date().toString());
-        if(approve.equals("0")) {
-            req.setStatus("-1");
-        }
-        else
-            req.setStatus("1");
+        req.setStatus("1");
+        Representative rep = representativeRepository.findByTin(req.getRequestedBy());
+        rep.setAgentId(req.getRequestFor());
+        representativeRepository.save(rep);
         trpAgentChangeRepository.save(req);
         return true;
     }
@@ -48,6 +57,28 @@ public class TRPAgentChangeServiceImpl implements TRPAgentChangeService{
     @Override
     public List<TRPAgentChange> getAllAgent (){
         return trpAgentChangeRepository.findAllRequestsAgent();
+    }
+
+    @Override
+    public Boolean ApproveRequestAgent(String id,String agent) {
+        TRPAgentChange req = trpAgentChangeRepository.findByTransferid(id);
+        req.setDecisionAt(new Date().toString());
+        req.setStatus("1");
+        req.setRequestFor(agent);
+        Representative rep = representativeRepository.findByTin(req.getPreviouslyAssigned());
+        rep.setAgentId(agent);
+        representativeRepository.save(rep);
+        trpAgentChangeRepository.save(req);
+        return true;
+    }
+
+    @Override
+    public Boolean RejectRequest(String id) {
+        TRPAgentChange req = trpAgentChangeRepository.findByTransferid(id);
+        req.setDecisionAt(new Date().toString());
+        req.setStatus("-1");
+        trpAgentChangeRepository.save(req);
+        return true;
     }
 
 }

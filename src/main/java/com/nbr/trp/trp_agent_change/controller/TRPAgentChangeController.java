@@ -12,8 +12,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 4800)
@@ -44,7 +46,7 @@ public class TRPAgentChangeController {
         }
 
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/all-trp")
     public ResponseEntity<?> GetAllRequest(HttpServletRequest request) {
         try {
@@ -59,12 +61,13 @@ public class TRPAgentChangeController {
 
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/approve/{id}")
-    public ResponseEntity<?> ApproveReq(HttpServletRequest request,@PathVariable String id) {
+    public ResponseEntity<?> ApproveReqTRP(HttpServletRequest request,@PathVariable String id) {
         try {
             String ip = commonService.getIPAddress(request);
             UserDetailsImpl userDetails = commonService.getDetails();
-            Boolean bool = trpAgentChangeService.updateRequest(id,"1");
+            Boolean bool = trpAgentChangeService.ApproveRequestTRP(id);
             loggerController.TRPRequestApprove(id,ip);
             return new ResponseEntity<>(bool, HttpStatus.OK);
         }catch(Exception e){
@@ -72,19 +75,20 @@ public class TRPAgentChangeController {
         }
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/reject/{id}")
-    public ResponseEntity<?> RejectReq(HttpServletRequest request,@PathVariable String id) {
+    public ResponseEntity<?> RejectReq(HttpServletRequest request, @PathVariable String id) {
         try {
             String ip = commonService.getIPAddress(request);
             UserDetailsImpl userDetails = commonService.getDetails();
-            Boolean bool = trpAgentChangeService.updateRequest(id,"0");
+            Boolean bool = trpAgentChangeService.RejectRequest(id);
             loggerController.TRPRequestApprove(id,ip);
             return new ResponseEntity<>(bool, HttpStatus.OK);
         }catch(Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
         }
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/all-agent")
     public ResponseEntity<?> GetAllAgentRequest(HttpServletRequest request) {
         try {
@@ -97,6 +101,19 @@ public class TRPAgentChangeController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
         }
 
+    }
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/approve-agent-req/{transferid}/{agentid}")
+    public ResponseEntity<?> ApproveReqAgent(HttpServletRequest request,@PathVariable String transferid, @PathVariable String agentid) {
+        try {
+            String ip = commonService.getIPAddress(request);
+            UserDetailsImpl userDetails = commonService.getDetails();
+            Boolean bool = trpAgentChangeService.ApproveRequestAgent(transferid,agentid);
+            loggerController.TRPRequestApprove(transferid,ip);
+            return new ResponseEntity<>(bool, HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        }
     }
 
 
