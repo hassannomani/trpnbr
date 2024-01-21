@@ -4,6 +4,9 @@ import com.nbr.trp.common.entity.*;
 import com.nbr.trp.common.service.CommonService;
 import com.nbr.trp.common.service.FileUploadService;
 import com.nbr.trp.log.LoggerController;
+import com.nbr.trp.user.entity.User;
+import com.nbr.trp.user.service.UserDetailsImpl;
+import com.nbr.trp.user.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -27,6 +30,7 @@ import java.nio.file.StandardCopyOption;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 import static org.springframework.web.servlet.function.ServerResponse.ok;
@@ -44,6 +48,9 @@ public class CommonController {
 
     @Autowired
     LoggerController loggerController;
+
+    @Autowired
+    UserService userService;
 
 
     @CrossOrigin(origins = "http://localhost:4200")
@@ -252,6 +259,33 @@ public class CommonController {
                     .status(HttpStatus.CONFLICT)
                     .body(null);
 
+        }
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/profilephoto")
+    public ResponseEntity<FileResponse> profilephotopost(HttpServletRequest request,@RequestPart("file") MultipartFile file) {
+        String ip = commonService.getIPAddress(request);
+        UserDetailsImpl userDetails = commonService.getDetails();
+
+        try {
+            File f = new ClassPathResource("").getFile();
+            final Path path = Paths.get(f.getAbsolutePath() + File.separator + "static" + File.separator + "profilephoto");
+            FileResponse fileResponse = fileUploadService.uploadFile(path, file, 0);
+            loggerController.IncomingRequest(ip,"Photo Upload");
+            User u = userService.getUserByUsername(userDetails.getUsername()).orElse(null);
+            if(u!=null){
+                u.setPhoto(fileResponse.getFileUri());
+                userService.saveUser(u);
+                return new ResponseEntity<>(fileResponse, HttpStatus.OK);
+
+            }else{
+                return new ResponseEntity<>(fileResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+
+        } catch (IOException e) {
+            loggerController.ErrorHandler(e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

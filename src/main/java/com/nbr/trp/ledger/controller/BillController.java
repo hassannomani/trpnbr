@@ -1,5 +1,7 @@
 package com.nbr.trp.ledger.controller;
 
+import com.nbr.trp.commission.entity.CommissionBillView;
+import com.nbr.trp.commission.service.CommissionService;
 import com.nbr.trp.ledger.entity.Ledger;
 import com.nbr.trp.ledger.entity.LedgerAdminView;
 import com.nbr.trp.ledger.request.BillRequest;
@@ -37,6 +39,10 @@ public class BillController {
 
     @Autowired
     UserDetailsImpl userDetails;
+
+
+    @Autowired
+    CommissionService commissionService;
 
     @Autowired
     LoggerController loggerController;
@@ -87,6 +93,31 @@ public class BillController {
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
         }
     }
+
+    @GetMapping("/approved-agt/{agent}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> getAgentApprovedBill(@PathVariable String agent){
+        try{
+            List<CommissionBillView> ldgs = commissionService.getApprovedBill(agent);
+            loggerController.BillCheck("AGENT",agent);
+            return ResponseEntity.ok(ldgs);
+        } catch(Exception e){
+            return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
+        }
+    }
+
+    @GetMapping("/approved-trp/{trp}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> getTRPpprovedBill(@PathVariable String trp){
+        try{
+            List<CommissionBillView> ldgs = commissionService.getApprovedBill(trp);
+            loggerController.BillCheck("REPRESENTATIVE",trp);
+            return ResponseEntity.ok(ldgs);
+        } catch(Exception e){
+            return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
+        }
+    }
+
 
 
 
