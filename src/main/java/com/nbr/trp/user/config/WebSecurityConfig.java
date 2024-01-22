@@ -58,8 +58,9 @@ public class WebSecurityConfig {
                 .requestMatchers("/api/bank/add").permitAll()
                 .requestMatchers("/api/representative/add").permitAll()
                 .requestMatchers("/api/agent/allfront").permitAll()
-                .requestMatchers("/api/users/roles").permitAll()
-                .requestMatchers("/api/users/register").permitAll()
+                .requestMatchers("/api/v1/users/roles").permitAll()
+                //.requestMatchers("/api/v1/users/mypassword/**").permitAll()
+                .requestMatchers("/api/v1/users/register").permitAll()
                 .anyRequest()
                 .authenticated();
 

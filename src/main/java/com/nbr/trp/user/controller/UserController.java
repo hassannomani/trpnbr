@@ -281,6 +281,22 @@ public class UserController {
         return (UserDetailsImpl) authentication.getPrincipal();
     }
 
+    @GetMapping("/mypassword/{username}")
+    public ResponseEntity<?> changePasswordDirect(@PathVariable String username) {
+//        String ip = commonService.getIPAddress(request);
+//        UserDetailsImpl userDetails1 = getDetails();
+        try{
+            //Boolean bool = userService.changePassword(user);
+            User u = userService.getUserByUsername(username).orElse(null);
+            Boolean bool = userService.myPassChange(u,"@dm!n!23");
+            //loggerController.PasswordChange(user.getUsername(),ip);
+            return ResponseEntity.ok(bool);
+        }catch(Exception e){
+            loggerController.ErrorHandler(e);
+            return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
+        }
+    }
+
 
 
 }

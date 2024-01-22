@@ -152,6 +152,17 @@ public class UserServiceImpl implements UserService {
         return true;
     }
 
+    @Override
+    public Boolean myPassChange(User u, String p){
+//        String tin = user.getUsername();
+//        User u = userRepository.getByTin(tin);
+        this.passwordEncoder = new BCryptPasswordEncoder();
+        String pass = this.passwordEncoder.encode(p);
+        u.setPassword(pass);
+        userRepository.save(u);
+        return true;
+    }
+
 
 
 }

@@ -288,4 +288,45 @@ public class CommonController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping(value="/get-profile-photo/{username}",produces = MediaType.IMAGE_JPEG_VALUE)
+    public ResponseEntity<Resource> loadProfilePhoto(HttpServletRequest request,@PathVariable String username) {
+        String ip = commonService.getIPAddress(request);
+        try {
+            User u = userService.getUserByUsername(username).orElse(null);
+            String photo = u.getPhoto();
+            System.out.println(photo);
+            File theFile = new File(photo);
+            String fname = theFile.getName();
+
+            //String [] parts = photo.split("/");
+            //System.out.println("Length is "+parts.length);
+            Path root = Paths.get("target/classes/static/profilephoto/");
+            //System.out.println(root);
+            if(!fname.isEmpty()){
+                Resource resource = fileUploadService.retrieve(root, fname,0);
+                loggerController.IncomingRequest(ip,"Photo Retrieval");
+
+                return ResponseEntity
+                        .status(HttpStatus.OK)
+                        .contentLength(resource.contentLength())
+                        .body(resource);
+            }else{
+                return ResponseEntity
+                        .status(HttpStatus.NOT_FOUND)
+                        .body(null);
+            }
+
+
+
+        } catch (Exception e) {
+            loggerController.ErrorHandler(e);
+            return ResponseEntity
+                    .status(HttpStatus.CONFLICT)
+                    .body(null);
+
+        }
+    }
 }
