@@ -117,4 +117,20 @@ public class TRPAgentChangeController {
     }
 
 
+    @GetMapping("/previous-trp-of-agent/{agentId}")
+    public ResponseEntity<?> GetAllPreviousTRPOfAgent(HttpServletRequest request, @PathVariable String agentId) {
+        try {
+            String ip = commonService.getIPAddress(request);
+            UserDetailsImpl userDetails = commonService.getDetails();
+            List<TRPAgentChange> trpAgentChangeList = trpAgentChangeService.getPreviousTRPs(agentId);
+            loggerController.AgentChange(userDetails.getUsername(),ip);
+            return new ResponseEntity<>(trpAgentChangeList, HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        }
+
+    }
+
+
+
 }

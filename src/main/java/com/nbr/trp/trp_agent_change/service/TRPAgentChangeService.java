@@ -22,5 +22,8 @@ public interface TRPAgentChangeService {
 
     public List<TRPAgentChange> getAllAgent ();
 
+    public List<TRPAgentChange> getPreviousTRPs (String id);
+
+
 
 }

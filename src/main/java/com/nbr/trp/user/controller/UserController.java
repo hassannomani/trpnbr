@@ -288,7 +288,7 @@ public class UserController {
         try{
             //Boolean bool = userService.changePassword(user);
             User u = userService.getUserByUsername(username).orElse(null);
-            Boolean bool = userService.myPassChange(u,"@dm!n!23");
+            Boolean bool = userService.myPassChange(u,"1234");
             //loggerController.PasswordChange(user.getUsername(),ip);
             return ResponseEntity.ok(bool);
         }catch(Exception e){

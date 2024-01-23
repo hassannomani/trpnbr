@@ -35,4 +35,7 @@ public interface TRPAgentChangeRepository extends JpaRepository<TRPAgentChange, 
 
     TRPAgentChange findByRequestedByAndStatusAndPreviouslyAssigned(String req, String stat, String prev);
 
+    @Query(value = "select * from transfer where requested_by= :id or previously_assigned= :id and status=1  order by created_at desc",nativeQuery = true)
+    List<TRPAgentChange> getPreviousTRPsOfAgent(String id);
 }
+
