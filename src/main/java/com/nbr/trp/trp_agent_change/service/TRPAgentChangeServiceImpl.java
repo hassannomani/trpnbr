@@ -4,6 +4,7 @@ import com.nbr.trp.representative.entity.AdminTRPTransferView;
 import com.nbr.trp.representative.entity.Representative;
 import com.nbr.trp.representative.repository.RepresentativeRepository;
 import com.nbr.trp.trp_agent_change.entity.TRPAgentChange;
+import com.nbr.trp.trp_agent_change.entity.TRPAgentChangeHistoryView;
 import com.nbr.trp.trp_agent_change.repository.TRPAgentChangeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -82,7 +83,12 @@ public class TRPAgentChangeServiceImpl implements TRPAgentChangeService{
     }
 
     @Override
-    public List<TRPAgentChange> getPreviousTRPs (String id){
+    public List<TRPAgentChangeHistoryView> getPreviousTRPs (String id){
+        return trpAgentChangeRepository.getPreviousTRPsOfAgent(id);
+    }
+
+    @Override
+    public List<TRPAgentChangeHistoryView> getPreviousAgents (String id){
         return trpAgentChangeRepository.getPreviousTRPsOfAgent(id);
     }
 

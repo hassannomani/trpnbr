@@ -5,6 +5,7 @@ import com.nbr.trp.log.LoggerController;
 import com.nbr.trp.representative.entity.AdminTRPTransferView;
 import com.nbr.trp.representative.entity.Representative;
 import com.nbr.trp.trp_agent_change.entity.TRPAgentChange;
+import com.nbr.trp.trp_agent_change.entity.TRPAgentChangeHistoryView;
 import com.nbr.trp.trp_agent_change.service.TRPAgentChangeService;
 import com.nbr.trp.user.response.MessageResponse;
 import com.nbr.trp.user.service.UserDetailsImpl;
@@ -122,7 +123,21 @@ public class TRPAgentChangeController {
         try {
             String ip = commonService.getIPAddress(request);
             UserDetailsImpl userDetails = commonService.getDetails();
-            List<TRPAgentChange> trpAgentChangeList = trpAgentChangeService.getPreviousTRPs(agentId);
+            List<TRPAgentChangeHistoryView> trpAgentChangeList = trpAgentChangeService.getPreviousTRPs(agentId);
+            loggerController.AgentChange(userDetails.getUsername(),ip);
+            return new ResponseEntity<>(trpAgentChangeList, HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        }
+
+    }
+
+    @GetMapping("/previous-agents-of-trp/{trpId}")
+    public ResponseEntity<?> GetAllPreviousAgentOfTRP(HttpServletRequest request, @PathVariable String trpId) {
+        try {
+            String ip = commonService.getIPAddress(request);
+            UserDetailsImpl userDetails = commonService.getDetails();
+            List<TRPAgentChangeHistoryView> trpAgentChangeList = trpAgentChangeService.getPreviousAgents(trpId);
             loggerController.AgentChange(userDetails.getUsername(),ip);
             return new ResponseEntity<>(trpAgentChangeList, HttpStatus.OK);
         }catch(Exception e){

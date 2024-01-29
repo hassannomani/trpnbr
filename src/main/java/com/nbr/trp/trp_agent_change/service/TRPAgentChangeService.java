@@ -3,6 +3,7 @@ package com.nbr.trp.trp_agent_change.service;
 import com.nbr.trp.ledger.entity.Ledger;
 import com.nbr.trp.representative.entity.AdminTRPTransferView;
 import com.nbr.trp.trp_agent_change.entity.TRPAgentChange;
+import com.nbr.trp.trp_agent_change.entity.TRPAgentChangeHistoryView;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,7 +23,10 @@ public interface TRPAgentChangeService {
 
     public List<TRPAgentChange> getAllAgent ();
 
-    public List<TRPAgentChange> getPreviousTRPs (String id);
+    public List<TRPAgentChangeHistoryView> getPreviousTRPs (String id);
+
+    public List<TRPAgentChangeHistoryView> getPreviousAgents (String id);
+
 
 
 
