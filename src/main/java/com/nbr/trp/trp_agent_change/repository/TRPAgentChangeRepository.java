@@ -43,5 +43,15 @@ public interface TRPAgentChangeRepository extends JpaRepository<TRPAgentChange, 
             "requested_by = username\n" +
             "where previously_assigned= :id and t.status='1'  order by created_at desc",nativeQuery = true)
     List<TRPAgentChangeHistoryView> getPreviousTRPsOfAgent(String id);
+
+
+    @Query(value = "select t.transferid, t.created_at,t.decision_at,previously_assigned,requested_by,t.status,u.first_name,u.last_name from transfer t join users u on previously_assigned=username \n" +
+            "where requested_by = :id and t.status='1'" +
+            "union\n" +
+            "select t.transferid,t.created_at,t.decision_at,previously_assigned,requested_by,t.status,u.first_name,u.last_name from transfer t join users u on \n" +
+            "requested_by = username\n" +
+            "where previously_assigned= :id and t.status='1'  order by created_at desc",nativeQuery = true)
+    List<TRPAgentChangeHistoryView> getPreviousAgentsOfTRP(String id);
+
 }
 

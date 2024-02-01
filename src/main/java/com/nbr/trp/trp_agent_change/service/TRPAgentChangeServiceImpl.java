@@ -89,7 +89,7 @@ public class TRPAgentChangeServiceImpl implements TRPAgentChangeService{
 
     @Override
     public List<TRPAgentChangeHistoryView> getPreviousAgents (String id){
-        return trpAgentChangeRepository.getPreviousTRPsOfAgent(id);
+        return trpAgentChangeRepository.getPreviousAgentsOfTRP(id);
     }
 
 }
