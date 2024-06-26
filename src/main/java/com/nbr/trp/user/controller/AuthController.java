@@ -11,6 +11,7 @@ import com.nbr.trp.user.repository.RoleRepository;
 import com.nbr.trp.user.repository.UserRepository;
 import com.nbr.trp.user.request.LoginRequest;
 import com.nbr.trp.user.request.SignupRequest;
+import com.nbr.trp.user.response.APILogInResponse;
 import com.nbr.trp.user.response.JwtResponse;
 import com.nbr.trp.user.response.MessageResponse;
 import com.nbr.trp.user.service.UserDetailsImpl;
@@ -77,6 +78,17 @@ public class AuthController {
         UserDetailsImpl userDetails = (UserDetailsImpl)
                 authentication.getPrincipal();
         //System.out.println("status is "+userDetails.getStatus());
+        if(userDetails.getUsername().equals("ereturn")){
+            if(userDetails.getStatus().equals("1")){
+                loggerController.Login(userDetails.getUuid(),ip);
+                return ResponseEntity.ok(new APILogInResponse(jwt,"Bearer",true));
+            }
+            else{
+                loggerController.Login(userDetails.getUuid(),ip);
+                return ResponseEntity.ok(new APILogInResponse("","Bearer",false));
+
+            }
+        }
 
         if(userDetails.getStatus().equals("1")){
             loggerController.Login(userDetails.getUuid(),ip);

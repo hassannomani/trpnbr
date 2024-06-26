@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.nbr.trp.commission.entity.Items;
 import com.nbr.trp.commission.service.ItemsService;
 import com.nbr.trp.common.service.CommonService;
+import com.nbr.trp.ledger.entity.LedgeAPIResponse;
 import com.nbr.trp.ledger.entity.Ledger;
 import com.nbr.trp.ledger.entity.LedgerAdminView;
 import com.nbr.trp.ledger.service.LedgerService;
@@ -13,6 +14,7 @@ import com.nbr.trp.user.response.MessageResponse;
 import com.nbr.trp.user.service.UserDetailsImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -39,6 +41,9 @@ public class LedgerController {
     @Autowired
     LoggerController loggerController;
 
+    @Value("${own.base-url}")
+    private String baseurl;
+
     @PostMapping("/")
     public ResponseEntity<?> saveLedger(HttpServletRequest request, @RequestBody Ledger ld){
         String ip = commonService.getIPAddress(request);
@@ -52,16 +57,16 @@ public class LedgerController {
                 Ledger ldg = ledgerService.saveLedger(ld);
                 loggerController.LedgerRequestSaved(ip,ldg.getAgentTin(),ldg.getRepresentativeTin(),ldg.getTaxpayerId());
                 //ledgerService.saveCommission(ldg);
-                return ResponseEntity.ok(ldg);
+                return ResponseEntity.status(201).body(new LedgeAPIResponse("Data saved",true,baseurl+"ledger-representative"));
             }else{
                 System.out.println("bad request");
                 loggerController.LedgerRequestDuplicate(ip,ld.getAgentTin(),ld.getRepresentativeTin(),ld.getTaxpayerId());
-                return ResponseEntity.badRequest().body(new MessageResponse("Duplicate entry not allowed"));
+                return ResponseEntity.badRequest().body(new LedgeAPIResponse("Duplicate entry not allowed",false,""));
             }
 
         } catch(Exception e){
             loggerController.ErrorHandler(e);
-            return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
+            return ResponseEntity.badRequest().body(new LedgeAPIResponse(e.getMessage(),false,""));
         }
     }
 

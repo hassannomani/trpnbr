@@ -48,7 +48,8 @@ public interface UserRepository extends JpaRepository<User, String> {
     List<ApproveTRPView> getAllTRPForApproval();
 
 
-    @Query(value = "select * from users join users_roles on users.uuid=users_roles.user_id where role_id!='1' order by added_date desc",
+    @Query(value = "select * from users join users_roles on users.uuid=users_roles.user_id where role_id!='1' and\n" +
+            "status='1' order by added_date desc",
             nativeQuery = true)
     List<User> findAllUsers();
 

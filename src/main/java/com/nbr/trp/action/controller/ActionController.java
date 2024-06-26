@@ -45,9 +45,9 @@ public class ActionController {
                 userService.rejectRepuser(action.getReceiver());
                 loggerController.ActionSave(action.getReceiver(),"DENY",ip);
             }
-            else if(actionType.equals("BLOCK")){
+            else if(actionType.equals("CANCEL")){
                 userService.blockRepuser(action.getReceiver());
-                loggerController.ActionSave(action.getReceiver(),"BLOCK",ip);
+                loggerController.ActionSave(action.getReceiver(),"CANCEL",ip);
             }
             else if(actionType.equals("SUSPEND")){
                 userService.suspendRepuser(action.getReceiver());
