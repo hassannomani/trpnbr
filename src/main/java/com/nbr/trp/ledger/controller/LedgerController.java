@@ -10,6 +10,9 @@ import com.nbr.trp.ledger.entity.Ledger;
 import com.nbr.trp.ledger.entity.LedgerAdminView;
 import com.nbr.trp.ledger.service.LedgerService;
 import com.nbr.trp.log.LoggerController;
+import com.nbr.trp.representative.entity.Representative;
+import com.nbr.trp.representative.repository.RepresentativeRepository;
+import com.nbr.trp.representative.service.RepresentativeService;
 import com.nbr.trp.user.response.MessageResponse;
 import com.nbr.trp.user.service.UserDetailsImpl;
 import jakarta.servlet.http.HttpServletRequest;
@@ -41,6 +44,9 @@ public class LedgerController {
     @Autowired
     LoggerController loggerController;
 
+    @Autowired
+    RepresentativeService representativeService;
+
     @Value("${own.base-url}")
     private String baseurl;
 
@@ -49,19 +55,78 @@ public class LedgerController {
         String ip = commonService.getIPAddress(request);
         loggerController.LedgerRequest(ip);
         try{
-            List<Ledger> ldPreli = ledgerService.getByAssmentYrAndTin(ld.getAssessmentYear(),ld.getTaxpayerId());
+            List<Ledger> ldPreli = ledgerService
+                    .getByAssmentYrAndTin(ld.getAssessmentYear(),ld.getTaxpayerId());
 
-            if(ldPreli.size()==0){
+            Representative rep = representativeService
+                    .getSingleRepresentativesOfAnAgent(ld.getAgentTin()
+                            ,ld.getRepresentativeTin());
+
+            if(ldPreli.isEmpty() && rep!=null){
 
                 ledgerService.checkItems(ld);
                 Ledger ldg = ledgerService.saveLedger(ld);
-                loggerController.LedgerRequestSaved(ip,ldg.getAgentTin(),ldg.getRepresentativeTin(),ldg.getTaxpayerId());
+
+                loggerController
+                        .LedgerRequestSaved(
+                                ip,
+                                ldg.getAgentTin(),
+                                ldg.getRepresentativeTin(),
+                                ldg.getTaxpayerId()
+                        );
                 //ledgerService.saveCommission(ldg);
-                return ResponseEntity.status(201).body(new LedgeAPIResponse("Data saved",true,baseurl+"ledger-representative"));
-            }else{
+                return ResponseEntity
+                        .status(201)
+                        .body(
+                                new LedgeAPIResponse(
+                                        "Data saved",
+                                        true,
+                                        baseurl+"ledger-representative")
+                        );
+            }
+            else if(!ldPreli.isEmpty() && rep!=null){
                 System.out.println("bad request");
-                loggerController.LedgerRequestDuplicate(ip,ld.getAgentTin(),ld.getRepresentativeTin(),ld.getTaxpayerId());
-                return ResponseEntity.badRequest().body(new LedgeAPIResponse("Duplicate entry not allowed",false,""));
+                loggerController
+                        .LedgerRequestDuplicate(
+                                ip,
+                                ld.getAgentTin(),
+                                ld.getRepresentativeTin(),
+                                ld.getTaxpayerId()
+                        );
+                return ResponseEntity
+                        .badRequest()
+                        .body(
+                                new LedgeAPIResponse(
+                                        "Duplicate entry not allowed",
+                                        false,
+                                        "")
+                        );
+
+            } else if(ldPreli.isEmpty() && rep==null){
+                loggerController
+                        .LedgerRequestDuplicate
+                                (
+                                        ip,
+                                        ld.getAgentTin(),
+                                        ld.getRepresentativeTin(),
+                                        ld.getTaxpayerId()
+                                );
+                return ResponseEntity
+                        .badRequest()
+                        .body(new LedgeAPIResponse(
+                                "TRP & Agent doesn't match",
+                                false,
+                                "")
+                        );
+            }else{
+                return ResponseEntity
+                        .badRequest()
+                        .body(
+                                new LedgeAPIResponse(
+                                        "Bad Request",
+                                        false,
+                                        "")
+                        );
             }
 
         } catch(Exception e){
