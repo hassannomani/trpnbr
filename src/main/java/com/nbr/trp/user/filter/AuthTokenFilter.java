@@ -1,5 +1,7 @@
 package com.nbr.trp.user.filter;
 
+import com.nbr.trp.common.service.CommonService;
+import com.nbr.trp.log.LoggerController;
 import com.nbr.trp.user.service.UserDetailsServiceImpl;
 import com.nbr.trp.user.utils.JwtUtils;
 import jakarta.servlet.FilterChain;
@@ -25,6 +27,12 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
+    @Autowired
+    CommonService commonService;
+
+    @Autowired
+    LoggerController loggerController;
+
     private static final Logger logger = LoggerFactory
             .getLogger(AuthTokenFilter.class);
 
@@ -39,6 +47,9 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                 String username = jwtUtils.getUserUsernameFromJwtToken(jwt);
 
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+                String ip = commonService.getIPAddress(request);
+                String url = request.getRequestURI();
+                loggerController.IncomingRequest(ip,url);
 
                 UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(
@@ -56,6 +67,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
             }
         } catch (Exception e) {
             logger.error("Cannot set user authentication: {}", e);
+            loggerController.ErrorHandler(e);
         }
 
         filterChain.doFilter(request, response);

@@ -1,6 +1,7 @@
 package com.nbr.trp.representative.service;
 
 import com.nbr.trp.representative.entity.Representative;
+import com.nbr.trp.representative.entity.RepresentativeAgentView;
 import com.nbr.trp.user.entity.User;
 import org.springframework.stereotype.Service;
 
@@ -20,5 +21,10 @@ public interface RepresentativeService {
     public List<Representative> getAllRepresentativesOfAnAgent(String id);
 
     public Representative assignAgent(String tin, String agent);
+
+    public RepresentativeAgentView getAgentInfo(String tin);
+
+    public Representative getSingleRepresentativesOfAnAgent(String agent, String trp);
+
 
 }

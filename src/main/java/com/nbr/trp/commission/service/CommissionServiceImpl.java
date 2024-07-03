@@ -1,16 +1,26 @@
 package com.nbr.trp.commission.service;
 
 import com.nbr.trp.commission.entity.Commission;
+import com.nbr.trp.commission.entity.CommissionBillView;
 import com.nbr.trp.commission.repository.CommissionRepository;
+import com.nbr.trp.commission.request.ValidateRequest;
 import com.nbr.trp.ledger.entity.Ledger;
 import com.nbr.trp.ledger.entity.Metrics;
+import com.nbr.trp.ledger.repository.LedgerRepository;
 import com.nbr.trp.ledger.repository.MetricsRepository;
+import com.nbr.trp.user.entity.Role;
+import com.nbr.trp.user.entity.User;
+import com.nbr.trp.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+=======
+import java.util.*;
+>>>>>>> 65ac1a815693facce2fb795c8d3c2a90b055db34
 
 @Service
 public class CommissionServiceImpl implements CommissionService {
@@ -20,6 +30,12 @@ public class CommissionServiceImpl implements CommissionService {
 
     @Autowired
     MetricsRepository metricsRepository;
+
+    @Autowired
+    LedgerRepository ledgerRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
 
     @Override
@@ -120,6 +136,103 @@ public class CommissionServiceImpl implements CommissionService {
         return true;
     }
 
+<<<<<<< HEAD
+=======
+    public HashMap<String, String> valiDateCommission(ValidateRequest[] reqs){
+        HashMap<String, String> map = new HashMap<>();
+        for(int i=0;i< reqs.length;i++){
+            String ledger = reqs[i].getLedger();
+            String role = reqs[i].getRole();
+            Integer count = commissionRepository.findDuplicatePayment(ledger,role);
+            map.put(reqs[i].getId(),count.toString());
+        }
+        return map;
+    }
+
+    public Boolean approveBills(ValidateRequest[] reqs){
+        List<Commission> cm = new ArrayList<>();
+        for(int i=0;i< reqs.length;i++) {
+            Commission cm_individual = commissionRepository.findByCreationNo(reqs[i].getId());
+            cm_individual.setStatus("1");
+            cm_individual.setPaymentDate(new Date());
+            cm.add(cm_individual);
+        }
+        commissionRepository.saveAll(cm);
+        return true;
+    }
+
+    public Boolean rejectBills(ValidateRequest[] reqs){
+        List<Commission> cm = new ArrayList<>();
+        List<Ledger> ls = new ArrayList<>();
+        for(int i=0;i< reqs.length;i++) {
+            Commission cm_individual = commissionRepository.findByCreationNo(reqs[i].getId());
+            Ledger ledger = ledgerRepository.findByLid(reqs[i].getLedger());
+            cm_individual.setStatus("-1");
+            cm_individual.setPaymentDate(new Date());
+            cm.add(cm_individual);
+            if(reqs[i].getRole().equals("ROLE_AGENT"))
+                ledger.setBillSubmittedAg("0");
+            else if(reqs[i].getRole().equals("ROLE_REPRESENTATIVE"))
+                ledger.setBillSubmittedTrp("0");
+            ls.add(ledger);
+
+        }
+        commissionRepository.saveAll(cm);
+        ledgerRepository.saveAll(ls);
+        return true;
+    }
+
+    public List<CommissionBillView> getPendingBill(String tin){
+        String pos = getRole(tin);
+
+        //System.out.println(pos);
+        if(pos.equals("ROLE_ADMIN"))
+            return commissionRepository.findBillAdmin("0");
+        else if(pos.equals("ROLE_AGENT") || pos.equals("ROLE_REPRESENTATIVE"))
+            return commissionRepository.findBillUser(tin,"0");
+        else return null;
+    }
+
+    public List<CommissionBillView> getRejectedBill(String tin){
+
+        String pos = getRole(tin);
+
+        if(pos.equals("ROLE_ADMIN"))
+            return commissionRepository.findBillAdmin("-1");
+        else if(pos.equals("ROLE_AGENT") || pos.equals("ROLE_REPRESENTATIVE"))
+            return commissionRepository.findBillUser(tin,"-1");
+        else return null;
+
+    }
+
+    public List<CommissionBillView> getApprovedBill(String tin){
+
+        String pos = getRole(tin);
+
+        if(pos.equals("ROLE_ADMIN"))
+            return commissionRepository.findBillAdmin("1");
+        else if(pos.equals("ROLE_AGENT") || pos.equals("ROLE_REPRESENTATIVE"))
+            return commissionRepository.findBillUser(tin,"1");
+        else return null;
+
+    }
+
+    private String getRole(String tin){
+        User u = userRepository.getByTin(tin);
+        Set<Role> role = u.getRoles();
+        Role role1 = role.iterator().next();
+        return role1.getName();
+    }
+
+    public Object[] get_Applicants(){
+        return commissionRepository.get_applicants();
+    }
+
+
+
+
+
+>>>>>>> 65ac1a815693facce2fb795c8d3c2a90b055db34
 
 }
 

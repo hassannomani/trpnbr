@@ -56,10 +56,14 @@ public class WebSecurityConfig {
                 .requestMatchers("/api/common/citycorporation").permitAll()
                 .requestMatchers("/api/address/add").permitAll()
                 .requestMatchers("/api/bank/add").permitAll()
-                .requestMatchers("/api/representative/add").permitAll()
+                .requestMatchers("/api/v1/representative/add").permitAll()
                 .requestMatchers("/api/agent/allfront").permitAll()
-                .requestMatchers("/api/users/roles").permitAll()
-                .requestMatchers("/api/users/register").permitAll()
+                .requestMatchers("/api/v1/users/roles").permitAll()
+                .requestMatchers("/api/v1/users/mypassword/**").permitAll()
+                .requestMatchers("/api/v1/users/register").permitAll()
+                .requestMatchers("/api/common/file/**").permitAll()
+                .requestMatchers("/api/common/photo/**").permitAll()
+
                 .anyRequest()
                 .authenticated();
 

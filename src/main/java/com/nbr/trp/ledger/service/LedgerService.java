@@ -46,5 +46,7 @@ public interface LedgerService {
 
     public Ledger getTaxPayerOfATRP(String trp, String tin);
 
+    public List<Object[]> getGraphDataForTrp(String agent);
+
 
 }

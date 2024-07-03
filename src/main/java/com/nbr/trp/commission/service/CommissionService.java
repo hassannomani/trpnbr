@@ -1,6 +1,8 @@
 package com.nbr.trp.commission.service;
 
 import com.nbr.trp.commission.entity.Commission;
+import com.nbr.trp.commission.entity.CommissionBillView;
+import com.nbr.trp.commission.request.ValidateRequest;
 import com.nbr.trp.ledger.entity.Ledger;
 import org.springframework.stereotype.Service;
 
@@ -23,4 +25,22 @@ public interface CommissionService {
     public List<Commission> getAll();
 
     public Boolean SaveBulkCommission(String role, String tin, String[] ids);
+<<<<<<< HEAD
+=======
+
+    public List<CommissionBillView> getPendingBill(String tin);
+
+    public HashMap<String, String> valiDateCommission(ValidateRequest[] reqs);
+
+    public Boolean approveBills(ValidateRequest[] reqs);
+
+    public Boolean rejectBills(ValidateRequest[] reqs);
+
+    public List<CommissionBillView> getRejectedBill(String tin);
+
+    public List<CommissionBillView> getApprovedBill(String tin);
+
+    public Object[] get_Applicants();
+
+>>>>>>> 65ac1a815693facce2fb795c8d3c2a90b055db34
 }

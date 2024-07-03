@@ -48,15 +48,22 @@ public interface LedgerRepository extends JpaRepository<Ledger, String>{
 
     List<Ledger> findByAssessmentYearAndTaxpayerId(String year, String id);
 
-    @Query(value = "select top 10 sum(isnull(cast(paid_amount as float),0)) as sum, representative_tin from ledger group by representative_tin",nativeQuery = true)
+    @Query(value = "select top 10 sum(isnull(cast(paid_amount as float),0)) as sum, representative_tin,representative.re_name from\n" +
+            "ledger join representative on ledger.representative_tin=representative.tin_no group by representative_tin,re_name",nativeQuery = true)
     List<Object[]> graphDataSample();
 
     @Query(value = "select sum(isnull(cast(paid_amount as float),0)) as amount, sum(representative_commission) as trp, sum(agent_commission) as agent, representative_tin\n" +
             "from ledger where agent_tin = :agentTin group by representative_tin",nativeQuery = true)
     List<Object[]> agentCommissionView(@Param("agentTin") String id);
 
-    @Query(value = "select top 10 sum(isnull(cast(paid_amount as float),0)) as sum, representative_tin from ledger where agent_tin = :agentTin group by representative_tin",nativeQuery = true)
+    @Query(value = "select top 10 sum(isnull(cast(paid_amount as float),0)) as sum, representative_tin,representative.re_name from ledger join representative on ledger.representative_tin=representative.tin_no where agent_tin = :agentTin group by representative_tin,re_name",nativeQuery = true)
     List<Object[]> graphDataAgent(@Param("agentTin") String tin);
+
+    @Query(value = "SELECT SUM(representative_commission) [TotalAmount], DATEPART(Year, created_at) Year, DATEPART(Month, created_at) Month \n" +
+            "FROM ledger where representative_tin = :trpTin\n" +
+            "GROUP BY DATEPART(Year, created_at), DATEPART(Month, created_at)\n" +
+            "ORDER BY Year, Month",nativeQuery = true)
+    List<Object[]> graphDataTrp(@Param("trpTin") String tin);
 
     List<Ledger> findByAgentTinAndRepresentativeTin(String agent, String trp);
 
@@ -65,10 +72,10 @@ public interface LedgerRepository extends JpaRepository<Ledger, String>{
 
     Ledger findByRepresentativeTinAndTaxpayerId(String trp, String taxpayer);
 
-    @Query(value = "select * from ledger where bill_submitted=0 and agent_tin = :agTin",nativeQuery = true)
+    @Query(value = "select * from ledger where bill_submitted_ag=0 and agent_tin = :agTin",nativeQuery = true)
     List<Ledger> findAgentBillable(@Param("agTin") String agTin);
 
-    @Query(value = "select * from ledger where bill_submitted=0 and representative_tin = :repTin",nativeQuery = true)
+    @Query(value = "select * from ledger where bill_submitted_trp=0 and representative_tin = :repTin",nativeQuery = true)
     List<Ledger> findTRPBillable(@Param("repTin") String repTin);
 
 }

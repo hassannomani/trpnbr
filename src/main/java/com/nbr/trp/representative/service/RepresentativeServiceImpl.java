@@ -1,6 +1,7 @@
 package com.nbr.trp.representative.service;
 
 import com.nbr.trp.representative.entity.Representative;
+import com.nbr.trp.representative.entity.RepresentativeAgentView;
 import com.nbr.trp.representative.repository.RepresentativeRepository;
 import com.nbr.trp.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,5 +52,13 @@ public class RepresentativeServiceImpl implements RepresentativeService{
         rep.setAgentId(agent);
         return representativeRepository.save(rep);
     }
+    @Override
+    public RepresentativeAgentView getAgentInfo(String tin){
+        return representativeRepository.findAgentInfoByTin(tin);
+    }
 
+    @Override
+    public Representative getSingleRepresentativesOfAnAgent(String agent, String trp){
+        return representativeRepository.findSingleTRPOfAgent(agent, trp);
+    }
 }

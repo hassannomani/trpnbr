@@ -16,4 +16,6 @@ public class TRPEReturnAuthRequestModel {
     private String grantType;
 
     private Boolean rememberMe;
+
+    private String refreshToken;
 }

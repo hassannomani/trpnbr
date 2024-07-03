@@ -37,6 +37,10 @@ public interface UserService {
 
     public User registerUser(User user);
 
+    public Boolean changePassword(User user);
+
+    public Boolean myPassChange(User u, String p);
+
 
 //    public User rejectRepUserByTin(String tin);
 
