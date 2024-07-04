@@ -22,4 +22,9 @@ public class YearServiceImpl implements  YearService{
     public AssessmentYear findYear(String year) {
         return yearRepository.findByYearOrderByCreatedDesc(year);
     }
+
+    @Override
+    public AssessmentYear findLatest() {
+        return yearRepository.findLatestYear();
+    }
 }

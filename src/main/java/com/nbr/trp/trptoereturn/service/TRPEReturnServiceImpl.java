@@ -30,6 +30,12 @@ public class TRPEReturnServiceImpl implements TRPEReturnService{
     @Value("${trpereturn.usertoken}")
     private String ereturnURL;
 
+    @Value("${trpereturn.live-base-url}")
+    private String assmnt_live_base_url;
+
+    @Value("${trpereturn.psr}")
+    private String psr_url;
+
     @Autowired
     private Gson gson;
 
@@ -130,4 +136,28 @@ public class TRPEReturnServiceImpl implements TRPEReturnService{
         //System.out.println(eReturnResponse.toString());
         return finalResponseToReturn;
     }
+
+    @Override
+    public TRPAssessmentYearResponse checkPSR(String tin, String year){
+
+        String url = assmnt_live_base_url + psr_url+"/"+tin+"/"+year;
+        HttpHeaders headers = new HttpHeaders();
+        //headers.setContentType(MediaType.APPLICATION_JSON);
+        System.out.println("url : {}"+ url);
+        HttpEntity<?> httpEntity = new HttpEntity<>(headers);
+
+        ResponseEntity<TRPAssessmentYearResponse> model = restTemplate.exchange(url,HttpMethod.POST, httpEntity, TRPAssessmentYearResponse.class);
+        if (model != null) {
+            TRPAssessmentYearResponse body = model.getBody();
+            System.out.println(model.toString());
+            return body;
+
+        }else{
+            System.out.println("null");
+            System.out.println(model);
+            return null;
+        }
+
+    }
+
 }

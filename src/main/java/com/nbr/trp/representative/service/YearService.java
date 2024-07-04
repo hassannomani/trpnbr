@@ -11,6 +11,7 @@ public interface YearService {
     AssessmentYear saveyear (String year);
 
     AssessmentYear findYear(String year);
+    AssessmentYear findLatest();
 
 
 }

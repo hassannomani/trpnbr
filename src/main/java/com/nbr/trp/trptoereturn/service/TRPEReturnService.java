@@ -16,4 +16,6 @@ public interface TRPEReturnService {
     HttpEntity createHttpHeaders();
 
     TRPEReturnOTPValidatedResponse validateOTP(TRPEReturnOTPValidateModel model);
+
+    TRPAssessmentYearResponse checkPSR(String tin, String year);
 }

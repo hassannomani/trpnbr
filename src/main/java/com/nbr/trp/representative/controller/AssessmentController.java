@@ -33,11 +33,11 @@ public class AssessmentController {
         }
     }
 
-    @GetMapping("/find/{year}")
-    public ResponseEntity<?> findYear(@PathVariable String year) {
+    @GetMapping("/find-latest")
+    public ResponseEntity<?> findLastAssmntYear() {
 
         try{
-            AssessmentYear assessmentYear = yearService.saveyear(year);
+            AssessmentYear assessmentYear = yearService.findLatest();
             // return ResponseEntity.ok(new MessageResponse("Representative registered successfully!"));
             return new ResponseEntity<>(assessmentYear, HttpStatus.CREATED);
 

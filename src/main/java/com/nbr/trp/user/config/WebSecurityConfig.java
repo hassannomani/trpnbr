@@ -63,6 +63,8 @@ public class WebSecurityConfig {
                 .requestMatchers("/api/v1/users/register").permitAll()
                 .requestMatchers("/api/common/file/**").permitAll()
                 .requestMatchers("/api/common/photo/**").permitAll()
+                .requestMatchers("/api/v1/year/find-latest").permitAll()
+                .requestMatchers("/api/trpereturn/psr/**").permitAll()
 
                 .anyRequest()
                 .authenticated();

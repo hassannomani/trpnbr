@@ -5,10 +5,7 @@ import com.nbr.trp.common.entity.ETinResponseModel;
 import com.nbr.trp.common.service.CommonService;
 import com.nbr.trp.common.service.EtinServiceImpl;
 import com.nbr.trp.log.LoggerController;
-import com.nbr.trp.trptoereturn.entity.TRPEReturnOTPReponseModel;
-import com.nbr.trp.trptoereturn.entity.TRPEReturnOTPRequestModel;
-import com.nbr.trp.trptoereturn.entity.TRPEReturnOTPValidateModel;
-import com.nbr.trp.trptoereturn.entity.TRPEReturnOTPValidatedResponse;
+import com.nbr.trp.trptoereturn.entity.*;
 import com.nbr.trp.trptoereturn.service.TRPEReturnService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +60,29 @@ public class TRPEReturnController {
         }
 
     }
+
+    @GetMapping("/psr/{year}/{tin}")
+    public ResponseEntity<?> checkPSROfTRP(HttpServletRequest request,@PathVariable String year, @PathVariable String tin) {
+        try{
+            TRPAssessmentYearResponse response = trpeReturnService.checkPSR(tin,year);
+            //loggerController.OTPValidate(commonService.getIPAddress(request));
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }catch(Exception e){
+//            Map<String, String> exc_map = new HashMap<String, String>();
+//            exc_map.put("message", e.toString());
+//            exc_map.put("stacktrace", getStackTrace(e));
+            System.out.println(e);
+            loggerController.ErrorHandler(e);
+            return ResponseEntity
+                    .status(HttpStatus.CONFLICT)
+                    .body(e.getMessage());
+
+        }
+
+    }
+
+
+
 //    public static String getStackTrace(final Throwable throwable) {
 //        final StringWriter sw = new StringWriter();
 //        final PrintWriter pw = new PrintWriter(sw, true);
