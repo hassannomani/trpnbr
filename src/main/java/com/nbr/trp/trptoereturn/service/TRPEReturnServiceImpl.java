@@ -13,7 +13,7 @@ import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
 @Service
-public class TRPEReturnServiceImpl implements TRPEReturnService{
+public class TRPEReturnServiceImpl implements TRPEReturnService {
 
     @Value("${trpereturn.username}")
     private String userName;
@@ -41,9 +41,10 @@ public class TRPEReturnServiceImpl implements TRPEReturnService{
 
     @Autowired
     private RestTemplate restTemplate;
+
     @Override
     public TRPEReturnAuthResponseModel getAuthResponse() {
-        TRPEReturnAuthRequestModel request = new TRPEReturnAuthRequestModel(userName, password,"password",true,"string");
+        TRPEReturnAuthRequestModel request = new TRPEReturnAuthRequestModel(userName, password, "password", true, "string");
         String url = baseURL + authTokenURL;
         HttpHeaders headers = new HttpHeaders();
         //headers.setContentType(MediaType.APPLICATION_JSON);
@@ -57,7 +58,7 @@ public class TRPEReturnServiceImpl implements TRPEReturnService{
             System.out.println(auth.getReplyMessage().toString());
             return auth;
 
-        }else{
+        } else {
             System.out.println("null");
             System.out.println(model);
             return null;
@@ -80,39 +81,36 @@ public class TRPEReturnServiceImpl implements TRPEReturnService{
     }
 
     @Override
-    public TRPEReturnOTPReponseModel getEReturnResponse(TRPEReturnOTPRequestModel request){
+    public TRPEReturnOTPReponseModel getEReturnResponse(TRPEReturnOTPRequestModel request) {
 
         HttpEntity headers = createHttpHeaders();
         String url = baseURL + ereturnURL;
         //System.out.println("url : " + url);
         HttpEntity<?> httpEntity = new HttpEntity<>(request, headers.getHeaders());
         ResponseEntity<TRPEReturnOTPReponseModel> eReturnResponse;
-        TRPEReturnOTPReponseModel finalAlternateResponseToReturn = new TRPEReturnOTPReponseModel();
+
 
         try {
-             eReturnResponse = restTemplate.exchange(url, HttpMethod.POST, httpEntity, TRPEReturnOTPReponseModel.class);
+            eReturnResponse = restTemplate.exchange(url, HttpMethod.POST, httpEntity, TRPEReturnOTPReponseModel.class);
 
             //eReturnResponse = restTemplate.exchange(url, HttpMethod.GET, httpHeadersEntity, String.class).getBody();
-        } catch (HttpStatusCodeException ex) {
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
-            finalAlternateResponseToReturn.setErrorCode(String.valueOf(ex.getRawStatusCode()));
-            finalAlternateResponseToReturn.setErrorMessage(String.valueOf(ex.getResponseBodyAsString()));
-            //System.out.println(finalAlternateResponseToReturn);
-            return finalAlternateResponseToReturn;
+            throw ex;
         }
         TRPEReturnOTPReponseModel finalResponseToReturn;
         finalResponseToReturn = eReturnResponse.getBody();
         //eReturnResponse = new Gson().fromJson(tinResponse, ETinResponseModel.class);
-//        if (finalResponseToReturn == null) {
-//            return null;
-//        }
-        System.out.println(eReturnResponse.toString());
+        if (finalResponseToReturn == null) {
+            return null;
+        }
+        //System.out.println(eReturnResponse.toString());
         return finalResponseToReturn;
     }
 
 
     @Override
-    public TRPEReturnOTPValidatedResponse validateOTP(TRPEReturnOTPValidateModel model){
+    public TRPEReturnOTPValidatedResponse validateOTP(TRPEReturnOTPValidateModel model) {
 
         HttpEntity headers = createHttpHeaders();
         String url = baseURL + ereturnURL;
@@ -137,27 +135,55 @@ public class TRPEReturnServiceImpl implements TRPEReturnService{
         return finalResponseToReturn;
     }
 
-    @Override
-    public TRPAssessmentYearResponse checkPSR(String tin, String year){
+//    @Override
+//    public TRPAssessmentYearResponse checkPSR(String tin, String year){
+//    return null;
+//    }
+ @Override
+    public TRPAssessmentYearResponse checkPSR(String tin, String year) {
 
-        String url = assmnt_live_base_url + psr_url+"/"+tin+"/"+year;
-        HttpHeaders headers = new HttpHeaders();
-        //headers.setContentType(MediaType.APPLICATION_JSON);
-        System.out.println("url : {}"+ url);
-        HttpEntity<?> httpEntity = new HttpEntity<>(headers);
+     String url = assmnt_live_base_url + psr_url + "/" + tin + "/" + year;
+     HttpHeaders headers = new HttpHeaders();
+     //headers.setContentType(MediaType.APPLICATION_JSON);
+     System.out.println("url : {}" + url);
+     HttpEntity<?> httpEntity = new HttpEntity<>(headers);
 
-        ResponseEntity<TRPAssessmentYearResponse> model = restTemplate.exchange(url,HttpMethod.POST, httpEntity, TRPAssessmentYearResponse.class);
-        if (model != null) {
-            TRPAssessmentYearResponse body = model.getBody();
-            System.out.println(model.toString());
-            return body;
+     TRPAssessmentYearResponse model;
+     int code = 0;
+     String bodyAPI;
+     try {
+         bodyAPI = restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class).getBody();
+         code = restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class).getStatusCode().value();
+         //tinResponse = restTemplate.exchange(url, HttpMethod.GET, httpHeadersEntity, String.class).getBody();
+     } catch (Exception ex) {
+         System.out.println("Code isy " + code);
 
-        }else{
-            System.out.println("null");
-            System.out.println(model);
-            return null;
-        }
+         System.out.println(ex.getMessage());
+         //model = new Gson().fromJson(bodyAPI, TRPAssessmentYearResponse.class);
+         TRPAssessmentYearResponse err = new TRPAssessmentYearResponse();
+         err.setErrorCode("404");
+         err.setSuccess(false);
+         return err;
+     }
 
-    }
+     model = new Gson().fromJson(bodyAPI, TRPAssessmentYearResponse.class);
+
+     System.out.println("Code is " + code);
+
+     // System.out.println(model);
+
+//        ResponseEntity<TRPAssessmentYearResponse> model = restTemplate.exchange(url,HttpMethod.POST, httpEntity, TRPAssessmentYearResponse.class);
+//        if (model != null) {
+//            TRPAssessmentYearResponse body = model.getBody();
+//            System.out.println(model.toString());
+//            return body;
+//
+//        }else{
+//            System.out.println("null");
+//            System.out.println(model);
+//            return null;
+//        }
+
+ }
 
 }

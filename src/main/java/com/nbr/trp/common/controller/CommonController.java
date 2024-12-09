@@ -8,7 +8,9 @@ import com.nbr.trp.user.entity.User;
 import com.nbr.trp.user.service.UserDetailsImpl;
 import com.nbr.trp.user.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
+import org.apache.tomcat.util.http.fileupload.impl.FileSizeLimitExceededException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -51,6 +53,9 @@ public class CommonController {
 
     @Autowired
     UserService userService;
+
+    @Value("${spring.max-file-size}")
+    private long max_file_size;
 
 
     @CrossOrigin(origins = "http://localhost:4200")
@@ -175,21 +180,31 @@ public class CommonController {
 
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/file")
-    public ResponseEntity<FileResponse> filepost(HttpServletRequest request, @RequestPart("file") MultipartFile file) {
-        String ip = commonService.getIPAddress(request);
-        try {
+    public ResponseEntity<FileResponse> filepost(HttpServletRequest request, @RequestPart("file") MultipartFile file) throws FileSizeLimitExceededException {
+        System.out.println("Exception happening 0");
 
+        String ip = commonService.getIPAddress(request);
+        long size = file.getSize();
+        if(size>max_file_size){
+            System.out.println("Exception happening");
+            throw new FileSizeLimitExceededException("Exceeded",max_file_size,size);
+
+        }
+        try {
             File f = new ClassPathResource("").getFile();
             final Path path = Paths.get(f.getAbsolutePath() + File.separator + "static" + File.separator + "files");
             FileResponse fileResponse = fileUploadService.uploadFile(path, file, 1);
             loggerController.IncomingRequest(ip,"File Upload");
             return new ResponseEntity<>(fileResponse, HttpStatus.OK);
 
-
-        } catch (IOException e) {
-            loggerController.ErrorHandler(e);
-
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        catch (FileSizeLimitExceededException e){
+            System.out.println("FException----------------------");
+            return new ResponseEntity<>(null,HttpStatus.PAYLOAD_TOO_LARGE);
+        }
+        catch (Exception e){
+            System.out.println("Exception----------------------");
+            return new ResponseEntity<>(null,HttpStatus.PAYLOAD_TOO_LARGE);
         }
     }
 

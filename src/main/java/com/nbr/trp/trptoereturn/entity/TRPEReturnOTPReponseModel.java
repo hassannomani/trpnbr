@@ -9,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 public class TRPEReturnOTPReponseModel {
 
-    private String replyMessage;
+    private TRPEReturnOTPReponseReplyMessage replyMessage;
 
     private Boolean success;
 
