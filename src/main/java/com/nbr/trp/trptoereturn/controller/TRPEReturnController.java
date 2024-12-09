@@ -34,11 +34,28 @@ public class TRPEReturnController {
 
     @PostMapping("")
     public ResponseEntity<TRPEReturnOTPReponseModel> getOTPMsg(HttpServletRequest request, @RequestBody TRPEReturnOTPRequestModel val) {
-        String ip = commonService.getIPAddress(request);
 
+//        String ip = commonService.getIPAddress(request);
+//        try {
+//            TRPEReturnOTPReponseModel response = trpeReturnService.getEReturnResponse(val);
+//            loggerController.OTPRequest(ip);
+//            return new ResponseEntity<>(response, HttpStatus.OK);
+//        }catch(Exception e){
+//            TRPEReturnOTPReponseModel model = new TRPEReturnOTPReponseModel();
+//            model.setErrorMessage(e.getMessage());
+//            model.setSuccess(false);
+//            model.setErrorCode("500");
+//            //System.out.println(e.g);
+//            loggerController.ErrorHandler(e);
+//            return new ResponseEntity<>(model, HttpStatus.OK);
         TRPEReturnOTPReponseModel response = trpeReturnService.getEReturnResponse(val);
-        loggerController.OTPRequest(ip);
         return new ResponseEntity<>(response, HttpStatus.OK);
+
+//            return ResponseEntity
+//                    .status(HttpStatus.CONFLICT)
+//                    .body(model);
+
+
 
     }
 

@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-//@CrossOrigin(origins = "*", maxAge = 4800)
+@CrossOrigin(origins = "*", maxAge = 4800)
 @RestController
 @RequestMapping("/api/v1/users")
 //@RequestMapping("/api/test")
@@ -119,6 +119,7 @@ public class UserController {
             loggerController.ListGeneration("","All Users","Admin",ip);
             return ResponseEntity.ok(all_users);
         }catch(Exception e){
+            System.out.println("Error: "+e.getMessage());
             loggerController.ErrorHandler(e);
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
         }
