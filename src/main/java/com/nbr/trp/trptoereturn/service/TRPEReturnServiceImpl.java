@@ -1,7 +1,6 @@
 package com.nbr.trp.trptoereturn.service;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.nbr.trp.common.entity.ETinAuthModel;
 import com.nbr.trp.common.entity.ETinAuthRequestModel;
 import com.nbr.trp.common.entity.ETinResponseModel;
@@ -141,43 +140,17 @@ public class TRPEReturnServiceImpl implements TRPEReturnService{
     @Override
     public TRPAssessmentYearResponse checkPSR(String tin, String year){
 
-        String url = assmnt_live_base_url + psr_url+tin+"/"+year;
+        String url = assmnt_live_base_url + psr_url+"/"+tin+"/"+year;
         HttpHeaders headers = new HttpHeaders();
         //headers.setContentType(MediaType.APPLICATION_JSON);
         System.out.println("url : {}"+ url);
         HttpEntity<?> httpEntity = new HttpEntity<>(headers);
-        TRPAssessmentYearResponse model;
-        int code = 0;
-        String bodyAPI;
-        try {
-            bodyAPI = restTemplate.exchange(url,HttpMethod.POST, httpEntity, String.class).getBody();
-            code = restTemplate.exchange(url,HttpMethod.POST, httpEntity, String.class).getStatusCode().value();
-            //tinResponse = restTemplate.exchange(url, HttpMethod.GET, httpHeadersEntity, String.class).getBody();
-        } catch (Exception ex) {
-            System.out.println("Code isy "+code);
 
-            System.out.println(ex.getMessage());
-            //model = new Gson().fromJson(bodyAPI, TRPAssessmentYearResponse.class);
-            TRPAssessmentYearResponse err = new TRPAssessmentYearResponse();
-            err.setErrorCode("404");
-            err.setSuccess(false);
-            return err;
-        }
-
-        model = new Gson().fromJson(bodyAPI, TRPAssessmentYearResponse.class);
-
-        System.out.println("Code is "+code);
-
-       // System.out.println(model);
-
+        ResponseEntity<TRPAssessmentYearResponse> model = restTemplate.exchange(url,HttpMethod.POST, httpEntity, TRPAssessmentYearResponse.class);
         if (model != null) {
-
-            System.out.println("-----------------------");
-//
-//            System.out.println(model.getErrorCode());
-//            System.out.println(model.getErrorMessage());
-//            System.out.println(model.getSuccess());
-            return model;
+            TRPAssessmentYearResponse body = model.getBody();
+            System.out.println(model.toString());
+            return body;
 
         }else{
             System.out.println("null");

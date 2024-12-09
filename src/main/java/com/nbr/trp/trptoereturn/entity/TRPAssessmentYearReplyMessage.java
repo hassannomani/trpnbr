@@ -9,12 +9,12 @@ import lombok.*;
 @AllArgsConstructor
 public class TRPAssessmentYearReplyMessage {
 
-    private String tinNo;
+    private Boolean tinNo;
 
-    private String assessmentYear;
+    private Boolean assessmentYear;
 
-    private String submissionStatus;
+    private Boolean submissionStatus;
 
-    private String assesName;
+    private Boolean assesName;
 
 }
